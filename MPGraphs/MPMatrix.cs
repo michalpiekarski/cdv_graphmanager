@@ -13,6 +13,10 @@ namespace MPGraphs
         {
             this.rows = new List<List<T>>();
         }
+        public MPMatrix(MPMatrix<T> matrix)
+        {
+            this.rows = matrix.rows;
+        }
         #region Indexers
         /// <summary>
         /// <c>Get</c> or <c>Set</c> matrix row with specified index == <paramref name="rowIndex"/>.
@@ -352,6 +356,28 @@ namespace MPGraphs
             }
         }
         #endregion Column Manipulation
+        /// <summary>
+        /// Create a transposed matrix if its rectangular.
+        /// </summary>
+        /// <returns>
+        /// New <c>MPMatrix&lt;T&gt;</c> with the same <c>T</c> type, which is a trasposition of calling matrix.
+        /// If the calling matrix is not rectangular, returns <c>null</c>.
+        /// </returns>
+        public MPMatrix<T> Transpose()
+        {
+            MPMatrix<T> transposedMatrix = null;
+            bool isRectangular = this.IsRectangular;
+            if(isRectangular == true)
+            {
+                Tuple<bool, int> columnCount = this.ColumnCount;
+                transposedMatrix = new MPMatrix<T>();
+                for (int i = 0; i < columnCount.Item2; i++)
+                {
+                    transposedMatrix.AddRow(this.GetColumn(i));
+                }
+            }
+            return transposedMatrix;
+        }
         /// <summary>
         /// Returns the identity matrix of specified <paramref name="size"/>.
         /// </summary>
