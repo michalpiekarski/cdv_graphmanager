@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace MPGraphs
 {
-    public class MPMatrix<T>
+    public class Matrix<T>
     {
         private List<List<T>> rows;
-        public MPMatrix()
+        public Matrix()
         {
             this.rows = new List<List<T>>();
         }
-        public MPMatrix(MPMatrix<T> matrix)
+        public Matrix(Matrix<T> matrix)
         {
             this.rows = matrix.rows;
         }
@@ -360,17 +360,17 @@ namespace MPGraphs
         /// Create a transposed matrix if its rectangular.
         /// </summary>
         /// <returns>
-        /// New <c>MPMatrix&lt;T&gt;</c> with the same <c>T</c> type, which is a trasposition of calling matrix.
+        /// New <c>Matrix&lt;T&gt;</c> with the same <c>T</c> type, which is a trasposition of calling matrix.
         /// If the calling matrix is not rectangular, returns <c>null</c>.
         /// </returns>
-        public MPMatrix<T> Transpose()
+        public Matrix<T> Transpose()
         {
-            MPMatrix<T> transposedMatrix = null;
+            Matrix<T> transposedMatrix = null;
             bool isRectangular = this.IsRectangular;
             if(isRectangular == true)
             {
                 Tuple<bool, int> columnCount = this.ColumnCount;
-                transposedMatrix = new MPMatrix<T>();
+                transposedMatrix = new Matrix<T>();
                 for (int i = 0; i < columnCount.Item2; i++)
                 {
                     transposedMatrix.AddRow(this.GetColumn(i));
@@ -382,9 +382,9 @@ namespace MPGraphs
         /// Returns the identity matrix of specified <paramref name="size"/>.
         /// </summary>
         /// <param name="size">Width and height of the identity matrix to create.</param>
-        public static MPMatrix<int> IdentityMatrix(int size)
+        public static Matrix<int> IdentityMatrix(int size)
         {
-            MPMatrix<int> identityMatrix = new MPMatrix<int>();
+            Matrix<int> identityMatrix = new Matrix<int>();
             List<int> row = new List<int>(size);
             for (int i = 0; i < size; i++)
             {
