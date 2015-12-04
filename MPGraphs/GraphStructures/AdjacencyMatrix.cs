@@ -6,22 +6,60 @@ using System.Threading.Tasks;
 
 namespace MPGraphs.GraphStructures
 {
-    class AdjacencyMatrix<T> : Matrix<T>, IGraphRepresentation
+    public enum Adjacency
     {
+        None = 0,
+        Single,
+        Double
+    }
+    class AdjacencyMatrix : GraphRepresentation<Adjacency>
+    {
+        #region Constructors
+        public AdjacencyMatrix()
+        {
+        }
+
+        public AdjacencyMatrix(Matrix<Adjacency> matrix) : base(matrix)
+        {
+        }
+
+        public AdjacencyMatrix(bool isDirected) : base(isDirected)
+        {
+        }
+
+        public AdjacencyMatrix(bool isDirected, Matrix<Adjacency> matrix) : base(isDirected, matrix)
+        {
+        }
+        #endregion Constructors
+
         /// <summary>
-        /// Adds an edge to the graph representation, between two vertices at indexes: <paramref name="vertexIndexA"/> and <paramref name="vertexIndexB"/>.
+        /// Adds new vertex to graph representation.
         /// </summary>
-        /// <param name="vertexIndexA">First vertex of the edge.</param>
-        /// <param name="vertexIndexB">Second vertex of the edge.</param>
-        public void AddEdge(int vertexIndexA, int vertexIndexB)
+        public override void AddVertex()
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// Adds new vertex to graph representation.
+        /// Removes a specified vertex at index == <paramref name="vertexIndex"/> from graph representation if it exists.
         /// </summary>
-        public void AddVertex()
+        /// <param name="vertexIndex">Index of the vertex to remove from graph representation.</param>
+        /// <returns>
+        /// If the vertex at index == <paramref name="vertexIndex"/> doesn't exist, return <c>false</c> (otherwise return <c>true</c>).
+        /// </returns>
+        public override bool RemoveVertex(int vertexIndex)
+        {
+            throw new NotImplementedException();
+        }
+        /// <summary>
+        /// Adds an edge to the graph representation, between two vertices at indexes: <paramref name="vertexIndexA"/> and <paramref name="vertexIndexB"/> if both those vertices exist.
+        /// </summary>
+        /// <param name="vertexIndexA">First vertex of the edge.</param>
+        /// <param name="vertexIndexB">Second vertex of the edge.</param>
+        /// <returns>
+        /// If any of two specified vertices doesn't exist, returns <c>false</c> (otherwise returns <c>true</c>).
+        /// </returns>
+        public override bool AddEdge(int vertexIndexA, int vertexIndexB)
         {
             throw new NotImplementedException();
         }
@@ -34,7 +72,7 @@ namespace MPGraphs.GraphStructures
         /// <returns>
         /// If the edge between specified vertices doesn't exist, returns <c>false</c> (otherwise returns <c>true</c>).
         /// </returns>
-        public bool FindEdge(int vertexIndexA, int vertexIndexB)
+        public override bool FindEdge(int vertexIndexA, int vertexIndexB)
         {
             throw new NotImplementedException();
         }
@@ -47,19 +85,7 @@ namespace MPGraphs.GraphStructures
         /// <returns>
         /// If the edge between two specified vertices doesn't exist, return <c>false</c> (otherwise returns <c>true</c>).
         /// </returns>
-        public bool RemoveEdge(int vertexIndexA, int vertexIndexB)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Removes a specified vertex at index == <paramref name="vertexIndex"/> from graph representation if it exists.
-        /// </summary>
-        /// <param name="vertexIndex">Index of the vertex to remove from graph representation.</param>
-        /// <returns>
-        /// If the vertex at index == <paramref name="vertexIndex"/> doesn't exist, return <c>false</c> (otherwise return <c>true</c>).
-        /// </returns>
-        public bool RemoveVertex(int vertexIndex)
+        public override bool RemoveEdge(int vertexIndexA, int vertexIndexB)
         {
             throw new NotImplementedException();
         }

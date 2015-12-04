@@ -6,14 +6,40 @@ using System.Threading.Tasks;
 
 namespace MPGraphs.GraphStructures
 {
-    class IncydenceMatrix<T> : Matrix<T>, IGraphRepresentation
+    public enum Incidence
     {
+        None = 0,
+        Incident
+    }
+    class IncidenceMatrix : GraphRepresentation<Incidence>
+    {
+        #region Constructors
+        public IncidenceMatrix()
+        {
+        }
+
+        public IncidenceMatrix(Matrix<Incidence> matrix) : base(matrix)
+        {
+        }
+
+        public IncidenceMatrix(bool isDirected) : base(isDirected)
+        {
+        }
+
+        public IncidenceMatrix(bool isDirected, Matrix<Incidence> matrix) : base(isDirected, matrix)
+        {
+        }
+        #endregion Constructors
+
         /// <summary>
-        /// Adds an edge to the graph representation, between two vertices at indexes: <paramref name="vertexIndexA"/> and <paramref name="vertexIndexB"/>.
+        /// Adds an edge to the graph representation, between two vertices at indexes: <paramref name="vertexIndexA"/> and <paramref name="vertexIndexB"/> if both those vertices exist.
         /// </summary>
         /// <param name="vertexIndexA">First vertex of the edge.</param>
         /// <param name="vertexIndexB">Second vertex of the edge.</param>
-        public void AddEdge(int vertexIndexA, int vertexIndexB)
+        /// <returns>
+        /// If any of two specified vertices doesn't exist, returns <c>false</c> (otherwise returns <c>true</c>).
+        /// </returns>
+        public override bool AddEdge(int vertexIndexA, int vertexIndexB)
         {
             throw new NotImplementedException();
         }
@@ -21,7 +47,7 @@ namespace MPGraphs.GraphStructures
         /// <summary>
         /// Adds new vertex to graph representation.
         /// </summary>
-        public void AddVertex()
+        public override void AddVertex()
         {
             throw new NotImplementedException();
         }
@@ -34,7 +60,7 @@ namespace MPGraphs.GraphStructures
         /// <returns>
         /// If the edge between specified vertices doesn't exist, returns <c>false</c> (otherwise returns <c>true</c>).
         /// </returns>
-        public bool FindEdge(int vertexIndexA, int vertexIndexB)
+        public override bool FindEdge(int vertexIndexA, int vertexIndexB)
         {
             throw new NotImplementedException();
         }
@@ -47,7 +73,7 @@ namespace MPGraphs.GraphStructures
         /// <returns>
         /// If the edge between two specified vertices doesn't exist, return <c>false</c> (otherwise returns <c>true</c>).
         /// </returns>
-        public bool RemoveEdge(int vertexIndexA, int vertexIndexB)
+        public override bool RemoveEdge(int vertexIndexA, int vertexIndexB)
         {
             throw new NotImplementedException();
         }
@@ -59,7 +85,7 @@ namespace MPGraphs.GraphStructures
         /// <returns>
         /// If the vertex at index == <paramref name="vertexIndex"/> doesn't exist, return <c>false</c> (otherwise return <c>true</c>).
         /// </returns>
-        public bool RemoveVertex(int vertexIndex)
+        public override bool RemoveVertex(int vertexIndex)
         {
             throw new NotImplementedException();
         }
