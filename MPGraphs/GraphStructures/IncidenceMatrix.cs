@@ -32,6 +32,49 @@ namespace MPGraphs.GraphStructures
         #endregion Constructors
 
         /// <summary>
+        /// Adds new vertex to graph representation.
+        /// </summary>
+        public override void AddVertex()
+        {
+            int columnCount = this.ColumnCount.Item2;
+            List<Incidence> row = new List<Incidence>(columnCount);
+            for (int i = 0; i < columnCount; i++)
+            {
+                row.Add(Incidence.None);
+            }
+            this.AddRow(row);
+            int rowCount = this.RowCount;
+            List<Incidence> column = new List<Incidence>(rowCount);
+            for (int i = 0; i < rowCount; i++)
+            {
+                column.Add(Incidence.None);
+            }
+            this.AddColumn(column);
+        }
+
+        /// <summary>
+        /// Removes a specified vertex at index == <paramref name="vertexIndex"/> from graph representation if it exists.
+        /// </summary>
+        /// <param name="vertexIndex">Index of the vertex to remove from graph representation.</param>
+        /// <returns>
+        /// If the vertex at index == <paramref name="vertexIndex"/> doesn't exist, return <c>false</c> (otherwise return <c>true</c>).
+        /// </returns>
+        public override bool RemoveVertex(int vertexIndex)
+        {
+            int rowCount = this.RowCount;
+            if (vertexIndex < rowCount)
+            {
+                this.RemoveRow(vertexIndex);
+                this.RemoveColumn(vertexIndex);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Adds an edge to the graph representation, between two vertices at indexes: <paramref name="vertexIndexA"/> and <paramref name="vertexIndexB"/> if both those vertices exist.
         /// </summary>
         /// <param name="vertexIndexA">First vertex of the edge.</param>
@@ -41,15 +84,20 @@ namespace MPGraphs.GraphStructures
         /// </returns>
         public override bool AddEdge(int vertexIndexA, int vertexIndexB)
         {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Adds new vertex to graph representation.
-        /// </summary>
-        public override void AddVertex()
-        {
-            throw new NotImplementedException();
+            int rowCount = this.RowCount;
+            if (vertexIndexA < rowCount && vertexIndexB < rowCount)
+            {
+                this[vertexIndexA, vertexIndexB] = Incidence.Incident;
+                if (this.isDirected == false)
+                {
+                    this[vertexIndexB, vertexIndexA] = Incidence.Incident;
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -62,7 +110,15 @@ namespace MPGraphs.GraphStructures
         /// </returns>
         public override bool FindEdge(int vertexIndexA, int vertexIndexB)
         {
-            throw new NotImplementedException();
+            int rowCount = this.RowCount;
+            if (vertexIndexA < rowCount && vertexIndexB < rowCount)
+            {
+                return this[vertexIndexA, vertexIndexB] != Incidence.None;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -75,19 +131,19 @@ namespace MPGraphs.GraphStructures
         /// </returns>
         public override bool RemoveEdge(int vertexIndexA, int vertexIndexB)
         {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Removes a specified vertex at index == <paramref name="vertexIndex"/> from graph representation if it exists.
-        /// </summary>
-        /// <param name="vertexIndex">Index of the vertex to remove from graph representation.</param>
-        /// <returns>
-        /// If the vertex at index == <paramref name="vertexIndex"/> doesn't exist, return <c>false</c> (otherwise return <c>true</c>).
-        /// </returns>
-        public override bool RemoveVertex(int vertexIndex)
-        {
-            throw new NotImplementedException();
+            if (this.FindEdge(vertexIndexA, vertexIndexB) == true)
+            {
+                this[vertexIndexA, vertexIndexB] = Incidence.None;
+                if (this.isDirected == false && vertexIndexA != vertexIndexB)
+                {
+                    this[vertexIndexB, vertexIndexA] = Incidence.None;
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
