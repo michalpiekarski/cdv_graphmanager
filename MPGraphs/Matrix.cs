@@ -340,7 +340,7 @@ namespace MPGraphs
             if (columnCount.Item1 == true)
             {
                 int columnElementIndex = 0;
-                for (int i = 0; i < column.Count && i < columnCount.Item2; i++)
+                for (int i = 0; i < column.Count && i < this.RowCount; i++)
                 {
                     this[i].Add(column[columnElementIndex]);
                     columnElementIndex++;

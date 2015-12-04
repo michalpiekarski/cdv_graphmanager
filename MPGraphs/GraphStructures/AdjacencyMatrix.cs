@@ -9,8 +9,8 @@ namespace MPGraphs.GraphStructures
     public enum Adjacency
     {
         None = 0,
-        Single,
-        Double
+        Edge,
+        Loop
     }
     public class AdjacencyMatrix : GraphRepresentation<Adjacency>
     {
@@ -38,19 +38,28 @@ namespace MPGraphs.GraphStructures
         public override void AddVertex()
         {
             int columnCount = this.ColumnCount.Item2;
-            List<Adjacency> row = new List<Adjacency>(columnCount);
-            for (int i = 0; i < columnCount; i++)
+            List<Adjacency> row;
+            if (columnCount > 0)
             {
+                row = new List<Adjacency>(columnCount);
+                for (int i = 0; i < columnCount; i++)
+                {
+                    row.Add(Adjacency.None);
+                }
+                this.AddRow(row);
+                int rowCount = this.RowCount;
+                List<Adjacency> column = new List<Adjacency>(rowCount);
+                for (int i = 0; i < rowCount; i++)
+                {
+                    column.Add(Adjacency.None);
+                }
+                this.AddColumn(column);
+            } else
+            {
+                row = new List<Adjacency>(1);
                 row.Add(Adjacency.None);
+                this.AddRow(row);
             }
-            this.AddRow(row);
-            int rowCount = this.RowCount;
-            List<Adjacency> column = new List<Adjacency>(rowCount);
-            for (int i = 0; i < rowCount; i++)
-            {
-                column.Add(Adjacency.None);
-            }
-            this.AddColumn(column);
         }
 
         /// <summary>
@@ -88,14 +97,14 @@ namespace MPGraphs.GraphStructures
             {
                 if (vertexIndexA == vertexIndexB)
                 {
-                    this[vertexIndexA, vertexIndexB] = Adjacency.Double;
+                    this[vertexIndexA, vertexIndexB] = Adjacency.Loop;
                 }
                 else
                 {
-                    this[vertexIndexA, vertexIndexB] = Adjacency.Single;
+                    this[vertexIndexA, vertexIndexB] = Adjacency.Edge;
                     if (this.IsDirected == false)
                     {
-                        this[vertexIndexB, vertexIndexA] = Adjacency.Single;
+                        this[vertexIndexB, vertexIndexA] = Adjacency.Edge;
                     }
                 }
                 return true;

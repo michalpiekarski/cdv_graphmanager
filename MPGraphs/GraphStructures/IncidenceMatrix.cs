@@ -9,7 +9,9 @@ namespace MPGraphs.GraphStructures
     public enum Incidence
     {
         None = 0,
-        Incident
+        Start,
+        End,
+        Loop
     }
     public class IncidenceMatrix : GraphRepresentation<Incidence>
     {
@@ -37,19 +39,13 @@ namespace MPGraphs.GraphStructures
         public override void AddVertex()
         {
             int columnCount = this.ColumnCount.Item2;
-            List<Incidence> row = new List<Incidence>(columnCount);
+            columnCount = Math.Max(1, columnCount);
+            List <Incidence> vertex = new List<Incidence>(columnCount);
             for (int i = 0; i < columnCount; i++)
             {
-                row.Add(Incidence.None);
+                vertex.Add(Incidence.None);
             }
-            this.AddRow(row);
-            int rowCount = this.RowCount;
-            List<Incidence> column = new List<Incidence>(rowCount);
-            for (int i = 0; i < rowCount; i++)
-            {
-                column.Add(Incidence.None);
-            }
-            this.AddColumn(column);
+            this.AddRow(vertex);
         }
 
         /// <summary>
@@ -65,7 +61,6 @@ namespace MPGraphs.GraphStructures
             if (vertexIndex < rowCount)
             {
                 this.RemoveRow(vertexIndex);
-                this.RemoveColumn(vertexIndex);
                 return true;
             }
             else
@@ -87,10 +82,58 @@ namespace MPGraphs.GraphStructures
             int rowCount = this.RowCount;
             if (vertexIndexA < rowCount && vertexIndexB < rowCount)
             {
-                this[vertexIndexA, vertexIndexB] = Incidence.Incident;
-                if (this.isDirected == false)
+                List<Incidence> edge = new List<Incidence>(rowCount);
+                bool isDirected = this.IsDirected;
+                for (int i = 0; i < rowCount; i++)
                 {
-                    this[vertexIndexB, vertexIndexA] = Incidence.Incident;
+                    if (i == vertexIndexA)
+                    {
+                        if(vertexIndexA == vertexIndexB)
+                        {
+                            edge.Add(Incidence.Loop);
+                        } else
+                        {
+                            edge.Add(Incidence.Start);
+                        }
+                    }
+                    else if (i == vertexIndexB && vertexIndexA != vertexIndexB)
+                    {
+                        if (isDirected == true)
+                        {
+                            edge.Add(Incidence.End);
+                        }
+                        else
+                        {
+                            edge.Add(Incidence.Start);
+                        }
+                    }
+                    else
+                    {
+                        edge.Add(Incidence.None);
+                    }
+                }
+                if(this.ColumnCount.Item2 == 1)
+                {
+                    bool noEdges = true;
+                    foreach(Incidence incidence in this.GetColumn(0))
+                    {
+                        if(incidence != Incidence.None)
+                        {
+                            noEdges = false;
+                            break;
+                        }
+                    }
+                    if (noEdges == true)
+                    {
+                        this.ReplaceColumn(0, edge);
+                    }
+                    else
+                    {
+                        this.AddColumn(edge);
+                    }
+                } else
+                {
+                    this.AddColumn(edge);
                 }
                 return true;
             }
@@ -113,7 +156,36 @@ namespace MPGraphs.GraphStructures
             int rowCount = this.RowCount;
             if (vertexIndexA < rowCount && vertexIndexB < rowCount)
             {
-                return this[vertexIndexA, vertexIndexB] != Incidence.None;
+                int columnCount = this.ColumnCount.Item2;
+                bool isDirected = this.IsDirected;
+                for (int i = 0; i < columnCount; i++)
+                {
+                    List<Incidence> edge = this.GetColumn(i);
+                    if(vertexIndexA == vertexIndexB)
+                    {
+                        if(edge[vertexIndexA] == Incidence.Loop)
+                        {
+                            return true;
+                        }
+                    } else
+                    {
+                        if (isDirected == true)
+                        {
+                            if (edge[vertexIndexA] == Incidence.Start && edge[vertexIndexB] == Incidence.End)
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            if (edge[vertexIndexA] == Incidence.Start && edge[vertexIndexB] == Incidence.Start)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
             }
             else
             {
@@ -133,10 +205,37 @@ namespace MPGraphs.GraphStructures
         {
             if (this.FindEdge(vertexIndexA, vertexIndexB) == true)
             {
-                this[vertexIndexA, vertexIndexB] = Incidence.None;
-                if (this.isDirected == false && vertexIndexA != vertexIndexB)
+                int columnCount = this.ColumnCount.Item2;
+                bool isDirected = this.IsDirected;
+                for (int i = 0; i < columnCount; i++)
                 {
-                    this[vertexIndexB, vertexIndexA] = Incidence.None;
+                    List<Incidence> edge = this.GetColumn(i);
+                    if(vertexIndexA == vertexIndexB)
+                    {
+                        if(edge[vertexIndexA] == Incidence.Loop)
+                        {
+                            this.RemoveColumn(i);
+                            break;
+                        }
+                    } else
+                    {
+                        if (isDirected == true)
+                        {
+                            if (edge[vertexIndexA] == Incidence.Start && edge[vertexIndexB] == Incidence.End)
+                            {
+                                this.RemoveColumn(i);
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if (edge[vertexIndexA] == Incidence.Start && edge[vertexIndexB] == Incidence.Start)
+                            {
+                                this.RemoveColumn(i);
+                                break;
+                            }
+                        }
+                    }
                 }
                 return true;
             }
