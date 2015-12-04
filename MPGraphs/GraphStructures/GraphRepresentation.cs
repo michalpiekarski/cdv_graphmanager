@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MPGraphs.GraphStructures
 {
-    abstract class GraphRepresentation<T> : Matrix<T>
+    public abstract class GraphRepresentation<T> : Matrix<T>
     {
         public bool IsDirected;
         #region Constructors

@@ -12,7 +12,7 @@ namespace MPGraphs.GraphStructures
         Single,
         Double
     }
-    class AdjacencyMatrix : GraphRepresentation<Adjacency>
+    public class AdjacencyMatrix : GraphRepresentation<Adjacency>
     {
         #region Constructors
         public AdjacencyMatrix()

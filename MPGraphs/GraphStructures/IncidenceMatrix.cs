@@ -11,7 +11,7 @@ namespace MPGraphs.GraphStructures
         None = 0,
         Incident
     }
-    class IncidenceMatrix : GraphRepresentation<Incidence>
+    public class IncidenceMatrix : GraphRepresentation<Incidence>
     {
         #region Constructors
         public IncidenceMatrix()
