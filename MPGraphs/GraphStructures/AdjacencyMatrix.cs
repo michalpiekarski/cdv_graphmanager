@@ -93,7 +93,7 @@ namespace MPGraphs.GraphStructures
                 else
                 {
                     this[vertexIndexA, vertexIndexB] = Adjacency.Single;
-                    if (this.isDirected == false)
+                    if (this.IsDirected == false)
                     {
                         this[vertexIndexB, vertexIndexA] = Adjacency.Single;
                     }
@@ -139,7 +139,7 @@ namespace MPGraphs.GraphStructures
             if(this.FindEdge(vertexIndexA, vertexIndexB) == true)
             {
                 this[vertexIndexA, vertexIndexB] = Adjacency.None;
-                if (this.isDirected == false && vertexIndexA != vertexIndexB)
+                if (this.IsDirected == false && vertexIndexA != vertexIndexB)
                 {
                     this[vertexIndexB, vertexIndexA] = Adjacency.None;
                 }

@@ -8,23 +8,23 @@ namespace MPGraphs.GraphStructures
 {
     abstract class GraphRepresentation<T> : Matrix<T>
     {
-        public bool isDirected;
+        public bool IsDirected;
         #region Constructors
         public GraphRepresentation() : base()
         {
-            this.isDirected = false;
+            this.IsDirected = false;
         }
         public GraphRepresentation(bool isDirected) : base()
         {
-            this.isDirected = isDirected;
+            this.IsDirected = isDirected;
         }
         public GraphRepresentation(Matrix<T> matrix) : base(matrix)
         {
-            this.isDirected = false;
+            this.IsDirected = false;
         }
         public GraphRepresentation(bool isDirected, Matrix<T> matrix) : base(matrix)
         {
-            this.isDirected = isDirected;
+            this.IsDirected = isDirected;
         }
         #endregion Constructors
         /// <summary>
