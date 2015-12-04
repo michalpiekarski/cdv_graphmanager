@@ -300,6 +300,29 @@ namespace MPGraphs
             }
         }
         /// <summary>
+        /// Removes a column at specified index == <paramref name="columnIndex"/> if it exists.
+        /// </summary>
+        /// <param name="columnIndex">Index of a column to remove.</param>
+        /// <returns>
+        /// If a column at specified <paramref name="columnIndex"/> doesn't exist, returns <c>false</c> (otherwise returns <c>true</c>).
+        /// </returns>
+        public bool RemoveColumn(int columnIndex)
+        {
+            Tuple<bool, int> columnCount = this.ColumnCount;
+            if(columnCount.Item1 == true && columnIndex < columnCount.Item2)
+            {
+                foreach (List<T> row in this.rows)
+                {
+                    row.RemoveAt(columnIndex);
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        /// <summary>
         /// Adds passed <paramref name="column"/> at the end of the matrix.
         /// </summary>
         /// <param name="column">New column to be added to the matrix.</param>
