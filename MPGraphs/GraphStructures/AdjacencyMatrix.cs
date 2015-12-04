@@ -37,7 +37,20 @@ namespace MPGraphs.GraphStructures
         /// </summary>
         public override void AddVertex()
         {
-            throw new NotImplementedException();
+            int columnCount = this.ColumnCount.Item2;
+            List<Adjacency> row = new List<Adjacency>(columnCount);
+            for (int i = 0; i < columnCount; i++)
+            {
+                row.Add(Adjacency.None);
+            }
+            this.AddRow(row);
+            int rowCount = this.RowCount;
+            List<Adjacency> column = new List<Adjacency>(rowCount);
+            for (int i = 0; i < rowCount; i++)
+            {
+                column.Add(Adjacency.None);
+            }
+            this.AddColumn(column);
         }
 
         /// <summary>
@@ -49,7 +62,16 @@ namespace MPGraphs.GraphStructures
         /// </returns>
         public override bool RemoveVertex(int vertexIndex)
         {
-            throw new NotImplementedException();
+            int rowCount = this.RowCount;
+            if(vertexIndex < rowCount)
+            {
+                this.RemoveRow(vertexIndex);
+                this.RemoveColumn(vertexIndex);
+                return true;
+            } else
+            {
+                return false;
+            }
         }
         /// <summary>
         /// Adds an edge to the graph representation, between two vertices at indexes: <paramref name="vertexIndexA"/> and <paramref name="vertexIndexB"/> if both those vertices exist.
@@ -61,7 +83,27 @@ namespace MPGraphs.GraphStructures
         /// </returns>
         public override bool AddEdge(int vertexIndexA, int vertexIndexB)
         {
-            throw new NotImplementedException();
+            int rowCount = this.RowCount;
+            if (vertexIndexA < rowCount && vertexIndexB < rowCount)
+            {
+                if (vertexIndexA == vertexIndexB)
+                {
+                    this[vertexIndexA, vertexIndexB] = Adjacency.Double;
+                }
+                else
+                {
+                    this[vertexIndexA, vertexIndexB] = Adjacency.Single;
+                    if (this.isDirected == false)
+                    {
+                        this[vertexIndexB, vertexIndexA] = Adjacency.Single;
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -74,7 +116,14 @@ namespace MPGraphs.GraphStructures
         /// </returns>
         public override bool FindEdge(int vertexIndexA, int vertexIndexB)
         {
-            throw new NotImplementedException();
+            int rowCount = this.RowCount;
+            if(vertexIndexA < rowCount && vertexIndexB < rowCount)
+            {
+                return this[vertexIndexA, vertexIndexB] != Adjacency.None;
+            } else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -87,7 +136,18 @@ namespace MPGraphs.GraphStructures
         /// </returns>
         public override bool RemoveEdge(int vertexIndexA, int vertexIndexB)
         {
-            throw new NotImplementedException();
+            if(this.FindEdge(vertexIndexA, vertexIndexB) == true)
+            {
+                this[vertexIndexA, vertexIndexB] = Adjacency.None;
+                if (this.isDirected == false && vertexIndexA != vertexIndexB)
+                {
+                    this[vertexIndexB, vertexIndexA] = Adjacency.None;
+                }
+                return true;
+            } else
+            {
+                return false;
+            }
         }
     }
 }
