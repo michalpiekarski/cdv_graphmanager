@@ -158,5 +158,29 @@ namespace MPGraphs.GraphStructures
                 return false;
             }
         }
+
+        /// <summary>
+        /// Generates a complete graph with <paramref name="vertexCount"/> vertices.
+        /// </summary>
+        /// <param name="vertexCount">Number of vertices in generated complete graph.</param>
+        public static AdjacencyMatrix CompleteGraph(int vertexCount)
+        {
+            AdjacencyMatrix completeGraph = new AdjacencyMatrix();
+            for (int i = 0; i < vertexCount; i++)
+            {
+                completeGraph.AddVertex();
+            }
+            for (int i = 0; i < vertexCount; i++)
+            {
+                for (int j = 0; j < vertexCount; j++)
+                {
+                    if(i != j)
+                    {
+                        completeGraph.AddEdge(i, j);
+                    }
+                }
+            }
+            return completeGraph;
+        }
     }
 }

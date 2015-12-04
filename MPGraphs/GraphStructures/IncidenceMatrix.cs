@@ -244,5 +244,29 @@ namespace MPGraphs.GraphStructures
                 return false;
             }
         }
+
+        /// <summary>
+        /// Generates a complete graph with <paramref name="vertexCount"/> vertices.
+        /// </summary>
+        /// <param name="vertexCount">Number of vertices in generated complete graph.</param>
+        public static IncidenceMatrix CompleteGraph(int vertexCount)
+        {
+            IncidenceMatrix completeGraph = new IncidenceMatrix();
+            for (int i = 0; i < vertexCount; i++)
+            {
+                completeGraph.AddVertex();
+            }
+            for (int i = 0; i < vertexCount; i++)
+            {
+                for (int j = i+1; j < vertexCount; j++)
+                {
+                    if (i != j)
+                    {
+                        completeGraph.AddEdge(i, j);
+                    }
+                }
+            }
+            return completeGraph;
+        }
     }
 }
