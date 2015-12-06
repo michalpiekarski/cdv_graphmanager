@@ -64,19 +64,16 @@ namespace MPGraphs
         /// Check if matrix is not empty and not jagged.
         /// </summary>
         /// <returns>
-        /// If matrix is empty or jagged, return <c>false</c> (otherwise returns <c>true</c>.
+        /// If matrix is jagged, return <c>false</c> (otherwise returns <c>true</c>.
         /// </returns>
+        /// <remarks>Empty matrix is considered rectangular</remarks>
         public bool IsRectangular
         {
             get
             {
                 bool isRectangular = true;
                 int rowCount = this.RowCount;
-                if (rowCount == 0)
-                {
-                    isRectangular = false;
-                }
-                else
+                if (rowCount > 0)
                 {
                     int firstRowColumns = this[0].Count;
                     for (int i = 1; i < rowCount; i++)
@@ -103,7 +100,7 @@ namespace MPGraphs
             {
                 bool isSquare = false;
                 Tuple<bool, int> columnCount = this.ColumnCount;
-                if(columnCount.Item1 == true && columnCount.Item2 == this.RowCount)
+                if (columnCount.Item1 == true && (this.RowCount == 0 || columnCount.Item2 == this.RowCount))
                 {
                     isSquare = true;
                 }
@@ -112,6 +109,7 @@ namespace MPGraphs
         }
         /// <summary>
         /// If matrix is rectangular returns <c>Tuple&lt;true, columnCount&gt;</c>.
+        /// For empty matrix returns <c>Tuple&lt;true, -1&gt;</c>.
         /// Otherwise returns <c>Tuple&lt;false, -1&gt;</c>.
         /// </summary>
         /// <remarks>
@@ -124,7 +122,15 @@ namespace MPGraphs
                 bool isRectangular = this.IsRectangular;
                 if (isRectangular)
                 {
-                    return new Tuple<bool, int>(isRectangular, this[0].Count);
+                    int rowCount = this.RowCount;
+                    if (rowCount == 0)
+                    {
+                        return new Tuple<bool, int>(isRectangular, -1);
+                    }
+                    else
+                    {
+                        return new Tuple<bool, int>(isRectangular, this[0].Count);
+                    }
                 }
                 else
                 {
