@@ -346,10 +346,22 @@ namespace MPGraphs
             if (columnCount.Item1 == true)
             {
                 int columnElementIndex = 0;
-                for (int i = 0; i < column.Count && i < this.RowCount; i++)
+                if (columnCount.Item2 == -1)
                 {
-                    this[i].Add(column[columnElementIndex]);
-                    columnElementIndex++;
+                    for (int i = 0; i < column.Count; i++)
+                    {
+                        List<T> newRow = new List<T>(new T[] { column[columnElementIndex] });
+                        this.AddRow(newRow);
+                        columnElementIndex++;
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < column.Count && i < this.RowCount; i++)
+                    {
+                        this[i].Add(column[columnElementIndex]);
+                        columnElementIndex++;
+                    }
                 }
                 return true;
             }
