@@ -241,7 +241,7 @@ namespace MPGraphs
                 rowIndexB < rowCount)
             {
                 List<T> tmpRow = this[rowIndexA];
-                this[rowIndexB] = this[rowIndexA];
+                this[rowIndexA] = this[rowIndexB];
                 this[rowIndexB] = tmpRow;
                 return true;
             }
