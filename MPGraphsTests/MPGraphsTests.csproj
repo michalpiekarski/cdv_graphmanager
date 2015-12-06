@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="GraphStructures\AdjacencyMatrixTests.cs" />
     <Compile Include="GraphStructures\IncidenceMatrixTests.cs" />
+    <Compile Include="MatrixTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
