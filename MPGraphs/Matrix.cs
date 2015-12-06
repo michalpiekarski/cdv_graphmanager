@@ -315,7 +315,7 @@ namespace MPGraphs
         public bool RemoveColumn(int columnIndex)
         {
             Tuple<bool, int> columnCount = this.ColumnCount;
-            if(columnCount.Item1 == true && columnIndex < columnCount.Item2)
+            if (columnCount.Item1 == true && columnIndex < columnCount.Item2)
             {
                 foreach (List<T> row in this.rows)
                 {
@@ -408,7 +408,7 @@ namespace MPGraphs
         {
             Matrix<T> transposedMatrix = null;
             bool isRectangular = this.IsRectangular;
-            if(isRectangular == true)
+            if (isRectangular == true)
             {
                 Tuple<bool, int> columnCount = this.ColumnCount;
                 transposedMatrix = new Matrix<T>();
