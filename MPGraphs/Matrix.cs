@@ -426,9 +426,9 @@ namespace MPGraphs
         public static Matrix<int> IdentityMatrix(int size)
         {
             Matrix<int> identityMatrix = new Matrix<int>();
-            List<int> row = new List<int>(size);
             for (int i = 0; i < size; i++)
             {
+                List<int> row = new List<int>(size);
                 for (int j = 0; j < size; j++)
                 {
                     if (i == j)
@@ -441,7 +441,6 @@ namespace MPGraphs
                     }
                 }
                 identityMatrix.AddRow(row);
-                row.Clear();
             }
             return identityMatrix;
         }
