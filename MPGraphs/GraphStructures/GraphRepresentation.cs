@@ -10,19 +10,19 @@ namespace MPGraphs.GraphStructures
     {
         public bool IsDirected;
         #region Constructors
-        public GraphRepresentation() : base()
+        protected GraphRepresentation() : base()
         {
             this.IsDirected = false;
         }
-        public GraphRepresentation(bool isDirected) : base()
+        protected GraphRepresentation(bool isDirected) : base()
         {
             this.IsDirected = isDirected;
         }
-        public GraphRepresentation(Matrix<T> matrix) : base(matrix)
+        protected GraphRepresentation(Matrix<T> matrix) : base(matrix)
         {
             this.IsDirected = false;
         }
-        public GraphRepresentation(bool isDirected, Matrix<T> matrix) : base(matrix)
+        protected GraphRepresentation(bool isDirected, Matrix<T> matrix) : base(matrix)
         {
             this.IsDirected = isDirected;
         }
