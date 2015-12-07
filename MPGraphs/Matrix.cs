@@ -23,13 +23,13 @@ namespace MPGraphs
         /// </summary>
         /// <param name="rowIndex">Accessed row index.</param>
         /// <remarks>Makes <c>this[x][y]</c> also possible.</remarks>
-        protected List<T> this[int rowIndex]
+        public List<T> this[int rowIndex]
         {
             get
             {
                 return this.rows[rowIndex];
             }
-            set
+            protected set
             {
                 this.rows[rowIndex] = value;
             }
@@ -40,13 +40,13 @@ namespace MPGraphs
         /// <param name="rowIndex">Accessed elements row index.</param>
         /// <param name="columnIndex">Accesed elements column index.</param>
         /// <remarks>Can throw out of bound exception</remarks>
-        protected T this[int rowIndex, int columnIndex]
+        public T this[int rowIndex, int columnIndex]
         {
             get
             {
                 return this.rows[rowIndex][columnIndex];
             }
-            set
+            protected set
             {
                 this.rows[rowIndex][columnIndex] = value;
             }
