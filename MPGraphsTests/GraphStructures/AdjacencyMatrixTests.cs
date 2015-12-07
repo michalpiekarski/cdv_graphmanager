@@ -33,6 +33,7 @@ namespace MPGraphs.GraphStructures.Tests
             Assert.IsTrue(m.RowCount == 4 && m.ColumnCount.Item2 == m.RowCount);
             m.RemoveVertex(2);
             Assert.IsTrue(m.RowCount == 3 && m.ColumnCount.Item2 == m.RowCount);
+            Assert.IsFalse(m.RemoveVertex(10));
         }
 
         [TestMethod()]
@@ -63,6 +64,7 @@ namespace MPGraphs.GraphStructures.Tests
             m.AddEdge(0, 3);
             Assert.IsTrue(m.FindEdge(3, 0));
             Assert.IsFalse(m.FindEdge(2, 1));
+            Assert.IsFalse(m.FindEdge(1, 10));
         }
 
         [TestMethod()]

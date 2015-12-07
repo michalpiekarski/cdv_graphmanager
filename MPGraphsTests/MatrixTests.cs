@@ -38,13 +38,14 @@ namespace MPGraphs.Tests
             bool allOne = true;
             foreach (int item in returnedRow)
             {
-                if(item != 1)
+                if (item != 1)
                 {
                     allOne = false;
                     break;
                 }
             }
             Assert.IsTrue(allOne);
+            Assert.IsNull(m.GetRow(5));
         }
 
         [TestMethod()]
@@ -64,6 +65,7 @@ namespace MPGraphs.Tests
             List<int> newRow = new List<int>(new int[] { 9, 9, 9 });
             m.ReplaceRow(1, newRow);
             Assert.IsTrue(m.RowCount == 3 && m.GetRow(1)[0] == 9 && m.GetRow(1)[2] == 9);
+            Assert.IsFalse(m.ReplaceRow(10, newRow));
         }
 
         [TestMethod()]
@@ -122,6 +124,8 @@ namespace MPGraphs.Tests
             List<int> column = m.GetColumn(2);
             Assert.IsTrue(column[0] == 0 && column[1] == 1 && column[2] == 2);
             Assert.IsNull(m.GetColumn(5));
+            m = new Matrix<int>();
+            Assert.IsNull(m.GetColumn(0));
         }
 
         [TestMethod()]
@@ -139,9 +143,11 @@ namespace MPGraphs.Tests
             }
             List<int> column = m.GetColumn(2);
             Assert.IsTrue(column[0] == 0 && column[1] == 1 && column[2] == 2);
-            m.ReplaceColumn(2, new List<int>(new int[] { 9, 9, 9 }));
+            List<int> newColumn = new List<int>(new int[] { 9, 9, 9 });
+            m.ReplaceColumn(2, newColumn);
             column = m.GetColumn(2);
             Assert.IsTrue(column[0] == 9 && column[1] == 9 && column[2] == 9);
+            Assert.IsFalse(m.ReplaceColumn(10, newColumn));
         }
 
         [TestMethod()]
@@ -177,6 +183,10 @@ namespace MPGraphs.Tests
                 m.AddColumn(column);
             }
             Assert.IsTrue(m.RowCount == 2 && m.ColumnCount.Item2 == 3);
+            List<int> testList = new List<int>(new int[] { 9, 9, 9, 9 });
+            m.AddRow(testList);
+            Assert.IsFalse(m.IsRectangular);
+            Assert.IsFalse(m.AddColumn(testList));
         }
 
         [TestMethod()]
@@ -246,9 +256,9 @@ namespace MPGraphs.Tests
                 List<int> testedRow = m.GetRow(i);
                 for (int j = 0; j < columnCount; j++)
                 {
-                    if(i == j)
+                    if (i == j)
                     {
-                        if(testedRow[j] == 0)
+                        if (testedRow[j] == 0)
                         {
                             isIdentity = false;
                             break;
@@ -256,7 +266,7 @@ namespace MPGraphs.Tests
                     }
                     else
                     {
-                        if(testedRow[j] == 1)
+                        if (testedRow[j] == 1)
                         {
                             isIdentity = false;
                             break;
@@ -265,6 +275,79 @@ namespace MPGraphs.Tests
                 }
             }
             Assert.IsTrue(isIdentity);
+        }
+
+        [TestMethod()]
+        public void MatrixTest()
+        {
+            Matrix<int> m1 = new Matrix<int>();
+            for (int i = 0; i < 3; i++)
+            {
+                List<int> newRow = new List<int>();
+                for (int j = 0; j < 2; j++)
+                {
+                    newRow.Add(i);
+                }
+                m1.AddRow(newRow);
+            }
+            Matrix<int> m2 = new Matrix<int>(m1);
+            Assert.IsTrue(m2.RowCount == 3 && m2.ColumnCount.Item2 == 2);
+        }
+        [TestMethod()]
+        public void IsRectangularTest()
+        {
+            Matrix<int> m = new Matrix<int>();
+            Assert.IsTrue(m.IsRectangular);
+            for (int i = 0; i < 3; i++)
+            {
+                List<int> newRow = new List<int>();
+                for (int j = 0; j < 2; j++)
+                {
+                    newRow.Add(i);
+                }
+                m.AddRow(newRow);
+            }
+            Assert.IsTrue(m.IsRectangular);
+            m.AddRow(new List<int>(new int[] { 9, 9, 9, 9 }));
+            Assert.IsFalse(m.IsRectangular);
+        }
+        [TestMethod()]
+        public void IsSquaredTest()
+        {
+            Matrix<int> m = new Matrix<int>();
+            Assert.IsTrue(m.IsSquare);
+            for (int i = 0; i < 3; i++)
+            {
+                List<int> newRow = new List<int>();
+                for (int j = 0; j < 2; j++)
+                {
+                    newRow.Add(i);
+                }
+                m.AddRow(newRow);
+            }
+            Assert.IsTrue(m.IsRectangular);
+            Assert.IsFalse(m.IsSquare);
+            m.AddColumn(new List<int>(new int[] { 9, 9, 9}));
+            Assert.IsTrue(m.IsSquare);
+        }
+        [TestMethod]
+        public void SizeTest()
+        {
+            Matrix<int> m = new Matrix<int>();
+            for (int i = 0; i < 3; i++)
+            {
+                List<int> newRow = new List<int>();
+                for (int j = 0; j < 2; j++)
+                {
+                    newRow.Add(i);
+                }
+                m.AddRow(newRow);
+            }
+            Tuple<bool, int, int> size = m.Size;
+            Assert.IsTrue(size.Item1 == true && size.Item2 == 3 && size.Item3 == 2);
+            m.AddRow(new List<int>(new int[] { 9, 9, 9, 9 }));
+            size = m.Size;
+            Assert.IsTrue(size.Item1 == false && size.Item2 == 4 && size.Item3 == -1);
         }
     }
 }

@@ -33,6 +33,7 @@ namespace MPGraphs.GraphStructures.Tests
             Assert.IsTrue(m.RowCount == 4 && m.ColumnCount.Item2 == 1);
             m.RemoveVertex(2);
             Assert.IsTrue(m.RowCount == 3 && m.ColumnCount.Item2 == 1);
+            Assert.IsFalse(m.RemoveVertex(10));
         }
 
         [TestMethod()]
@@ -85,6 +86,7 @@ namespace MPGraphs.GraphStructures.Tests
             m.AddEdge(0, 3);
             Assert.IsTrue(m.FindEdge(3, 0));
             Assert.IsFalse(m.FindEdge(2, 1));
+            Assert.IsFalse(m.FindEdge(1, 10));
         }
 
         [TestMethod()]
@@ -96,10 +98,14 @@ namespace MPGraphs.GraphStructures.Tests
                 m.AddVertex();
             }
             m.AddEdge(2, 2);
-            Assert.IsTrue(m.GetRow(2)[0] == Incidence.Loop && m.ColumnCount.Item2 == 1);
+            Assert.IsTrue(m.FindEdge(2, 2));
             m.RemoveEdge(2, 2);
-            Assert.IsTrue(m.ColumnCount.Item2 == 0);
+            Assert.IsFalse(m.FindEdge(2,2));
             Assert.IsFalse(m.RemoveEdge(2, 3));
+            m.AddEdge(0, 3);
+            Assert.IsTrue(m.FindEdge(0, 3));
+            m.RemoveEdge(0, 3);
+            Assert.IsFalse(m.FindEdge(0, 3));
         }
 
         [TestMethod()]
