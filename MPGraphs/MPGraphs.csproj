@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GraphSearch\BFS.cs" />
     <Compile Include="GraphStructures\AdjacencyMatrix.cs" />
     <Compile Include="GraphStructures\GraphRepresentation.cs" />
     <Compile Include="GraphStructures\IGraphRepresentation.cs" />
