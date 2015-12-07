@@ -83,6 +83,16 @@ namespace MPGraphs.GraphStructures
             }
         }
         /// <summary>
+        /// Returns the number of vertices in graph.
+        /// </summary>
+        public override int VertexCount
+        {
+            get
+            {
+                return this.RowCount;
+            }
+        }
+        /// <summary>
         /// Adds an edge to the graph representation, between two vertices at indexes: <paramref name="vertexIndexA"/> and <paramref name="vertexIndexB"/> if both those vertices exist.
         /// </summary>
         /// <param name="vertexIndexA">First vertex of the edge.</param>
@@ -158,29 +168,45 @@ namespace MPGraphs.GraphStructures
                 return false;
             }
         }
-
         /// <summary>
-        /// Generates a complete graph with <paramref name="vertexCount"/> vertices.
+        /// Returns the number of edges in graph.
         /// </summary>
-        /// <param name="vertexCount">Number of vertices in generated complete graph.</param>
-        public static AdjacencyMatrix CompleteGraph(int vertexCount)
+        public override int EdgeCount
         {
-            AdjacencyMatrix completeGraph = new AdjacencyMatrix();
-            for (int i = 0; i < vertexCount; i++)
+            get
             {
-                completeGraph.AddVertex();
-            }
-            for (int i = 0; i < vertexCount; i++)
-            {
-                for (int j = 0; j < vertexCount; j++)
+                int edgeCount = 0;
+                int rowCount = this.RowCount;
+                int columnCount = this.ColumnCount.Item2;
+                if (this.IsDirected)
                 {
-                    if(i != j)
+                    for (int i = 0; i < rowCount; i++)
                     {
-                        completeGraph.AddEdge(i, j);
+                        List<Adjacency> row = this.GetRow(i);
+                        for (int j = 0; j < columnCount; j++)
+                        {
+                            if(row[j] != Adjacency.None)
+                            {
+                                edgeCount++;
+                            }
+                        }
+                    }
+                } else
+                {
+                    for (int i = 0; i < rowCount; i++)
+                    {
+                        List<Adjacency> row = this.GetRow(i);
+                        for (int j = i; j < columnCount; j++)
+                        {
+                            if (row[j] != Adjacency.None)
+                            {
+                                edgeCount++;
+                            }
+                        }
                     }
                 }
+                return edgeCount;
             }
-            return completeGraph;
         }
     }
 }

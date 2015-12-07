@@ -85,7 +85,7 @@ namespace MPGraphs.GraphStructures.Tests
         [TestMethod()]
         public void CompleteGraphTest()
         {
-            AdjacencyMatrix m = AdjacencyMatrix.CompleteGraph(5);
+            AdjacencyMatrix m = AdjacencyMatrix.CompleteGraph<AdjacencyMatrix>(5);
             int rowCount = m.RowCount;
             Trace.WriteLine("Complete graph:");
             Trace.Indent();
@@ -114,7 +114,7 @@ namespace MPGraphs.GraphStructures.Tests
         [TestMethod()]
         public void FindAdjacentEdgesTest()
         {
-            AdjacencyMatrix m = AdjacencyMatrix.CompleteGraph(6);
+            AdjacencyMatrix m = AdjacencyMatrix.CompleteGraph<AdjacencyMatrix>(6);
             List<int> adjacentEdges = m.FindAdjacentEdges(0);
             List<int> expectedResult = new List<int>(new int[] { 1, 2, 3, 4, 5 });
             CollectionAssert.AreEqual(expectedResult, adjacentEdges);

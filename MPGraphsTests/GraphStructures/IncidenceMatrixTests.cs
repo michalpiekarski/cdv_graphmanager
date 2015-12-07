@@ -111,7 +111,7 @@ namespace MPGraphs.GraphStructures.Tests
         [TestMethod()]
         public void CompleteGraphTest()
         {
-            IncidenceMatrix m = IncidenceMatrix.CompleteGraph(5);
+            IncidenceMatrix m = IncidenceMatrix.CompleteGraph<IncidenceMatrix>(5);
             int columnCount = m.ColumnCount.Item2;
             int rowCount = m.RowCount;
             Trace.WriteLine("Complete graph:");
@@ -135,7 +135,7 @@ namespace MPGraphs.GraphStructures.Tests
         [TestMethod()]
         public void FindAdjacentEdgesTest()
         {
-            IncidenceMatrix m = IncidenceMatrix.CompleteGraph(6);
+            IncidenceMatrix m = IncidenceMatrix.CompleteGraph<IncidenceMatrix>(6);
             List<int> adjacentEdges = m.FindAdjacentEdges(0);
             List<int> expectedResult = new List<int>(new int[] { 1, 2, 3, 4, 5 });
             CollectionAssert.AreEqual(expectedResult, adjacentEdges);

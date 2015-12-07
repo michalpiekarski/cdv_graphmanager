@@ -6,9 +6,23 @@ using System.Threading.Tasks;
 
 namespace MPGraphs.GraphStructures
 {
-    public abstract class GraphRepresentation<T> : Matrix<T>
+    public abstract class GraphRepresentation<T> : Matrix<T>, IGraphRepresentation
     {
         public bool IsDirected;
+        /// <summary>
+        /// Returns the number of vertices in calling graph representation.
+        /// </summary>
+        public abstract int VertexCount
+        {
+            get;
+        }
+        /// <summary>
+        /// Returns the number of edges in calling graph representation.
+        /// </summary>
+        public abstract int EdgeCount
+        {
+            get;
+        }
         #region Constructors
         protected GraphRepresentation() : base()
         {
@@ -66,6 +80,29 @@ namespace MPGraphs.GraphStructures
         /// If the edge between specified vertices doesn't exist, returns <c>false</c> (otherwise returns <c>true</c>).
         /// </returns>
         public abstract bool FindEdge(int vertexIndexA, int vertexIndexB);
+        /// <summary>
+        /// Generates a complete graph with <paramref name="vertexCount"/> vertices.
+        /// </summary>
+        /// <param name="vertexCount">Number of vertices in generated complete graph.</param>
+        public static R CompleteGraph<R>(int vertexCount) where R : class, IGraphRepresentation, new()
+        {
+            R completeGraph = new R();
+            for (int i = 0; i < vertexCount; i++)
+            {
+                completeGraph.AddVertex();
+            }
+            for (int i = 0; i < vertexCount; i++)
+            {
+                for (int j = 0; j < vertexCount; j++)
+                {
+                    if (i != j)
+                    {
+                        completeGraph.AddEdge(i, j);
+                    }
+                }
+            }
+            return completeGraph;
+        }
         /// <summary>
         /// Finds all adjacent edges to the edge with index == <paramref name="vertexIndex"/>.
         /// </summary>

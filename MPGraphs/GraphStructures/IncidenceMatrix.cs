@@ -68,6 +68,16 @@ namespace MPGraphs.GraphStructures
                 return false;
             }
         }
+        /// <summary>
+        /// Returns the number of vertices in graph.
+        /// </summary>
+        public override int VertexCount
+        {
+            get
+            {
+                return this.RowCount;
+            }
+        }
 
         /// <summary>
         /// Adds an edge to the graph representation, between two vertices at indexes: <paramref name="vertexIndexA"/> and <paramref name="vertexIndexB"/> if both those vertices exist.
@@ -244,29 +254,15 @@ namespace MPGraphs.GraphStructures
                 return false;
             }
         }
-
         /// <summary>
-        /// Generates a complete graph with <paramref name="vertexCount"/> vertices.
+        /// Returns the number of edges in graph.
         /// </summary>
-        /// <param name="vertexCount">Number of vertices in generated complete graph.</param>
-        public static IncidenceMatrix CompleteGraph(int vertexCount)
+        public override int EdgeCount
         {
-            IncidenceMatrix completeGraph = new IncidenceMatrix();
-            for (int i = 0; i < vertexCount; i++)
+            get
             {
-                completeGraph.AddVertex();
+                return this.ColumnCount.Item2;
             }
-            for (int i = 0; i < vertexCount; i++)
-            {
-                for (int j = i+1; j < vertexCount; j++)
-                {
-                    if (i != j)
-                    {
-                        completeGraph.AddEdge(i, j);
-                    }
-                }
-            }
-            return completeGraph;
         }
     }
 }
