@@ -132,5 +132,13 @@ namespace MPGraphs.GraphStructures.Tests
             }
             Trace.Unindent();
         }
+        [TestMethod()]
+        public void FindAdjacentEdgesTest()
+        {
+            IncidenceMatrix m = IncidenceMatrix.CompleteGraph(6);
+            List<int> adjacentEdges = m.FindAdjacentEdges(0);
+            List<int> expectedResult = new List<int>(new int[] { 1, 2, 3, 4, 5 });
+            CollectionAssert.AreEqual(expectedResult, adjacentEdges);
+        }
     }
 }

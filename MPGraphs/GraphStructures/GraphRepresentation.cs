@@ -66,5 +66,33 @@ namespace MPGraphs.GraphStructures
         /// If the edge between specified vertices doesn't exist, returns <c>false</c> (otherwise returns <c>true</c>).
         /// </returns>
         public abstract bool FindEdge(int vertexIndexA, int vertexIndexB);
+        /// <summary>
+        /// Finds all adjacent edges to the edge with index == <paramref name="vertexIndex"/>.
+        /// </summary>
+        /// <param name="vertexIndex">Index of the vertex that the adjacent edges are to be found.</param>
+        /// <returns>
+        /// <c>List&lt;int&gt;</c> containing data needed to identify adjacent edges in given graph representation.
+        /// If no adjacent edges are found, returns <c>null</c>.
+        /// </returns>
+        public List<int> FindAdjacentEdges(int vertexIndex)
+        {
+            List<int> adjacentEdges = new List<int>();
+            int columnCount = this.ColumnCount.Item2;
+            for (int i = 0; i < columnCount; i++)
+            {
+                if (this.FindEdge(vertexIndex, i) == true)
+                {
+                    adjacentEdges.Add(i);
+                }
+            }
+            if (adjacentEdges.Count > 0)
+            {
+                return adjacentEdges;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
