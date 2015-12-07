@@ -7,7 +7,7 @@ using MPGraphs.GraphStructures;
 
 namespace MPGraphs.GraphSearch
 {
-    public class BFS<T> : IDisposable where T : class, IGraphRepresentation, new()
+    public class BFS<T> : IGraphSearch<T>, IDisposable where T : class, IGraphRepresentation, new()
     {
         private List<int> Numer;
         private int Ponumerowano;
@@ -26,7 +26,7 @@ namespace MPGraphs.GraphSearch
         {
         }
 
-        public Tuple<List<int>, T, T> Search(T G, int x)
+        public SearchResult<T> Search(T Graph, int Root)
         {
             for (int i = 0; i < G.VertexCount; i++)
             {
@@ -54,7 +54,7 @@ namespace MPGraphs.GraphSearch
                     else { Pozostałe.AddEdge(v, w); }
                 }
             }
-            return new Tuple<List<int>, T, T>(Numer, Drzewo, Pozostałe);
+            return new SearchResult<T>(Numer, Drzewo, Pozostałe);
         }
         public void Clear()
         {
