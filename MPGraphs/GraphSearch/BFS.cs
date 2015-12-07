@@ -60,7 +60,7 @@ namespace MPGraphs.GraphSearch
                         Graph.AddEdge(v, w);
                         SearchQueue.Enqueue(w);
                     }
-                    else
+                    else if (Numbering[v] < Numbering[w])
                     {
                         Remaining.AddEdge(v, w);
                     }

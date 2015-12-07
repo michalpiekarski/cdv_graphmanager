@@ -61,7 +61,7 @@ namespace MPGraphs.GraphSearch
                     Graph.AddEdge(v, w);
                     Search(graph, w);
                 }
-                else if (Numbering[w] < Numbering[v])
+                else if (Numbering[v] < Numbering[w])
                 {
                     Remaining.AddEdge(v, w);
                 }
