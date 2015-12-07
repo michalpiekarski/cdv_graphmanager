@@ -9,6 +9,25 @@ namespace MPGraphs.GraphStructures
     public abstract class GraphRepresentation<T> : Matrix<T>, IGraphRepresentation
     {
         public bool IsDirected;
+        #region Constructors
+        protected GraphRepresentation() : base()
+        {
+            IsDirected = false;
+        }
+        protected GraphRepresentation(bool isDirected) : base()
+        {
+            IsDirected = isDirected;
+        }
+        protected GraphRepresentation(Matrix<T> matrix) : base(matrix)
+        {
+            IsDirected = false;
+        }
+        protected GraphRepresentation(bool isDirected, Matrix<T> matrix) : base(matrix)
+        {
+            IsDirected = isDirected;
+        }
+        #endregion Constructors
+        #region Properties
         /// <summary>
         /// Returns the number of vertices in calling graph representation.
         /// </summary>
@@ -23,24 +42,8 @@ namespace MPGraphs.GraphStructures
         {
             get;
         }
-        #region Constructors
-        protected GraphRepresentation() : base()
-        {
-            this.IsDirected = false;
-        }
-        protected GraphRepresentation(bool isDirected) : base()
-        {
-            this.IsDirected = isDirected;
-        }
-        protected GraphRepresentation(Matrix<T> matrix) : base(matrix)
-        {
-            this.IsDirected = false;
-        }
-        protected GraphRepresentation(bool isDirected, Matrix<T> matrix) : base(matrix)
-        {
-            this.IsDirected = isDirected;
-        }
-        #endregion Constructors
+        #endregion Properties
+        #region Vertex Manipulation
         /// <summary>
         /// Adds new vertex to graph representation.
         /// </summary>
@@ -53,6 +56,8 @@ namespace MPGraphs.GraphStructures
         /// If the vertex at index == <paramref name="vertexIndex"/> doesn't exist, return <c>false</c> (otherwise return <c>true</c>).
         /// </returns>
         public abstract bool RemoveVertex(int vertexIndex);
+        #endregion Vertex Manipulation
+        #region Edge Manipulation
         /// <summary>
         /// Adds an edge to the graph representation, between two vertices at indexes: <paramref name="vertexIndexA"/> and <paramref name="vertexIndexB"/> if both those vertices exist.
         /// </summary>
@@ -80,6 +85,7 @@ namespace MPGraphs.GraphStructures
         /// If the edge between specified vertices doesn't exist, returns <c>false</c> (otherwise returns <c>true</c>).
         /// </returns>
         public abstract bool FindEdge(int vertexIndexA, int vertexIndexB);
+        #endregion Edge Manipulation
         /// <summary>
         /// Generates a complete graph with <paramref name="vertexCount"/> vertices.
         /// </summary>
@@ -111,25 +117,24 @@ namespace MPGraphs.GraphStructures
         /// <c>List&lt;int&gt;</c> containing data needed to identify adjacent edges in given graph representation.
         /// If no adjacent edges are found, returns <c>null</c>.
         /// </returns>
-        public List<int> FindAdjacentEdges(int vertexIndex)
+        public List<int> FindAdjacentVertices(int vertexIndex)
         {
-            List<int> adjacentEdges = new List<int>();
-            int columnCount = this.ColumnCount.Item2;
+            List<int> adjacentEdges = null;
+            int columnCount = ColumnCount.Item2;
+            bool firstEdge = true;
             for (int i = 0; i < columnCount; i++)
             {
-                if (this.FindEdge(vertexIndex, i) == true)
+                if (FindEdge(vertexIndex, i) == true)
                 {
+                    if (firstEdge == true)
+                    {
+                        adjacentEdges = new List<int>();
+                        firstEdge = false;
+                    }
                     adjacentEdges.Add(i);
                 }
             }
-            if (adjacentEdges.Count > 0)
-            {
-                return adjacentEdges;
-            }
-            else
-            {
-                return null;
-            }
+            return adjacentEdges;
         }
     }
 }

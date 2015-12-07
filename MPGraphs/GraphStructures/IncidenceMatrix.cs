@@ -32,20 +32,42 @@ namespace MPGraphs.GraphStructures
         {
         }
         #endregion Constructors
-
+        #region Properties
+        /// <summary>
+        /// Returns the number of vertices in graph.
+        /// </summary>
+        public override int VertexCount
+        {
+            get
+            {
+                return RowCount;
+            }
+        }
+        /// <summary>
+        /// Returns the number of edges in graph.
+        /// </summary>
+        public override int EdgeCount
+        {
+            get
+            {
+                return ColumnCount.Item2;
+            }
+        }
+        #endregion Properties
+        #region Vertex Manipulation
         /// <summary>
         /// Adds new vertex to graph representation.
         /// </summary>
         public override void AddVertex()
         {
-            int columnCount = this.ColumnCount.Item2;
+            int columnCount = ColumnCount.Item2;
             columnCount = Math.Max(1, columnCount);
-            List <Incidence> vertex = new List<Incidence>(columnCount);
+            List<Incidence> vertex = new List<Incidence>(columnCount);
             for (int i = 0; i < columnCount; i++)
             {
                 vertex.Add(Incidence.None);
             }
-            this.AddRow(vertex);
+            AddRow(vertex);
         }
 
         /// <summary>
@@ -57,28 +79,17 @@ namespace MPGraphs.GraphStructures
         /// </returns>
         public override bool RemoveVertex(int vertexIndex)
         {
-            int rowCount = this.RowCount;
+            int rowCount = RowCount;
+            bool vertexRemoved = false;
             if (vertexIndex < rowCount)
             {
-                this.RemoveRow(vertexIndex);
-                return true;
+                RemoveRow(vertexIndex);
+                vertexRemoved = true;
             }
-            else
-            {
-                return false;
-            }
+            return vertexRemoved;
         }
-        /// <summary>
-        /// Returns the number of vertices in graph.
-        /// </summary>
-        public override int VertexCount
-        {
-            get
-            {
-                return this.RowCount;
-            }
-        }
-
+        #endregion Vertex Manipulation
+        #region Edge Manipulation
         /// <summary>
         /// Adds an edge to the graph representation, between two vertices at indexes: <paramref name="vertexIndexA"/> and <paramref name="vertexIndexB"/> if both those vertices exist.
         /// </summary>
@@ -89,19 +100,21 @@ namespace MPGraphs.GraphStructures
         /// </returns>
         public override bool AddEdge(int vertexIndexA, int vertexIndexB)
         {
-            int rowCount = this.RowCount;
+            int rowCount = RowCount;
+            bool edgeAdded = false;
             if (vertexIndexA < rowCount && vertexIndexB < rowCount)
             {
                 List<Incidence> edge = new List<Incidence>(rowCount);
-                bool isDirected = this.IsDirected;
+                bool isDirected = IsDirected;
                 for (int i = 0; i < rowCount; i++)
                 {
                     if (i == vertexIndexA)
                     {
-                        if(vertexIndexA == vertexIndexB)
+                        if (vertexIndexA == vertexIndexB)
                         {
                             edge.Add(Incidence.Loop);
-                        } else
+                        }
+                        else
                         {
                             edge.Add(Incidence.Start);
                         }
@@ -122,12 +135,12 @@ namespace MPGraphs.GraphStructures
                         edge.Add(Incidence.None);
                     }
                 }
-                if(this.ColumnCount.Item2 == 1)
+                if (ColumnCount.Item2 == 1)
                 {
                     bool noEdges = true;
-                    foreach(Incidence incidence in this.GetColumn(0))
+                    foreach (Incidence incidence in GetColumn(0))
                     {
-                        if(incidence != Incidence.None)
+                        if (incidence != Incidence.None)
                         {
                             noEdges = false;
                             break;
@@ -135,72 +148,20 @@ namespace MPGraphs.GraphStructures
                     }
                     if (noEdges == true)
                     {
-                        this.ReplaceColumn(0, edge);
+                        ReplaceColumn(0, edge);
                     }
                     else
                     {
-                        this.AddColumn(edge);
-                    }
-                } else
-                {
-                    this.AddColumn(edge);
-                }
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Checks if the edge between two specified vertices at indexes: <paramref name="vertexIndexA"/> and <paramref name="vertexIndexB"/> exists.
-        /// </summary>
-        /// <param name="vertexIndexA">First vertex of the edge.</param>
-        /// <param name="vertexIndexB">Second vertex of the edge to find.</param>
-        /// <returns>
-        /// If the edge between specified vertices doesn't exist, returns <c>false</c> (otherwise returns <c>true</c>).
-        /// </returns>
-        public override bool FindEdge(int vertexIndexA, int vertexIndexB)
-        {
-            int rowCount = this.RowCount;
-            if (vertexIndexA < rowCount && vertexIndexB < rowCount)
-            {
-                int columnCount = this.ColumnCount.Item2;
-                bool isDirected = this.IsDirected;
-                for (int i = 0; i < columnCount; i++)
-                {
-                    List<Incidence> edge = this.GetColumn(i);
-                    if(vertexIndexA == vertexIndexB)
-                    {
-                        if(edge[vertexIndexA] == Incidence.Loop)
-                        {
-                            return true;
-                        }
-                    } else
-                    {
-                        if (isDirected == true)
-                        {
-                            if (edge[vertexIndexA] == Incidence.Start && edge[vertexIndexB] == Incidence.End)
-                            {
-                                return true;
-                            }
-                        }
-                        else
-                        {
-                            if (edge[vertexIndexA] == Incidence.Start && edge[vertexIndexB] == Incidence.Start)
-                            {
-                                return true;
-                            }
-                        }
+                        AddColumn(edge);
                     }
                 }
-                return false;
+                else
+                {
+                    AddColumn(edge);
+                }
+                edgeAdded = true;
             }
-            else
-            {
-                return false;
-            }
+            return edgeAdded;
         }
 
         /// <summary>
@@ -213,27 +174,29 @@ namespace MPGraphs.GraphStructures
         /// </returns>
         public override bool RemoveEdge(int vertexIndexA, int vertexIndexB)
         {
-            if (this.FindEdge(vertexIndexA, vertexIndexB) == true)
+            bool edgeRemoved = false;
+            if (FindEdge(vertexIndexA, vertexIndexB) == true)
             {
-                int columnCount = this.ColumnCount.Item2;
-                bool isDirected = this.IsDirected;
+                int columnCount = ColumnCount.Item2;
+                bool isDirected = IsDirected;
                 for (int i = 0; i < columnCount; i++)
                 {
-                    List<Incidence> edge = this.GetColumn(i);
-                    if(vertexIndexA == vertexIndexB)
+                    List<Incidence> edge = GetColumn(i);
+                    if (vertexIndexA == vertexIndexB)
                     {
-                        if(edge[vertexIndexA] == Incidence.Loop)
+                        if (edge[vertexIndexA] == Incidence.Loop)
                         {
-                            this.RemoveColumn(i);
+                            RemoveColumn(i);
                             break;
                         }
-                    } else
+                    }
+                    else
                     {
                         if (isDirected == true)
                         {
                             if (edge[vertexIndexA] == Incidence.Start && edge[vertexIndexB] == Incidence.End)
                             {
-                                this.RemoveColumn(i);
+                                RemoveColumn(i);
                                 break;
                             }
                         }
@@ -241,28 +204,67 @@ namespace MPGraphs.GraphStructures
                         {
                             if (edge[vertexIndexA] == Incidence.Start && edge[vertexIndexB] == Incidence.Start)
                             {
-                                this.RemoveColumn(i);
+                                RemoveColumn(i);
                                 break;
                             }
                         }
                     }
                 }
-                return true;
+                edgeRemoved = true;
             }
-            else
-            {
-                return false;
-            }
+            return edgeRemoved;
         }
+
         /// <summary>
-        /// Returns the number of edges in graph.
+        /// Checks if the edge between two specified vertices at indexes: <paramref name="vertexIndexA"/> and <paramref name="vertexIndexB"/> exists.
         /// </summary>
-        public override int EdgeCount
+        /// <param name="vertexIndexA">First vertex of the edge.</param>
+        /// <param name="vertexIndexB">Second vertex of the edge to find.</param>
+        /// <returns>
+        /// If the edge between specified vertices doesn't exist, returns <c>false</c> (otherwise returns <c>true</c>).
+        /// </returns>
+        public override bool FindEdge(int vertexIndexA, int vertexIndexB)
         {
-            get
+            int rowCount = RowCount;
+            bool edgeFound = false;
+            if (vertexIndexA < rowCount && vertexIndexB < rowCount)
             {
-                return this.ColumnCount.Item2;
+                int columnCount = ColumnCount.Item2;
+                bool isDirected = IsDirected;
+                for (int i = 0; i < columnCount; i++)
+                {
+                    List<Incidence> edge = GetColumn(i);
+                    if (vertexIndexA == vertexIndexB)
+                    {
+                        if (edge[vertexIndexA] == Incidence.Loop)
+                        {
+                            edgeFound = true;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (isDirected == true)
+                        {
+                            if (edge[vertexIndexA] == Incidence.Start && edge[vertexIndexB] == Incidence.End)
+                            {
+                                edgeFound = true;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if (edge[vertexIndexA] == Incidence.Start && edge[vertexIndexB] == Incidence.Start)
+                            {
+                                edgeFound = true;
+                                break;
+                            }
+                        }
+                    }
+                }
             }
+            return edgeFound;
         }
+        #endregion Edge Manipulation
     }
 }

@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace MPGraphs.GraphStructures.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class IncidenceMatrixTests
     {
-        [TestMethod()]
+        [TestMethod, TestCategory("GraphRepresentation"), TestCategory("IncidenceMatrix"), TestCategory("Vertex")]
         public void AddVertexTest()
         {
             IncidenceMatrix m = new IncidenceMatrix();
@@ -22,7 +22,7 @@ namespace MPGraphs.GraphStructures.Tests
             Assert.IsTrue(m.RowCount == 2 && m.ColumnCount.Item2 == 1);
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("GraphRepresentation"), TestCategory("IncidenceMatrix"), TestCategory("Vertex")]
         public void RemoveVertexTest()
         {
             IncidenceMatrix m = new IncidenceMatrix();
@@ -36,7 +36,7 @@ namespace MPGraphs.GraphStructures.Tests
             Assert.IsFalse(m.RemoveVertex(10));
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("GraphRepresentation"), TestCategory("IncidenceMatrix"), TestCategory("Edge")]
         public void AddEdgeTest()
         {
             IncidenceMatrix m = new IncidenceMatrix();
@@ -49,7 +49,7 @@ namespace MPGraphs.GraphStructures.Tests
             bool foundLoop = false;
             foreach (Incidence incidence in vertex)
             {
-                if(incidence == Incidence.Loop)
+                if (incidence == Incidence.Loop)
                 {
                     foundLoop = true;
                     break;
@@ -73,7 +73,7 @@ namespace MPGraphs.GraphStructures.Tests
             Assert.IsFalse(m.AddEdge(0, 6));
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("GraphRepresentation"), TestCategory("IncidenceMatrix"), TestCategory("Edge")]
         public void FindEdgeTest()
         {
             IncidenceMatrix m = new IncidenceMatrix();
@@ -89,7 +89,7 @@ namespace MPGraphs.GraphStructures.Tests
             Assert.IsFalse(m.FindEdge(1, 10));
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("GraphRepresentation"), TestCategory("IncidenceMatrix"), TestCategory("Edge")]
         public void RemoveEdgeTest()
         {
             IncidenceMatrix m = new IncidenceMatrix();
@@ -100,7 +100,7 @@ namespace MPGraphs.GraphStructures.Tests
             m.AddEdge(2, 2);
             Assert.IsTrue(m.FindEdge(2, 2));
             m.RemoveEdge(2, 2);
-            Assert.IsFalse(m.FindEdge(2,2));
+            Assert.IsFalse(m.FindEdge(2, 2));
             Assert.IsFalse(m.RemoveEdge(2, 3));
             m.AddEdge(0, 3);
             Assert.IsTrue(m.FindEdge(0, 3));
@@ -108,7 +108,7 @@ namespace MPGraphs.GraphStructures.Tests
             Assert.IsFalse(m.FindEdge(0, 3));
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("GraphRepresentation"), TestCategory("IncidenceMatrix")]
         public void CompleteGraphTest()
         {
             IncidenceMatrix m = IncidenceMatrix.CompleteGraph<IncidenceMatrix>(5);
@@ -120,7 +120,7 @@ namespace MPGraphs.GraphStructures.Tests
             {
                 List<Incidence> column = m.GetColumn(i);
                 string colStr = "";
-                foreach(Incidence incidence in column)
+                foreach (Incidence incidence in column)
                 {
                     colStr += incidence.ToString() + ", ";
                 }
@@ -132,11 +132,11 @@ namespace MPGraphs.GraphStructures.Tests
             }
             Trace.Unindent();
         }
-        [TestMethod()]
-        public void FindAdjacentEdgesTest()
+        [TestMethod, TestCategory("GraphRepresentation"), TestCategory("IncidenceMatrix")]
+        public void FindAdjacentVerticesTest()
         {
             IncidenceMatrix m = IncidenceMatrix.CompleteGraph<IncidenceMatrix>(6);
-            List<int> adjacentEdges = m.FindAdjacentEdges(0);
+            List<int> adjacentEdges = m.FindAdjacentVertices(0);
             List<int> expectedResult = new List<int>(new int[] { 1, 2, 3, 4, 5 });
             CollectionAssert.AreEqual(expectedResult, adjacentEdges);
         }

@@ -8,15 +8,17 @@ namespace MPGraphs
 {
     public class Matrix<T>
     {
-        private List<List<T>> rows;
+        private List<List<T>> Rows;
+        #region Constructors
         public Matrix()
         {
-            this.rows = new List<List<T>>();
+            Rows = new List<List<T>>();
         }
         public Matrix(Matrix<T> matrix)
         {
-            this.rows = matrix.rows;
+            Rows = matrix.Rows;
         }
+        #endregion Constructors
         #region Indexers
         /// <summary>
         /// <c>Get</c> or <c>Set</c> matrix row with specified index == <paramref name="rowIndex"/>.
@@ -27,11 +29,11 @@ namespace MPGraphs
         {
             get
             {
-                return this.rows[rowIndex];
+                return Rows[rowIndex];
             }
             protected set
             {
-                this.rows[rowIndex] = value;
+                Rows[rowIndex] = value;
             }
         }
         /// <summary>
@@ -44,11 +46,11 @@ namespace MPGraphs
         {
             get
             {
-                return this.rows[rowIndex][columnIndex];
+                return Rows[rowIndex][columnIndex];
             }
             protected set
             {
-                this.rows[rowIndex][columnIndex] = value;
+                Rows[rowIndex][columnIndex] = value;
             }
         }
         #endregion Indexers
@@ -57,7 +59,7 @@ namespace MPGraphs
         {
             get
             {
-                return this.rows.Count;
+                return Rows.Count;
             }
         }
         /// <summary>
@@ -72,7 +74,7 @@ namespace MPGraphs
             get
             {
                 bool isRectangular = true;
-                int rowCount = this.RowCount;
+                int rowCount = RowCount;
                 if (rowCount > 0)
                 {
                     int firstRowColumns = this[0].Count;
@@ -99,8 +101,9 @@ namespace MPGraphs
             get
             {
                 bool isSquare = false;
-                Tuple<bool, int> columnCount = this.ColumnCount;
-                if (columnCount.Item1 == true && (this.RowCount == 0 || columnCount.Item2 == this.RowCount))
+                Tuple<bool, int> columnCount = ColumnCount;
+                int rowCount = RowCount;
+                if (columnCount.Item1 == true && (rowCount == 0 || columnCount.Item2 == rowCount))
                 {
                     isSquare = true;
                 }
@@ -119,23 +122,25 @@ namespace MPGraphs
         {
             get
             {
-                bool isRectangular = this.IsRectangular;
+                bool isRectangular = IsRectangular;
+                Tuple<bool, int> columnCount;
                 if (isRectangular)
                 {
-                    int rowCount = this.RowCount;
+                    int rowCount = RowCount;
                     if (rowCount == 0)
                     {
-                        return new Tuple<bool, int>(isRectangular, -1);
+                        columnCount = new Tuple<bool, int>(isRectangular, -1);
                     }
                     else
                     {
-                        return new Tuple<bool, int>(isRectangular, this[0].Count);
+                        columnCount = new Tuple<bool, int>(isRectangular, this[0].Count);
                     }
                 }
                 else
                 {
-                    return new Tuple<bool, int>(isRectangular, -1);
+                    columnCount = new Tuple<bool, int>(isRectangular, -1);
                 }
+                return columnCount;
             }
         }
         /// <summary>
@@ -150,8 +155,8 @@ namespace MPGraphs
         {
             get
             {
-                Tuple<bool, int> columnCount = this.ColumnCount;
-                return new Tuple<bool, int, int>(columnCount.Item1, this.RowCount, columnCount.Item2);
+                Tuple<bool, int> columnCount = ColumnCount;
+                return new Tuple<bool, int, int>(columnCount.Item1, RowCount, columnCount.Item2);
             }
         }
         #endregion Properties
@@ -165,15 +170,13 @@ namespace MPGraphs
         /// </returns>
         public List<T> GetRow(int rowIndex)
         {
-            int rowCount = this.RowCount;
+            int rowCount = RowCount;
+            List<T> row = null;
             if (rowIndex < rowCount)
             {
-                return this[rowIndex];
+                row = this[rowIndex];
             }
-            else
-            {
-                return null;
-            }
+            return row;
         }
         /// <summary>
         /// Replaces a row at index == <paramref name="rowIndex"/> with passed <paramref name="row"/> if the specified row exists.
@@ -185,16 +188,14 @@ namespace MPGraphs
         /// </returns>
         public bool ReplaceRow(int rowIndex, List<T> row)
         {
-            int rowCount = this.RowCount;
+            int rowCount = RowCount;
+            bool rowReplaced = false;
             if (rowIndex < rowCount)
             {
                 this[rowIndex] = row;
-                return true;
+                rowReplaced = true;
             }
-            else
-            {
-                return false;
-            }
+            return rowReplaced;
         }
         /// <summary>
         /// Adds passed <paramref name="newRow"/> at the end of the matrix
@@ -202,7 +203,7 @@ namespace MPGraphs
         /// <param name="newRow">New row to add to matrix.</param>
         public void AddRow(List<T> newRow)
         {
-            this.rows.Add(newRow);
+            Rows.Add(newRow);
         }
         /// <summary>
         /// Removes a row at specified index == <paramref name="rowIndex"/> if it exists.
@@ -215,15 +216,13 @@ namespace MPGraphs
         /// </returns>
         public bool RemoveRow(int rowIndex)
         {
-            if (rowIndex < this.rows.Count)
+            bool rowRemoved = false;
+            if (rowIndex < Rows.Count)
             {
-                this.rows.RemoveAt(rowIndex);
-                return true;
+                Rows.RemoveAt(rowIndex);
+                rowRemoved = true;
             }
-            else
-            {
-                return false;
-            }
+            return rowRemoved;
         }
         /// <summary>
         /// Replaces row at index == <paramref name="rowIndexA"/> with row at index == <paramref name="rowIndexB"/>, and vice versa.
@@ -236,19 +235,16 @@ namespace MPGraphs
         /// </returns>
         public bool SwapRows(int rowIndexA, int rowIndexB)
         {
-            int rowCount = this.RowCount;
-            if (rowIndexA < rowCount &&
-                rowIndexB < rowCount)
+            int rowCount = RowCount;
+            bool rowsSwapped = false;
+            if (rowIndexA < rowCount && rowIndexB < rowCount)
             {
                 List<T> tmpRow = this[rowIndexA];
                 this[rowIndexA] = this[rowIndexB];
                 this[rowIndexB] = tmpRow;
-                return true;
+                rowsSwapped = true;
             }
-            else
-            {
-                return false;
-            }
+            return rowsSwapped;
         }
         #endregion Row Manipulation
         #region Column Manipulation
@@ -261,21 +257,17 @@ namespace MPGraphs
         /// </returns>
         public List<T> GetColumn(int columnIndex)
         {
-            Tuple<bool, int> columnCount = this.ColumnCount;
-            if (columnCount.Item1 == true &&
-                columnIndex < columnCount.Item2)
+            Tuple<bool, int> columnCount = ColumnCount;
+            List<T> column = null;
+            if (columnCount.Item1 == true && columnIndex < columnCount.Item2)
             {
-                List<T> column = new List<T>(this.RowCount);
-                foreach (List<T> row in this.rows)
+                column = new List<T>(RowCount);
+                foreach (List<T> row in Rows)
                 {
                     column.Add(row[columnIndex]);
                 }
-                return column;
             }
-            else
-            {
-                return null;
-            }
+            return column;
         }
         /// <summary>
         /// Replaces the matrix column at index == <paramref name="columnIndex"/> with passed <paramref name="column"/> if it exists.
@@ -288,22 +280,19 @@ namespace MPGraphs
         /// <remarks>Replacing a column is only possible if the matrix is square.</remarks>
         public bool ReplaceColumn(int columnIndex, List<T> column)
         {
-            Tuple<bool, int> columnCount = this.ColumnCount;
-            if (columnCount.Item1 == true &&
-                columnIndex < columnCount.Item2)
+            Tuple<bool, int> columnCount = ColumnCount;
+            bool columnReplaced = false;
+            if (columnCount.Item1 == true && columnIndex < columnCount.Item2)
             {
                 int columnElementIndex = 0;
-                foreach (List<T> row in this.rows)
+                foreach (List<T> row in Rows)
                 {
                     row[columnIndex] = column[columnElementIndex];
                     columnElementIndex++;
                 }
-                return true;
+                columnReplaced = true;
             }
-            else
-            {
-                return false;
-            }
+            return columnReplaced;
         }
         /// <summary>
         /// Removes a column at specified index == <paramref name="columnIndex"/> if it exists.
@@ -314,19 +303,17 @@ namespace MPGraphs
         /// </returns>
         public bool RemoveColumn(int columnIndex)
         {
-            Tuple<bool, int> columnCount = this.ColumnCount;
+            Tuple<bool, int> columnCount = ColumnCount;
+            bool columnRemoved = false;
             if (columnCount.Item1 == true && columnIndex < columnCount.Item2)
             {
-                foreach (List<T> row in this.rows)
+                foreach (List<T> row in Rows)
                 {
                     row.RemoveAt(columnIndex);
                 }
-                return true;
+                columnRemoved = true;
             }
-            else
-            {
-                return false;
-            }
+            return columnRemoved;
         }
         /// <summary>
         /// Adds passed <paramref name="column"/> at the end of the matrix.
@@ -342,7 +329,8 @@ namespace MPGraphs
         /// </remarks>
         public bool AddColumn(List<T> column)
         {
-            Tuple<bool, int> columnCount = this.ColumnCount;
+            Tuple<bool, int> columnCount = ColumnCount;
+            bool columnAdded = false;
             if (columnCount.Item1 == true)
             {
                 int columnElementIndex = 0;
@@ -351,24 +339,21 @@ namespace MPGraphs
                     for (int i = 0; i < column.Count; i++)
                     {
                         List<T> newRow = new List<T>(new T[] { column[columnElementIndex] });
-                        this.AddRow(newRow);
+                        AddRow(newRow);
                         columnElementIndex++;
                     }
                 }
                 else
                 {
-                    for (int i = 0; i < column.Count && i < this.RowCount; i++)
+                    for (int i = 0; i < column.Count && i < RowCount; i++)
                     {
                         this[i].Add(column[columnElementIndex]);
                         columnElementIndex++;
                     }
                 }
-                return true;
+                columnAdded = true;
             }
-            else
-            {
-                return false;
-            }
+            return columnAdded;
         }
         /// <summary>
         /// Replaces the column at index == <paramref name="columnIndexA"/> with column at index == <paramref name="columnIndexB"/>, and vice versa.
@@ -381,20 +366,16 @@ namespace MPGraphs
         /// <remarks>Swaping columns is only possible if matrix is square.</remarks>
         public bool SwapColumns(int columnIndexA, int columnIndexB)
         {
-            Tuple<bool, int> columnCount = this.ColumnCount;
-            if (columnCount.Item1 == true &&
-                columnIndexA < columnCount.Item2 &&
-                columnIndexB < columnCount.Item2)
+            Tuple<bool, int> columnCount = ColumnCount;
+            bool columnsSwapped = false;
+            if (columnCount.Item1 == true && columnIndexA < columnCount.Item2 && columnIndexB < columnCount.Item2)
             {
-                List<T> tmpColumn = this.GetColumn(columnIndexA);
-                this.ReplaceColumn(columnIndexA, this.GetColumn(columnIndexB));
-                this.ReplaceColumn(columnIndexB, tmpColumn);
-                return true;
+                List<T> tmpColumn = GetColumn(columnIndexA);
+                ReplaceColumn(columnIndexA, GetColumn(columnIndexB));
+                ReplaceColumn(columnIndexB, tmpColumn);
+                columnsSwapped = true;
             }
-            else
-            {
-                return false;
-            }
+            return columnsSwapped;
         }
         #endregion Column Manipulation
         /// <summary>
@@ -407,14 +388,14 @@ namespace MPGraphs
         public Matrix<T> Transpose()
         {
             Matrix<T> transposedMatrix = null;
-            bool isRectangular = this.IsRectangular;
+            bool isRectangular = IsRectangular;
             if (isRectangular == true)
             {
-                Tuple<bool, int> columnCount = this.ColumnCount;
+                Tuple<bool, int> columnCount = ColumnCount;
                 transposedMatrix = new Matrix<T>();
                 for (int i = 0; i < columnCount.Item2; i++)
                 {
-                    transposedMatrix.AddRow(this.GetColumn(i));
+                    transposedMatrix.AddRow(GetColumn(i));
                 }
             }
             return transposedMatrix;

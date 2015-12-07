@@ -9,28 +9,17 @@ namespace MPGraphs.GraphSearch
 {
     public class DFS<T> : IGraphSearch<T>, IDisposable where T : class, IGraphRepresentation, new()
     {
-        private List<int> Numer;
-        private int Ponumerowano;
-        private Queue<int> Kolejka;
-        private T Drzewo;
-        private T Pozostałe;
+        private List<int> Numbering;
+        private int CurrentlyNumbered;
+        private T Graph;
+        private T Remaining;
         private bool FirstRun;
         public DFS()
         {
-            Numer = new List<int>();
-            Ponumerowano = 0;
-            Kolejka = new Queue<int>();
-            Drzewo = new T();
-            Pozostałe = new T();
-            FirstRun = true;
-        }
-        public void Clear()
-        {
-            Numer = new List<int>();
-            Ponumerowano = 0;
-            Kolejka = new Queue<int>();
-            Drzewo = new T();
-            Pozostałe = new T();
+            Numbering = new List<int>();
+            CurrentlyNumbered = 0;
+            Graph = new T();
+            Remaining = new T();
             FirstRun = true;
         }
 
@@ -38,37 +27,54 @@ namespace MPGraphs.GraphSearch
         {
         }
 
-        public SearchResult<T> Search(T G, int x)
+        /// <summary>
+        /// Performs a search on a <paramref name="graph"/> starting from vertex == <paramref name="root"/>.
+        /// </summary>
+        /// <param name="graph">Graph to search.</param>
+        /// <param name="root">Vertex to start the search from.</param>
+        /// <returns>
+        /// <c>SearchResult&lt;T&gt;</c> containing all the information about search results.
+        /// </returns>
+        /// <seealso cref="SearchResult{T}"/>
+        public SearchResult<T> Search(T graph, int root)
         {
-            int v = x;
+            int v = root;
             if (FirstRun == true)
             {
-                for (int i = 0; i < G.VertexCount; i++)
+                for (int i = 0; i < graph.VertexCount; i++)
                 {
-                    Numer.Add(0);
-                    Drzewo.AddVertex();
-                    Pozostałe.AddVertex();
+                    Numbering.Add(0);
+                    Graph.AddVertex();
+                    Remaining.AddVertex();
                 }
-                Ponumerowano = 1;
-                Numer[v] = 1;
+                CurrentlyNumbered = 1;
+                Numbering[v] = 1;
                 FirstRun = false;
             }
-            List<int> N = G.FindAdjacentEdges(v);
+            List<int> N = graph.FindAdjacentVertices(v);
             foreach (int w in N)
             {
-                if (Numer[w] == 0)
+                if (Numbering[w] == 0)
                 {
-                    Ponumerowano++;
-                    Numer[w] = Ponumerowano;
-                    Drzewo.AddEdge(v, w);
-                    Search(G, w);
+                    CurrentlyNumbered++;
+                    Numbering[w] = CurrentlyNumbered;
+                    Graph.AddEdge(v, w);
+                    Search(graph, w);
                 }
-                else if (Numer[w] < Numer[v])
+                else if (Numbering[w] < Numbering[v])
                 {
-                    Pozostałe.AddEdge(v, w);
+                    Remaining.AddEdge(v, w);
                 }
             }
-            return new SearchResult<T>(Numer, Drzewo, Pozostałe);
+            return new SearchResult<T>(Numbering, Graph, Remaining);
+        }
+        public void Clear()
+        {
+            Numbering = new List<int>();
+            CurrentlyNumbered = 0;
+            Graph = new T();
+            Remaining = new T();
+            FirstRun = true;
         }
     }
 }

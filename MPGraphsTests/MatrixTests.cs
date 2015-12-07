@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace MPGraphs.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class MatrixTests
     {
 
-        [TestMethod()]
+        [TestMethod, TestCategory("Matrix"), TestCategory("Row")]
         public void AddRowTest()
         {
             Matrix<int> m = new Matrix<int>();
@@ -21,7 +21,7 @@ namespace MPGraphs.Tests
             m.AddRow(new List<int>(2));
             Assert.IsTrue(m.RowCount == 2 && m.ColumnCount.Item2 == 0);
         }
-        [TestMethod()]
+        [TestMethod, TestCategory("Matrix"), TestCategory("Row")]
         public void GetRowTest()
         {
             Matrix<int> m = new Matrix<int>();
@@ -48,7 +48,7 @@ namespace MPGraphs.Tests
             Assert.IsNull(m.GetRow(5));
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("Matrix"), TestCategory("Row")]
         public void ReplaceRowTest()
         {
             Matrix<int> m = new Matrix<int>();
@@ -68,7 +68,7 @@ namespace MPGraphs.Tests
             Assert.IsFalse(m.ReplaceRow(10, newRow));
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("Matrix"), TestCategory("Row")]
         public void RemoveRowTest()
         {
             Matrix<int> m = new Matrix<int>();
@@ -87,7 +87,7 @@ namespace MPGraphs.Tests
             Assert.IsFalse(m.RemoveRow(5));
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("Matrix"), TestCategory("Row")]
         public void SwapRowsTest()
         {
             Matrix<int> m = new Matrix<int>();
@@ -108,7 +108,7 @@ namespace MPGraphs.Tests
             Assert.IsFalse(m.SwapRows(10, 20));
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("Matrix"), TestCategory("Column")]
         public void GetColumnTest()
         {
             Matrix<int> m = new Matrix<int>();
@@ -128,7 +128,7 @@ namespace MPGraphs.Tests
             Assert.IsNull(m.GetColumn(0));
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("Matrix"), TestCategory("Column")]
         public void ReplaceColumnTest()
         {
             Matrix<int> m = new Matrix<int>();
@@ -150,7 +150,7 @@ namespace MPGraphs.Tests
             Assert.IsFalse(m.ReplaceColumn(10, newColumn));
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("Matrix"), TestCategory("Column")]
         public void RemoveColumnTest()
         {
             Matrix<int> m = new Matrix<int>();
@@ -169,7 +169,7 @@ namespace MPGraphs.Tests
             Assert.IsFalse(m.RemoveColumn(10));
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("Matrix"), TestCategory("Column")]
         public void AddColumnTest()
         {
             Matrix<int> m = new Matrix<int>();
@@ -189,7 +189,7 @@ namespace MPGraphs.Tests
             Assert.IsFalse(m.AddColumn(testList));
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("Matrix"), TestCategory("Column")]
         public void SwapColumnsTest()
         {
             Matrix<int> m = new Matrix<int>();
@@ -210,7 +210,7 @@ namespace MPGraphs.Tests
             Assert.IsFalse(m.SwapColumns(10, 20));
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("Matrix")]
         public void TransposeTest()
         {
             Matrix<int> m = new Matrix<int>();
@@ -243,7 +243,7 @@ namespace MPGraphs.Tests
             Assert.IsNull(m.Transpose());
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("Matrix")]
         public void IdentityMatrixTest()
         {
             Matrix<int> m = Matrix<int>.IdentityMatrix(3);
@@ -277,7 +277,7 @@ namespace MPGraphs.Tests
             Assert.IsTrue(isIdentity);
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("Matrix")]
         public void MatrixTest()
         {
             Matrix<int> m1 = new Matrix<int>();
@@ -293,7 +293,7 @@ namespace MPGraphs.Tests
             Matrix<int> m2 = new Matrix<int>(m1);
             Assert.IsTrue(m2.RowCount == 3 && m2.ColumnCount.Item2 == 2);
         }
-        [TestMethod()]
+        [TestMethod, TestCategory("Matrix"), TestCategory("Property")]
         public void IsRectangularTest()
         {
             Matrix<int> m = new Matrix<int>();
@@ -311,7 +311,7 @@ namespace MPGraphs.Tests
             m.AddRow(new List<int>(new int[] { 9, 9, 9, 9 }));
             Assert.IsFalse(m.IsRectangular);
         }
-        [TestMethod()]
+        [TestMethod, TestCategory("Matrix"), TestCategory("Property")]
         public void IsSquaredTest()
         {
             Matrix<int> m = new Matrix<int>();
@@ -327,10 +327,10 @@ namespace MPGraphs.Tests
             }
             Assert.IsTrue(m.IsRectangular);
             Assert.IsFalse(m.IsSquare);
-            m.AddColumn(new List<int>(new int[] { 9, 9, 9}));
+            m.AddColumn(new List<int>(new int[] { 9, 9, 9 }));
             Assert.IsTrue(m.IsSquare);
         }
-        [TestMethod]
+        [TestMethod, TestCategory("Matrix"), TestCategory("Property")]
         public void SizeTest()
         {
             Matrix<int> m = new Matrix<int>();

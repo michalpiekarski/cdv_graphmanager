@@ -9,14 +9,14 @@ namespace MPGraphs.GraphSearch
 {
     public class SearchResult<T> where T : class, IGraphRepresentation, new()
     {
-        public List<int> Numer;
-        public T Drzewo;
-        public T Pozostałe;
-        public SearchResult(List<int> Numer, T Drzewo, T Pozostałe)
+        public List<int> Numbering;
+        public T Graph;
+        public T Remaining;
+        public SearchResult(List<int> numbering, T graph, T remaining)
         {
-            this.Numer = Numer;
-            this.Drzewo = Drzewo;
-            this.Pozostałe = Pozostałe;
+            Numbering = numbering;
+            Graph = graph;
+            Remaining = remaining;
         }
     }
 }

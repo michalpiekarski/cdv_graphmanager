@@ -55,7 +55,7 @@ namespace MPGraphs.GraphStructures
         /// <c>List&lt;int&gt;</c> containing data needed to identify adjacent edges in given graph representation.
         /// If no adjacent edges are found, returns <c>null</c>.
         /// </returns>
-        List<int> FindAdjacentEdges(int vertexIndex);
+        List<int> FindAdjacentVertices(int vertexIndex);
         /// <summary>
         /// Returns the number of vertices in calling graph representation.
         /// </summary>

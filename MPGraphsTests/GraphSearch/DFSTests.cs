@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace MPGraphs.GraphSearch.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class DFSTests
     {
-        [TestMethod()]
+        [TestMethod, TestCategory("GraphSearch"), TestCategory("DFS")]
         public void SearchTest()
         {
             AdjacencyMatrix m = new AdjacencyMatrix();
@@ -31,18 +31,18 @@ namespace MPGraphs.GraphSearch.Tests
             using (DFS<AdjacencyMatrix> dfs = new DFS<AdjacencyMatrix>())
             {
                 SearchResult<AdjacencyMatrix> bfsResult = dfs.Search(m, 0);
-                List<int> expectedResult = new List<int>(new int[] { 1, 2, 3, 4, 5, 6, 7 });
-                CollectionAssert.AreEqual(expectedResult, bfsResult.Numer);
-                CollectionAssert.DoesNotContain(bfsResult.Numer, 0);
-                Assert.IsTrue(bfsResult.Drzewo.EdgeCount == 6);
+                List<int> expectedNumbering = new List<int>(new int[] { 1, 2, 3, 4, 5, 6, 7 });
+                CollectionAssert.AreEqual(expectedNumbering, bfsResult.Numbering);
+                CollectionAssert.DoesNotContain(bfsResult.Numbering, 0);
+                Assert.IsTrue(bfsResult.Graph.EdgeCount == 6);
 
                 dfs.Clear();
 
                 bfsResult = dfs.Search(m, 1);
-                expectedResult = new List<int>(new int[] { 2, 1, 4, 5, 3, 6, 7 });
-                CollectionAssert.AreEqual(expectedResult, bfsResult.Numer);
-                CollectionAssert.DoesNotContain(bfsResult.Numer, 0);
-                Assert.IsTrue(bfsResult.Drzewo.EdgeCount == 6);
+                expectedNumbering = new List<int>(new int[] { 2, 1, 4, 5, 3, 6, 7 });
+                CollectionAssert.AreEqual(expectedNumbering, bfsResult.Numbering);
+                CollectionAssert.DoesNotContain(bfsResult.Numbering, 0);
+                Assert.IsTrue(bfsResult.Graph.EdgeCount == 6);
             }
         }
     }

@@ -9,60 +9,72 @@ namespace MPGraphs.GraphSearch
 {
     public class BFS<T> : IGraphSearch<T>, IDisposable where T : class, IGraphRepresentation, new()
     {
-        private List<int> Numer;
-        private int Ponumerowano;
-        private Queue<int> Kolejka;
-        private T Drzewo;
-        private T Pozostałe;
+        private List<int> Numbering;
+        private int CurrentlyNumbered;
+        private Queue<int> SearchQueue;
+        private T Graph;
+        private T Remaining;
         public BFS()
         {
-            this.Numer = new List<int>();
-            this.Ponumerowano = 0;
-            this.Kolejka = new Queue<int>();
-            this.Drzewo = new T();
-            this.Pozostałe = new T();
+            Numbering = new List<int>();
+            CurrentlyNumbered = 0;
+            SearchQueue = new Queue<int>();
+            Graph = new T();
+            Remaining = new T();
         }
         public void Dispose()
         {
         }
 
-        public SearchResult<T> Search(T Graph, int Root)
+        /// <summary>
+        /// Performs a search on a <paramref name="graph"/> starting from vertex == <paramref name="root"/>.
+        /// </summary>
+        /// <param name="graph">Graph to search.</param>
+        /// <param name="root">Vertex to start the search from.</param>
+        /// <returns>
+        /// <c>SearchResult&lt;T&gt;</c> containing all the information about search results.
+        /// </returns>
+        /// <seealso cref="SearchResult{T}"/>
+        public SearchResult<T> Search(T graph, int root)
         {
-            for (int i = 0; i < G.VertexCount; i++)
+            for (int i = 0; i < graph.VertexCount; i++)
             {
-                this.Numer.Add(0);
-                this.Drzewo.AddVertex();
-                this.Pozostałe.AddVertex();
+                Numbering.Add(0);
+                Graph.AddVertex();
+                Remaining.AddVertex();
             }
-            Numer[x] = 1;
-            Ponumerowano = 1;
-            Kolejka.Enqueue(x);
-            while (Kolejka.Count > 0)
+            Numbering[root] = 1;
+            CurrentlyNumbered = 1;
+            SearchQueue.Enqueue(root);
+            while (SearchQueue.Count > 0)
             {
-                int v = Kolejka.Dequeue();
-                List<int> Iv = G.FindAdjacentEdges(v);
+                int v = SearchQueue.Dequeue();
+                List<int> Iv = graph.FindAdjacentVertices(v);
                 for (int i = 0; i < Iv.Count; i++)
                 {
                     int w = Iv[i];
-                    if (Numer[w] == 0)
+                    if (Numbering[w] == 0)
                     {
-                        Ponumerowano = Ponumerowano + 1;
-                        Numer[w] = Ponumerowano;
-                        Drzewo.AddEdge(v, w);
-                        Kolejka.Enqueue(w);
+                        CurrentlyNumbered++;
+                        Numbering[w] = CurrentlyNumbered;
+                        Graph.AddEdge(v, w);
+                        SearchQueue.Enqueue(w);
                     }
-                    else { Pozostałe.AddEdge(v, w); }
+                    else
+                    {
+                        Remaining.AddEdge(v, w);
+                    }
                 }
             }
-            return new SearchResult<T>(Numer, Drzewo, Pozostałe);
+            return new SearchResult<T>(Numbering, Graph, Remaining);
         }
         public void Clear()
         {
-            this.Numer = new List<int>();
-            this.Ponumerowano = 0;
-            this.Kolejka = new Queue<int>();
-            this.Drzewo = new T();
-            this.Pozostałe = new T();
+            Numbering = new List<int>();
+            CurrentlyNumbered = 0;
+            SearchQueue = new Queue<int>();
+            Graph = new T();
+            Remaining = new T();
         }
     }
 }

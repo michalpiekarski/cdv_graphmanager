@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace MPGraphs.GraphStructures.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class AdjacencyMatrixTests
     {
-        [TestMethod()]
+        [TestMethod, TestCategory("GraphRepresentation"), TestCategory("AdjacencyMatrix"), TestCategory("Vertex")]
         public void AddVertexTest()
         {
             AdjacencyMatrix m = new AdjacencyMatrix();
@@ -22,7 +22,7 @@ namespace MPGraphs.GraphStructures.Tests
             Assert.IsTrue(m.RowCount == 2 && m.RowCount == m.ColumnCount.Item2);
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("GraphRepresentation"), TestCategory("AdjacencyMatrix"), TestCategory("Vertex")]
         public void RemoveVertexTest()
         {
             AdjacencyMatrix m = new AdjacencyMatrix();
@@ -36,7 +36,7 @@ namespace MPGraphs.GraphStructures.Tests
             Assert.IsFalse(m.RemoveVertex(10));
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("GraphRepresentation"), TestCategory("AdjacencyMatrix"), TestCategory("Edge")]
         public void AddEdgeTest()
         {
             AdjacencyMatrix m = new AdjacencyMatrix();
@@ -51,7 +51,7 @@ namespace MPGraphs.GraphStructures.Tests
             Assert.IsFalse(m.AddEdge(0, 6));
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("GraphRepresentation"), TestCategory("AdjacencyMatrix"), TestCategory("Edge")]
         public void FindEdgeTest()
         {
             AdjacencyMatrix m = new AdjacencyMatrix();
@@ -67,7 +67,7 @@ namespace MPGraphs.GraphStructures.Tests
             Assert.IsFalse(m.FindEdge(1, 10));
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("GraphRepresentation"), TestCategory("AdjacencyMatrix"), TestCategory("Edge")]
         public void RemoveEdgeTest()
         {
             AdjacencyMatrix m = new AdjacencyMatrix();
@@ -82,7 +82,7 @@ namespace MPGraphs.GraphStructures.Tests
             Assert.IsFalse(m.RemoveEdge(2, 3));
         }
 
-        [TestMethod()]
+        [TestMethod, TestCategory("GraphRepresentation"), TestCategory("AdjacencyMatrix")]
         public void CompleteGraphTest()
         {
             AdjacencyMatrix m = AdjacencyMatrix.CompleteGraph<AdjacencyMatrix>(5);
@@ -93,7 +93,7 @@ namespace MPGraphs.GraphStructures.Tests
             {
                 List<Adjacency> row = m.GetRow(i);
                 string rowStr = "";
-                foreach(Adjacency adjacency in row)
+                foreach (Adjacency adjacency in row)
                 {
                     rowStr += adjacency.ToString() + ", ";
                 }
@@ -103,7 +103,8 @@ namespace MPGraphs.GraphStructures.Tests
                     if (i == j)
                     {
                         Assert.IsTrue(row[j] == Adjacency.None);
-                    } else
+                    }
+                    else
                     {
                         Assert.IsTrue(row[j] == Adjacency.Edge);
                     }
@@ -111,11 +112,11 @@ namespace MPGraphs.GraphStructures.Tests
             }
             Trace.Unindent();
         }
-        [TestMethod()]
+        [TestMethod, TestCategory("GraphRepresentation"), TestCategory("AdjacencyMatrix")]
         public void FindAdjacentEdgesTest()
         {
             AdjacencyMatrix m = AdjacencyMatrix.CompleteGraph<AdjacencyMatrix>(6);
-            List<int> adjacentEdges = m.FindAdjacentEdges(0);
+            List<int> adjacentEdges = m.FindAdjacentVertices(0);
             List<int> expectedResult = new List<int>(new int[] { 1, 2, 3, 4, 5 });
             CollectionAssert.AreEqual(expectedResult, adjacentEdges);
         }
