@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GraphSearch\BFS.cs" />
+    <Compile Include="GraphSearch\DFS.cs" />
     <Compile Include="GraphSearch\IGraphSearch.cs" />
     <Compile Include="GraphSearch\SearchResult.cs" />
     <Compile Include="GraphStructures\AdjacencyMatrix.cs" />
