@@ -266,5 +266,129 @@ namespace MPGraphs.GraphStructures
             return edgeFound;
         }
         #endregion Edge Manipulation
+        /// <summary>
+        /// Merges two specified vertices at indexes: <paramref name="vertexIndexA"/> and <paramref name="vertexIndexB"/>.
+        /// </summary>
+        /// <param name="vertexIndexA">Vertex index to merge into.</param>
+        /// <param name="vertexIndexB">Vertex index to merge from.</param>
+        /// <returns>
+        /// If merging possible and both vertices exist, returns <c>true</c> (otherwise returns <c>false</c>).
+        /// </returns>
+        public override bool MergeVertices(int vertexIndexA, int vertexIndexB)
+        {
+            int vertexCount = VertexCount;
+            int edgeCount = EdgeCount;
+            bool verticesMerged = false;
+            if (vertexIndexA < vertexCount && vertexIndexB < vertexCount)
+            {
+                List<Incidence> vertexARow = GetRow(vertexIndexA);
+                List<Incidence> vertexBRow = GetRow(vertexIndexB);
+                for (int k = 0; k < edgeCount; k++)
+                {
+                    vertexARow[k] = MergeValue(vertexARow[k], vertexBRow[k]);
+                }
+                RemoveEdge(vertexIndexA, vertexIndexB);
+                if(IsDirected == false)
+                {
+                    RemoveEdge(vertexIndexB, vertexIndexA);
+                }
+                RemoveVertex(vertexIndexB);
+                verticesMerged = true;
+            }
+            return verticesMerged;
+        }
+        public override Incidence MergeValue(Incidence incidenceA, Incidence incidenceB)
+        {
+            Incidence incidence = Incidence.None;
+            if(IsDirected == true)
+            {
+                if (incidenceA == Incidence.Loop || incidenceB == Incidence.Loop)
+                {
+                    incidence = Incidence.Loop;
+                }
+                else if (incidenceA == Incidence.Start && incidenceB == Incidence.End)
+                {
+                    incidence = Incidence.Loop;
+                }
+                else if (incidenceA == Incidence.End && incidenceB == Incidence.Start)
+                {
+                    incidence = Incidence.Loop;
+                }
+            } else
+            {
+                if (incidenceA == Incidence.Start || incidenceB == Incidence.Start)
+                {
+                    incidence = Incidence.Start;
+                }
+                else if (incidenceA == Incidence.Loop && incidenceB == Incidence.Loop)
+                {
+                    incidence = Incidence.Loop;
+                }
+            }
+            return incidence;
+        }
+        /// <summary>
+        /// Merges connected component from vertex with index == <paramref name="vertexIndex"/>.
+        /// </summary>
+        /// <param name="vertexIndex">Index of the vertex to merge the component from.</param>
+        /// <returns>
+        /// If graph merges to single vertex (aka. only 1 connected component) return <c>true</c> (otherwise return <c>false</c>).
+        /// </returns>
+        public override bool MergeComponent(int vertexIndex)
+        {
+            IncidenceMatrix m = new IncidenceMatrix(this);
+            bool graphConnected = false;
+            m.SwapRows(0, vertexIndex);
+            do
+            {
+                List<Incidence> mergeRow = m.GetRow(0);
+                int edgeCount = m.EdgeCount;
+                int vertexCount = m.VertexCount;
+                if (vertexCount == 1 || mergeRow.Count == 0)
+                {
+                    if(vertexCount == 1)
+                    {
+                        graphConnected = true;
+                    } else
+                    {
+                        graphConnected = false;
+                    } 
+                    break;
+                }
+                int i = 0;
+                while (i < edgeCount && mergeRow[i] != Incidence.Start)
+                {
+                    i++;
+                }
+                if (i == edgeCount && mergeRow[i - 1] != Incidence.Start)
+                {
+                    break;
+                }
+                else
+                {
+                    List<Incidence> edge = m.GetColumn(i);
+                    for (int j = 1; j < vertexCount; j++)
+                    {
+                        if (m.IsDirected == true)
+                        {
+                            if (edge[j] == Incidence.End)
+                            {
+                                m.MergeVertices(0, j);
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if (edge[j] == Incidence.Start)
+                            {
+                                m.MergeVertices(0, j);
+                                break;
+                            }
+                        }
+                    }
+                }
+            } while (true);
+            return graphConnected;
+        }
     }
 }

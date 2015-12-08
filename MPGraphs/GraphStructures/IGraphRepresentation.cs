@@ -57,6 +57,23 @@ namespace MPGraphs.GraphStructures
         /// </returns>
         List<int> FindAdjacentVertices(int vertexIndex);
         /// <summary>
+        /// Merges two specified vertices at indexes: <paramref name="vertexIndexA"/> and <paramref name="vertexIndexB"/>.
+        /// </summary>
+        /// <param name="vertexIndexA">Vertex index to merge into.</param>
+        /// <param name="vertexIndexB">Vertex index to merge from.</param>
+        /// <returns>
+        /// If merging possible and both vertices exist, returns <c>true</c> (otherwise returns <c>false</c>).
+        /// </returns>
+        bool MergeVertices(int vertexIndexA, int vertexIndexB);
+        /// <summary>
+        /// Merges connected component from vertex with index == <paramref name="vertexIndex"/>.
+        /// </summary>
+        /// <param name="vertexIndex">Index of the vertex to merge the component from.</param>
+        /// <returns>
+        /// If graph merges to single vertex (aka. only 1 connected component) return <c>true</c> (otherwise return <c>false</c>).
+        /// </returns>
+        bool MergeComponent(int vertexIndex);
+        /// <summary>
         /// Returns the number of vertices in calling graph representation.
         /// </summary>
         int VertexCount

@@ -210,5 +210,84 @@ namespace MPGraphs.GraphStructures
             return edgeFound;
         }
         #endregion Edge Manipulation
+        /// <summary>
+        /// Merges two specified vertices at indexes: <paramref name="vertexIndexA"/> and <paramref name="vertexIndexB"/>.
+        /// </summary>
+        /// <param name="vertexIndexA">Vertex index to merge into.</param>
+        /// <param name="vertexIndexB">Vertex index to merge from.</param>
+        /// <returns>
+        /// If merging possible and both vertices exist, returns <c>true</c> (otherwise returns <c>false</c>).
+        /// </returns>
+        public override bool MergeVertices(int vertexIndexA, int vertexIndexB)
+        {
+            int vertexCount = VertexCount;
+            bool verticesMerged = false;
+            if (vertexIndexA < vertexCount && vertexIndexB < vertexCount)
+            {
+                List<Adjacency> vertexARow = GetRow(vertexIndexA);
+                List<Adjacency> vertexAColumn = GetColumn(vertexIndexA);
+                List<Adjacency> vertexBRow = GetRow(vertexIndexB);
+                List<Adjacency> vertexBColumn = GetColumn(vertexIndexB);
+                for (int k = 0; k < vertexCount; k++)
+                {
+                    vertexARow[k] = MergeValue(vertexARow[k], vertexBRow[k]);
+                    vertexAColumn[k] = MergeValue(vertexAColumn[k], vertexBColumn[k]);
+                }
+                RemoveVertex(vertexIndexB);
+                verticesMerged = true;
+            }
+            return verticesMerged;
+        }
+        public override Adjacency MergeValue(Adjacency adjacencyA, Adjacency adjacencyB)
+        {
+            Adjacency adjacency = Adjacency.None;
+            if (adjacencyA == Adjacency.Edge || adjacencyB == Adjacency.Edge)
+            {
+                adjacency = Adjacency.Edge;
+            }
+            else if (adjacencyA == Adjacency.Loop || adjacencyB == Adjacency.Loop)
+            {
+                adjacency = Adjacency.Loop;
+            }
+            return adjacency;
+        }
+        /// <summary>
+        /// Merges connected component from vertex with index == <paramref name="vertexIndex"/>.
+        /// </summary>
+        /// <param name="vertexIndex">Index of the vertex to merge the component from.</param>
+        /// <returns>
+        /// If graph merges to single vertex (aka. only 1 connected component) return <c>true</c> (otherwise return <c>false</c>).
+        /// </returns>
+        public override bool MergeComponent(int vertexIndex)
+        {
+            AdjacencyMatrix m = new AdjacencyMatrix(this);
+            bool graphConnected = false;
+            m.SwapRows(0, vertexIndex);
+            m.SwapColumns(0, vertexIndex);
+            do
+            {
+                List<Adjacency> mergeRow = m.GetRow(0);
+                int vertexCount = m.VertexCount;
+                int i = 1;
+                while (i < vertexCount && mergeRow[i] == Adjacency.None)
+                {
+                    i++;
+                }
+                if (i == vertexCount && mergeRow[i - 1] == Adjacency.None)
+                {
+                    break;
+                }
+                else
+                {
+                    m.MergeVertices(0, i);
+                }
+                if (m.VertexCount == 1)
+                {
+                    graphConnected = true;
+                    break;
+                }
+            } while (true);
+            return graphConnected;
+        }
     }
 }

@@ -16,7 +16,16 @@ namespace MPGraphs
         }
         public Matrix(Matrix<T> matrix)
         {
-            Rows = matrix.Rows;
+            Rows = new List<List<T>>();
+            foreach(List<T> row in matrix.Rows)
+            {
+                List<T> newRow = new List<T>();
+                foreach(T element in row)
+                {
+                    newRow.Add(element);
+                }
+                Rows.Add(newRow);
+            }
         }
         #endregion Constructors
         #region Indexers

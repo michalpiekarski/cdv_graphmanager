@@ -136,5 +136,23 @@ namespace MPGraphs.GraphStructures
             }
             return adjacentEdges;
         }
+        /// <summary>
+        /// Merges two specified vertices at indexes: <paramref name="vertexIndexA"/> and <paramref name="vertexIndexB"/>.
+        /// </summary>
+        /// <param name="vertexIndexA">Vertex index to merge into.</param>
+        /// <param name="vertexIndexB">Vertex index to merge from.</param>
+        /// <returns>
+        /// If merging possible and both vertices exist, returns <c>true</c> (otherwise returns <c>false</c>).
+        /// </returns>
+        public abstract bool MergeVertices(int vertexIndexA, int vertexIndexB);
+        public abstract T MergeValue(T adjacencyA, T adjacencyB);
+        /// <summary>
+        /// Merges connected component from vertex with index == <paramref name="vertexIndex"/>.
+        /// </summary>
+        /// <param name="vertexIndex">Index of the vertex to merge the component from.</param>
+        /// <returns>
+        /// If graph merges to single vertex (aka. only 1 connected component) return <c>true</c> (otherwise return <c>false</c>).
+        /// </returns>
+        public abstract bool MergeComponent(int vertexIndex);
     }
 }

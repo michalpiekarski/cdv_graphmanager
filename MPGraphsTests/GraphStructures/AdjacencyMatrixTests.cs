@@ -120,5 +120,23 @@ namespace MPGraphs.GraphStructures.Tests
             List<int> expectedResult = new List<int>(new int[] { 1, 2, 3, 4, 5 });
             CollectionAssert.AreEqual(expectedResult, adjacentEdges);
         }
+
+        [TestMethod, TestCategory("GraphRepresentation"), TestCategory("AdjacencyMatrix"), TestCategory("Merging")]
+        public void MergeComponentTest()
+        {
+            AdjacencyMatrix m = AdjacencyMatrix.CompleteGraph<AdjacencyMatrix>(4);
+            Assert.IsTrue(m.MergeComponent(0));
+            m = new AdjacencyMatrix();
+            for (int i = 0; i < 4; i++)
+            {
+                m.AddVertex();
+            }
+            m.AddEdge(0, 1);
+            m.AddEdge(1, 3);
+            Assert.IsFalse(m.MergeComponent(0));
+            Assert.IsFalse(m.MergeComponent(2));
+            m.AddEdge(2,3);
+            Assert.IsTrue(m.MergeComponent(0));
+        }
     }
 }
