@@ -238,7 +238,7 @@ namespace MPGraphs.GraphStructures
             }
             return verticesMerged;
         }
-        public override Adjacency MergeValue(Adjacency adjacencyA, Adjacency adjacencyB)
+        protected override Adjacency MergeValue(Adjacency adjacencyA, Adjacency adjacencyB)
         {
             Adjacency adjacency = Adjacency.None;
             if (adjacencyA == Adjacency.Edge || adjacencyB == Adjacency.Edge)

@@ -297,7 +297,7 @@ namespace MPGraphs.GraphStructures
             }
             return verticesMerged;
         }
-        public override Incidence MergeValue(Incidence incidenceA, Incidence incidenceB)
+        protected override Incidence MergeValue(Incidence incidenceA, Incidence incidenceB)
         {
             Incidence incidence = Incidence.None;
             if(IsDirected == true)

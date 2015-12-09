@@ -145,7 +145,7 @@ namespace MPGraphs.GraphStructures
         /// If merging possible and both vertices exist, returns <c>true</c> (otherwise returns <c>false</c>).
         /// </returns>
         public abstract bool MergeVertices(int vertexIndexA, int vertexIndexB);
-        public abstract T MergeValue(T adjacencyA, T adjacencyB);
+        protected abstract T MergeValue(T adjacencyA, T adjacencyB);
         /// <summary>
         /// Merges connected component from vertex with index == <paramref name="vertexIndex"/>.
         /// </summary>
