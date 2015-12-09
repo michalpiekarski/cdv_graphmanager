@@ -299,30 +299,31 @@ namespace MPGraphs.GraphStructures
         }
         protected override Incidence MergeValue(Incidence incidenceA, Incidence incidenceB)
         {
-            Incidence incidence = Incidence.None;
-            if(IsDirected == true)
+            Incidence incidence = Incidence.Loop;
+            if(incidenceA == incidenceB)
             {
-                if (incidenceA == Incidence.Loop || incidenceB == Incidence.Loop)
-                {
-                    incidence = Incidence.Loop;
-                }
-                else if (incidenceA == Incidence.Start && incidenceB == Incidence.End)
-                {
-                    incidence = Incidence.Loop;
-                }
-                else if (incidenceA == Incidence.End && incidenceB == Incidence.Start)
-                {
-                    incidence = Incidence.Loop;
-                }
-            } else
+                incidence = incidenceA;
+            }
+            else if (incidenceA == Incidence.None || incidenceB == Incidence.None)
             {
-                if (incidenceA == Incidence.Start || incidenceB == Incidence.Start)
+                if (incidenceA == Incidence.None)
                 {
-                    incidence = Incidence.Start;
+                    incidence = incidenceB;
                 }
-                else if (incidenceA == Incidence.Loop && incidenceB == Incidence.Loop)
+                else
                 {
-                    incidence = Incidence.Loop;
+                    incidence = incidenceA;
+                }
+            }
+            else if (incidenceA == Incidence.Loop || incidenceB == Incidence.Loop)
+            {
+                if (incidenceA == Incidence.Loop)
+                {
+                    incidence = incidenceB;
+                }
+                else
+                {
+                    incidence = incidenceA;
                 }
             }
             return incidence;
