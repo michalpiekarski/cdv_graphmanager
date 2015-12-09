@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace MPGraphs.GraphStructures.Tests
 {
     [TestClass]
-    public class AdjacencyMatrixTests
+    public class AdjacencyMatrixTests : AdjacencyMatrix
     {
         [TestMethod, TestCategory("GraphRepresentation"), TestCategory("AdjacencyMatrix"), TestCategory("Vertex")]
         public void AddVertexTest()
@@ -122,6 +122,62 @@ namespace MPGraphs.GraphStructures.Tests
         }
 
         [TestMethod, TestCategory("GraphRepresentation"), TestCategory("AdjacencyMatrix"), TestCategory("Merging")]
+        public void MergeValueTest()
+        {
+            Assert.AreEqual<Adjacency>(Adjacency.None, MergeValue(Adjacency.None, Adjacency.None));
+            Assert.AreEqual<Adjacency>(Adjacency.Edge, MergeValue(Adjacency.Edge, Adjacency.None));
+            Assert.AreEqual<Adjacency>(Adjacency.Edge, MergeValue(Adjacency.None, Adjacency.Edge));
+            Assert.AreEqual<Adjacency>(Adjacency.Edge, MergeValue(Adjacency.Edge, Adjacency.Edge));
+            Assert.AreEqual<Adjacency>(Adjacency.Loop, MergeValue(Adjacency.Loop, Adjacency.None));
+            Assert.AreEqual<Adjacency>(Adjacency.Loop, MergeValue(Adjacency.None, Adjacency.Loop));
+            Assert.AreEqual<Adjacency>(Adjacency.Edge, MergeValue(Adjacency.Edge, Adjacency.Loop));
+            Assert.AreEqual<Adjacency>(Adjacency.Edge, MergeValue(Adjacency.Loop, Adjacency.Edge));
+            Assert.AreEqual<Adjacency>(Adjacency.Loop, MergeValue(Adjacency.Loop, Adjacency.Loop));
+        }
+
+        [TestMethod, TestCategory("GraphRepresentation"), TestCategory("AdjacencyMatrix"), TestCategory("Merging")]
+        public void MergeVerticesTest()
+        {
+            AdjacencyMatrix mBase = new AdjacencyMatrix();
+            mBase.AddVertex();
+            mBase.AddVertex();
+            Assert.IsTrue(mBase.VertexCount == 2 && mBase.EdgeCount == 0);
+
+            AdjacencyMatrix m = new AdjacencyMatrix(mBase);
+            foreach (Adjacency a in m.GetRow(0))
+            {
+                Assert.AreEqual<Adjacency>(Adjacency.None, a);
+            }
+            foreach (Adjacency a in m.GetRow(1))
+            {
+                Assert.AreEqual<Adjacency>(Adjacency.None, a);
+            }
+            m.MergeVertices(0, 1);
+            Assert.IsTrue(m.VertexCount == 1 && m.EdgeCount == 0);
+            foreach (Adjacency a in m.GetRow(0))
+            {
+                Assert.AreEqual<Adjacency>(a, Adjacency.None);
+            }
+
+            m = new AdjacencyMatrix(mBase);
+            m.AddEdge(0, 1);
+            List<Adjacency> expectedRow = new List<Adjacency>(new Adjacency[] { Adjacency.None, Adjacency.Edge });
+            CollectionAssert.AreEqual(expectedRow, m.GetRow(0));
+            m.MergeVertices(0, 1);
+            expectedRow = new List<Adjacency>(new Adjacency[] { Adjacency.Edge });
+            CollectionAssert.AreEqual(expectedRow, m.GetRow(0));
+
+            m = new AdjacencyMatrix(mBase);
+            m.AddVertex();
+            m.AddEdge(0, 2);
+            expectedRow = new List<Adjacency>(new Adjacency[] { Adjacency.None, Adjacency.None, Adjacency.Edge });
+            CollectionAssert.AreEqual(expectedRow, m.GetRow(0));
+            m.MergeVertices(0, 2);
+            expectedRow = new List<Adjacency>(new Adjacency[] { Adjacency.Edge, Adjacency.None });
+            CollectionAssert.AreEqual(expectedRow, m.GetRow(0));
+        }
+
+        [TestMethod, TestCategory("GraphRepresentation"), TestCategory("AdjacencyMatrix"), TestCategory("Merging")]
         public void MergeComponentTest()
         {
             AdjacencyMatrix m = AdjacencyMatrix.CompleteGraph<AdjacencyMatrix>(4);
@@ -135,7 +191,7 @@ namespace MPGraphs.GraphStructures.Tests
             m.AddEdge(1, 3);
             Assert.IsFalse(m.MergeComponent(0));
             Assert.IsFalse(m.MergeComponent(2));
-            m.AddEdge(2,3);
+            m.AddEdge(2, 3);
             Assert.IsTrue(m.MergeComponent(0));
         }
     }
