@@ -110,31 +110,31 @@ namespace MPGraphs.GraphStructures
             return completeGraph;
         }
         /// <summary>
-        /// Finds all adjacent edges to the edge with index == <paramref name="vertexIndex"/>.
+        /// Finds all adjacent vertices to the vertex with index == <paramref name="vertexIndex"/>.
         /// </summary>
-        /// <param name="vertexIndex">Index of the vertex that the adjacent edges are to be found.</param>
+        /// <param name="vertexIndex">Index of the vertex that the adjacent vertices are to be found.</param>
         /// <returns>
-        /// <c>List&lt;int&gt;</c> containing data needed to identify adjacent edges in given graph representation.
-        /// If no adjacent edges are found, returns <c>null</c>.
+        /// <c>List&lt;int&gt;</c> containing data needed to identify adjacent vertices in given graph representation.
+        /// If no adjacent vertices are found, returns <c>null</c>.
         /// </returns>
         public List<int> FindAdjacentVertices(int vertexIndex)
         {
-            List<int> adjacentEdges = null;
+            List<int> adjacentVertices = null;
             int columnCount = ColumnCount.Item2;
-            bool firstEdge = true;
+            bool firstVertex = true;
             for (int i = 0; i < columnCount; i++)
             {
                 if (FindEdge(vertexIndex, i) == true)
                 {
-                    if (firstEdge == true)
+                    if (firstVertex == true)
                     {
-                        adjacentEdges = new List<int>();
-                        firstEdge = false;
+                        adjacentVertices = new List<int>();
+                        firstVertex = false;
                     }
-                    adjacentEdges.Add(i);
+                    adjacentVertices.Add(i);
                 }
             }
-            return adjacentEdges;
+            return adjacentVertices;
         }
         /// <summary>
         /// Merges two specified vertices at indexes: <paramref name="vertexIndexA"/> and <paramref name="vertexIndexB"/>.
