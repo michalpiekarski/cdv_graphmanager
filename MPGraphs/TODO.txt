@@ -1,0 +1,12 @@
+﻿------------------------------------------
+------------------ TODO ------------------
+------------------------------------------
+
+- Separate the directed and undirected graph representation
+- Implement weighted graph representations
+- Conversion from directed to undirected graph
+- Conversion between graph representations
+- Implement MST generation algorithm
+- Path length algorithm
+- Calculating radius, diameter and graphs center
+- Eulerian cycle algorithm
