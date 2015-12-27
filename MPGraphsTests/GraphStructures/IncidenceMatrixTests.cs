@@ -219,7 +219,7 @@ namespace MPGraphs.GraphStructures.Tests
             Assert.IsFalse(m.MergeComponent(0));
             Assert.IsFalse(m.MergeComponent(2));
             m.AddEdge(2, 3);
-            Assert.IsTrue(m.MergeComponent(0)); /// FIXME - Fails, probably caused by a bug in vertex merging
+            Assert.IsTrue(m.MergeComponent(0));
         }
     }
 }
