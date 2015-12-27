@@ -20,15 +20,11 @@ namespace MPGraphs.GraphStructures
         {
         }
 
-        public IncidenceMatrix(Matrix<Incidence> matrix) : base(matrix)
+        public IncidenceMatrix(IncidenceMatrix matrix) : base(matrix)
         {
         }
 
         public IncidenceMatrix(bool isDirected) : base(isDirected)
-        {
-        }
-
-        public IncidenceMatrix(bool isDirected, Matrix<Incidence> matrix) : base(isDirected, matrix)
         {
         }
         #endregion Constructors

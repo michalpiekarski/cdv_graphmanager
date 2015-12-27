@@ -18,13 +18,9 @@ namespace MPGraphs.GraphStructures
         {
             IsDirected = isDirected;
         }
-        protected GraphRepresentation(Matrix<T> matrix) : base(matrix)
+        protected GraphRepresentation(GraphRepresentation<T> matrix) : base(matrix)
         {
-            IsDirected = false;
-        }
-        protected GraphRepresentation(bool isDirected, Matrix<T> matrix) : base(matrix)
-        {
-            IsDirected = isDirected;
+            IsDirected = matrix.IsDirected;
         }
         #endregion Constructors
         #region Properties

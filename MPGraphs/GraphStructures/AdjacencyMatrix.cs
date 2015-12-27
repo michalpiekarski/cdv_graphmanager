@@ -19,15 +19,11 @@ namespace MPGraphs.GraphStructures
         {
         }
 
-        public AdjacencyMatrix(Matrix<Adjacency> matrix) : base(matrix)
+        public AdjacencyMatrix(AdjacencyMatrix matrix) : base(matrix)
         {
         }
 
         public AdjacencyMatrix(bool isDirected) : base(isDirected)
-        {
-        }
-
-        public AdjacencyMatrix(bool isDirected, Matrix<Adjacency> matrix) : base(isDirected, matrix)
         {
         }
         #endregion Constructors
