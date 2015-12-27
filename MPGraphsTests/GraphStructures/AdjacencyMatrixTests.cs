@@ -193,6 +193,10 @@ namespace MPGraphs.GraphStructures.Tests
             Assert.IsFalse(m.MergeComponent(2));
             m.AddEdge(2, 3);
             Assert.IsTrue(m.MergeComponent(0));
+            m.RemoveEdge(2, 3);
+            m.AddEdge(0, 2);
+            m.AddEdge(1, 2);
+            Assert.IsTrue(m.MergeComponent(0));
         }
     }
 }
