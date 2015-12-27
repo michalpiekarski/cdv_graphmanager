@@ -288,10 +288,6 @@ namespace MPGraphs.GraphStructures
                     vertexARow[k] = MergeValue(vertexARow[k], vertexBRow[k]);
                 }
                 RemoveEdge(vertexIndexA, vertexIndexB);
-                if(IsDirected == false)
-                {
-                    RemoveEdge(vertexIndexB, vertexIndexA);
-                }
                 RemoveVertex(vertexIndexB);
                 verticesMerged = true;
             }
