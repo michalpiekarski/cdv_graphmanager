@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace MPGraphs.GraphSearch
 {
-    public class DFS<T> : IGraphSearch<T>, IDisposable where T : class, IGraphRepresentation, new()
+    public class DFS<T, V> : IGraphSearch<T, V>, IDisposable
+        where T : GraphRepresentation<V>, new()
+        where V : struct
     {
         private List<int> Numbering;
         private int CurrentlyNumbered;
@@ -36,7 +38,7 @@ namespace MPGraphs.GraphSearch
         /// <c>SearchResult&lt;T&gt;</c> containing all the information about search results.
         /// </returns>
         /// <seealso cref="SearchResult{T}"/>
-        public SearchResult<T> Search(T graph, int root)
+        public SearchResult<T, V> Search(T graph, int root)
         {
             int v = root;
             if (FirstRun == true)
@@ -66,7 +68,7 @@ namespace MPGraphs.GraphSearch
                     Remaining.AddEdge(v, w);
                 }
             }
-            return new SearchResult<T>(Numbering, Graph, Remaining);
+            return new SearchResult<T, V>(Numbering, Graph, Remaining);
         }
         public void Clear()
         {

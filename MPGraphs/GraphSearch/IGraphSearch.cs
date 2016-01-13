@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace MPGraphs.GraphSearch
 {
-    public interface IGraphSearch<T> where T : class, IGraphRepresentation, new()
+    public interface IGraphSearch<T, V>
+        where T : GraphRepresentation<V>, new()
+        where V : struct
     {
         /// <summary>
         /// Performs a search on a <paramref name="graph"/> starting from vertex == <paramref name="root"/>.
@@ -18,7 +20,7 @@ namespace MPGraphs.GraphSearch
         /// <c>SearchResult&lt;T&gt;</c> containing all the information about search results.
         /// </returns>
         /// <seealso cref="SearchResult{T}"/>
-        SearchResult<T> Search(T graph, int root);
+        SearchResult<T, V> Search(T graph, int root);
         /// <summary>
         /// Reinitializes the search algorithm data for performing next search.
         /// </summary>

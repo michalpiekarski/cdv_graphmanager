@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace MPGraphs.GraphSearch
 {
-    public class SearchResult<T> where T : class, IGraphRepresentation, new()
+    public class SearchResult<T, V>
+        where T : GraphRepresentation<V>, new()
+        where V : struct
     {
         public List<int> Numbering;
         public T Graph;

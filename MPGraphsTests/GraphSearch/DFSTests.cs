@@ -28,9 +28,9 @@ namespace MPGraphs.GraphSearch.Tests
             m.AddEdge(5, 6);
             m.AddEdge(2, 3);
             Assert.IsTrue(m.EdgeCount == 7);
-            using (DFS<AdjacencyMatrix> dfs = new DFS<AdjacencyMatrix>())
+            using (DFS<AdjacencyMatrix, Adjacency> dfs = new DFS<AdjacencyMatrix, Adjacency>())
             {
-                SearchResult<AdjacencyMatrix> bfsResult = dfs.Search(m, 0);
+                SearchResult<AdjacencyMatrix, Adjacency> bfsResult = dfs.Search(m, 0);
                 List<int> expectedNumbering = new List<int>(new int[] { 1, 2, 3, 4, 5, 6, 7 });
                 CollectionAssert.AreEqual(expectedNumbering, bfsResult.Numbering);
                 CollectionAssert.DoesNotContain(bfsResult.Numbering, 0);
