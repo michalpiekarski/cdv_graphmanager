@@ -48,7 +48,6 @@
     <Compile Include="GraphSearch\SearchResult.cs" />
     <Compile Include="GraphStructures\AdjacencyMatrix.cs" />
     <Compile Include="GraphStructures\GraphRepresentation.cs" />
-    <Compile Include="GraphStructures\IGraphRepresentation.cs" />
     <Compile Include="GraphStructures\IncidenceMatrix.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
