@@ -85,7 +85,7 @@ namespace MPGraphs.GraphStructures.Tests
         [TestMethod, TestCategory("GraphRepresentation"), TestCategory("AdjacencyMatrix")]
         public void CompleteGraphTest()
         {
-            AdjacencyMatrix m = AdjacencyMatrix.CompleteGraph<AdjacencyMatrix>(5);
+            AdjacencyMatrix m = AdjacencyMatrix.CompleteGraph<AdjacencyMatrix, Adjacency>(5);
             int rowCount = m.RowCount;
             Trace.WriteLine("Complete graph:");
             Trace.Indent();
@@ -115,7 +115,7 @@ namespace MPGraphs.GraphStructures.Tests
         [TestMethod, TestCategory("GraphRepresentation"), TestCategory("AdjacencyMatrix")]
         public void FindAdjacentEdgesTest()
         {
-            AdjacencyMatrix m = AdjacencyMatrix.CompleteGraph<AdjacencyMatrix>(6);
+            AdjacencyMatrix m = AdjacencyMatrix.CompleteGraph<AdjacencyMatrix, Adjacency>(6);
             List<int> adjacentEdges = m.FindAdjacentVertices(0);
             List<int> expectedResult = new List<int>(new int[] { 1, 2, 3, 4, 5 });
             CollectionAssert.AreEqual(expectedResult, adjacentEdges);
@@ -180,7 +180,7 @@ namespace MPGraphs.GraphStructures.Tests
         [TestMethod, TestCategory("GraphRepresentation"), TestCategory("AdjacencyMatrix"), TestCategory("Merging")]
         public void MergeComponentTest()
         {
-            AdjacencyMatrix m = AdjacencyMatrix.CompleteGraph<AdjacencyMatrix>(4);
+            AdjacencyMatrix m = AdjacencyMatrix.CompleteGraph<AdjacencyMatrix, Adjacency>(4);
             Assert.IsTrue(m.MergeComponent(0));
             m = new AdjacencyMatrix();
             for (int i = 0; i < 4; i++)

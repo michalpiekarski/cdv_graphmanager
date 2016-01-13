@@ -111,7 +111,7 @@ namespace MPGraphs.GraphStructures.Tests
         [TestMethod, TestCategory("GraphRepresentation"), TestCategory("IncidenceMatrix")]
         public void CompleteGraphTest()
         {
-            IncidenceMatrix m = IncidenceMatrix.CompleteGraph<IncidenceMatrix>(5);
+            IncidenceMatrix m = IncidenceMatrix.CompleteGraph<IncidenceMatrix, Incidence>(5);
             int columnCount = m.ColumnCount.Item2;
             int rowCount = m.RowCount;
             Trace.WriteLine("Complete graph:");
@@ -135,7 +135,7 @@ namespace MPGraphs.GraphStructures.Tests
         [TestMethod, TestCategory("GraphRepresentation"), TestCategory("IncidenceMatrix")]
         public void FindAdjacentVerticesTest()
         {
-            IncidenceMatrix m = IncidenceMatrix.CompleteGraph<IncidenceMatrix>(6);
+            IncidenceMatrix m = IncidenceMatrix.CompleteGraph<IncidenceMatrix, Incidence>(6);
             List<int> adjacentEdges = m.FindAdjacentVertices(0);
             List<int> expectedResult = new List<int>(new int[] { 1, 2, 3, 4, 5 });
             CollectionAssert.AreEqual(expectedResult, adjacentEdges);
@@ -207,7 +207,7 @@ namespace MPGraphs.GraphStructures.Tests
         [TestMethod, TestCategory("GraphRepresentation"), TestCategory("IncidenceMatrix"), TestCategory("Merging")]
         public void MergeComponentTest()
         {
-            IncidenceMatrix m = IncidenceMatrix.CompleteGraph<IncidenceMatrix>(4);
+            IncidenceMatrix m = IncidenceMatrix.CompleteGraph<IncidenceMatrix, Incidence>(4);
             Assert.IsTrue(m.MergeComponent(0));
             m = new IncidenceMatrix();
             for (int i = 0; i < 4; i++)

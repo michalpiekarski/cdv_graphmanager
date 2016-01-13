@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MPGraphs.GraphStructures
 {
-    public abstract class GraphRepresentation<T> : Matrix<T>, IGraphRepresentation
+    public abstract class GraphRepresentation<T> : Matrix<T>
     {
         public bool IsDirected;
         #region Constructors
@@ -86,7 +86,9 @@ namespace MPGraphs.GraphStructures
         /// Generates a complete graph with <paramref name="vertexCount"/> vertices.
         /// </summary>
         /// <param name="vertexCount">Number of vertices in generated complete graph.</param>
-        public static R CompleteGraph<R>(int vertexCount) where R : class, IGraphRepresentation, new()
+        public static R CompleteGraph<R, V>(int vertexCount)
+            where R : GraphRepresentation<V>, new()
+            where V : struct
         {
             R completeGraph = new R();
             for (int i = 0; i < vertexCount; i++)
