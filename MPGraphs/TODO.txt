@@ -3,7 +3,6 @@
 ------------------------------------------
 
 - Separate the directed and undirected graph representation
-- Conversion from directed to undirected graph
 - Conversion between graph representations
 - Implement MST generation algorithm
 - Path length algorithm
