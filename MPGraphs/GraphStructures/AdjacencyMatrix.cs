@@ -285,5 +285,32 @@ namespace MPGraphs.GraphStructures
             } while (true);
             return graphConnected;
         }
+
+        public override GraphRepresentation<Adjacency> ConvertToUndirected()
+        {
+            if(IsDirected == true)
+            {
+                AdjacencyMatrix undirectedMatrix = new AdjacencyMatrix(this);
+                for(int i = 0; i < undirectedMatrix.RowCount; i++)
+                {
+                    List<Adjacency> row = undirectedMatrix.GetRow(i);
+                    for(int j = 0; j < row.Count; j++)
+                    {
+                        if(row[j] == Adjacency.Edge)
+                        {
+                            List<Adjacency> column = undirectedMatrix.GetColumn(i);
+                            if(column[j] != Adjacency.Edge)
+                            {
+                                column[j] = Adjacency.Edge;
+                                undirectedMatrix.ReplaceColumn(i, column);
+                            }
+                        }
+                    }
+                }
+                undirectedMatrix.IsDirected = false;
+                return undirectedMatrix;
+            }
+            return null;
+        }
     }
 }
