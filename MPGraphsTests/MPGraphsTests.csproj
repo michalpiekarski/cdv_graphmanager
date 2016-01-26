@@ -54,6 +54,7 @@
     <Compile Include="GraphSearch\BFSTests.cs" />
     <Compile Include="GraphSearch\DFSTests.cs" />
     <Compile Include="GraphStructures\AdjacencyMatrixTests.cs" />
+    <Compile Include="GraphStructures\AdjacencyMatrixWeightedTests.cs" />
     <Compile Include="GraphStructures\IncidenceMatrixTests.cs" />
     <Compile Include="MatrixTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
