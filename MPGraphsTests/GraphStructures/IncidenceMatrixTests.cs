@@ -225,5 +225,27 @@ namespace MPGraphs.GraphStructures.Tests
             m.AddEdge(1, 2);
             Assert.IsTrue(m.MergeComponent(0));
         }
+
+        [TestMethod()]
+        public void ConvertToUndirectedTest()
+        {
+            IncidenceMatrix m = new IncidenceMatrix(true);
+            m.AddVertex();
+            m.AddVertex();
+            m.AddVertex();
+            m.AddVertex();
+            Assert.IsTrue(m.VertexCount == 4);
+            Assert.IsTrue(m.EdgeCount == 1);
+            m.AddEdge(0, 1);
+            m.AddEdge(1, 2);
+            m.AddEdge(2, 3);
+            m.AddEdge(0, 3);
+            Assert.IsTrue(m.EdgeCount == 4);
+            Assert.IsFalse(m.MergeComponent(1));
+            IncidenceMatrix undirectedM = m.ConvertToUndirected() as IncidenceMatrix;
+            Assert.IsTrue(undirectedM.VertexCount == 4);
+            Assert.IsTrue(undirectedM.EdgeCount == 4);
+            Assert.IsTrue(undirectedM.MergeComponent(1));
+        }
     }
 }
