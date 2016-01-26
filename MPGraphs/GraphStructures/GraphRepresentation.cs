@@ -152,5 +152,6 @@ namespace MPGraphs.GraphStructures
         /// If graph merges to single vertex (aka. only 1 connected component) return <c>true</c> (otherwise return <c>false</c>).
         /// </returns>
         public abstract bool MergeComponent(int vertexIndex);
+        public abstract GraphRepresentation<T> ConvertToUndirected();
     }
 }
