@@ -23,7 +23,7 @@ namespace MPGraphs.GraphStructures
                 }
             }
         }
-        public AdjacencyMatrixWeighted()
+        public AdjacencyMatrixWeighted() : base()
         {
             this.edgeWeights = new List<Tuple<int,int,int>>();
         }
