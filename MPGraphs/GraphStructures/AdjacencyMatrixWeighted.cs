@@ -71,13 +71,16 @@ namespace MPGraphs.GraphStructures
 
         public override bool AddEdge(int vertexIndexA, int vertexIndexB)
         {
-            this.edgeWeights.Add(new Tuple<int,int,int>(vertexIndexA,vertexIndexB,0));
-            return base.AddEdge(vertexIndexA, vertexIndexB);
+            return AddEdge(vertexIndexA, vertexIndexB, 0);
         }
         public bool AddEdge(int vertexIndexA, int vertexIndexB, int edgeWeight)
         {
-            this.edgeWeights.Add(new Tuple<int,int,int>(vertexIndexA,vertexIndexB,edgeWeight));
-            return base.AddEdge(vertexIndexA, vertexIndexB);
+            bool edgeAdded = base.AddEdge(vertexIndexA, vertexIndexB);
+            if (edgeAdded == true)
+            {
+                this.edgeWeights.Add(new Tuple<int, int, int>(vertexIndexA, vertexIndexB, edgeWeight));
+            }
+            return edgeAdded;
         }
         public override bool RemoveEdge(int vertexIndexA, int vertexIndexB)
         {
