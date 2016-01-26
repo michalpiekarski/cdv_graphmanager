@@ -50,6 +50,7 @@
     <Compile Include="GraphStructures\AdjacencyMatrixWeighted.cs" />
     <Compile Include="GraphStructures\GraphRepresentation.cs" />
     <Compile Include="GraphStructures\IncidenceMatrix.cs" />
+    <Compile Include="GraphStructures\IncidenceMatrixWeighted.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
