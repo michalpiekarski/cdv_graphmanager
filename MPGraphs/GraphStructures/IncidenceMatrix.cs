@@ -383,5 +383,27 @@ namespace MPGraphs.GraphStructures
             } while (true);
             return graphConnected;
         }
+        public override GraphRepresentation<Incidence> ConvertToUndirected()
+        {
+            if (IsDirected == true)
+            {
+                IncidenceMatrix undirectedMatrix = new IncidenceMatrix(this);
+                for (int i = 0; i < undirectedMatrix.RowCount; i++)
+                {
+                    List<Incidence> row = undirectedMatrix.GetRow(i);
+                    for(int j = 0; j < row.Count; j++)
+                    {
+                        if(row[j] == Incidence.End)
+                        {
+                            row[j] = Incidence.Start;
+                        }
+                    }
+                    undirectedMatrix.ReplaceRow(i, row);
+                }
+                undirectedMatrix.IsDirected = false;
+                return undirectedMatrix;
+            }
+            return null;
+        }
     }
 }
