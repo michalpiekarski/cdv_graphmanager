@@ -33,6 +33,20 @@ namespace MPGraphs.GraphStructures
             this.edgeWeights = matrix.EdgeWeights;
         }
 
+        public IncidenceMatrixWeighted(IncidenceMatrix matrix) : base(matrix)
+        {
+            this.edgeWeights = new List<Tuple<int, int, int>>(EdgeCount);
+            for (int i = 0; i < VertexCount; i++)
+            {
+                for (int j = 0; j < VertexCount; j++)
+                {
+                    if (FindEdge(i, j) == true)
+                    {
+                        this.edgeWeights.Add(new Tuple<int, int, int>(i, j, 0));
+                    }
+                }
+            }
+        }
         public IncidenceMatrixWeighted(bool isDirected) : base(isDirected)
         {
             this.edgeWeights = new List<Tuple<int,int,int>>();
