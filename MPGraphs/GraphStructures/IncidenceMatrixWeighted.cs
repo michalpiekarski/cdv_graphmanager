@@ -77,6 +77,10 @@ namespace MPGraphs.GraphStructures
             if (edgeAdded == true)
             {
                 this.edgeWeights.Add(new Tuple<int,int,int>(vertexIndexA,vertexIndexB,edgeWeight));
+                if(IsDirected == false)
+                {
+                    this.edgeWeights.Add(new Tuple<int, int, int>(vertexIndexB, vertexIndexA, edgeWeight));
+                }
             }
             return edgeAdded;
         }
@@ -87,6 +91,10 @@ namespace MPGraphs.GraphStructures
             if (edgeRemoved)
             {
                 RemoveWeight(vertexIndexA, vertexIndexB);
+                if(IsDirected == false)
+                {
+                    RemoveWeight(vertexIndexB, vertexIndexA);
+                }
             }
             return edgeRemoved;
         }
@@ -96,8 +104,41 @@ namespace MPGraphs.GraphStructures
             if(vertivesMerged == true)
             {
                 RemoveWeight(vertexIndexA, vertexIndexB);
+                if(IsDirected == false)
+                {
+                    RemoveWeight(vertexIndexB, vertexIndexA);
+                }
             }
             return vertivesMerged;
+        }
+        public override GraphRepresentation<Incidence> ConvertToUndirected()
+        {
+            IncidenceMatrixWeighted undirectedGraph = base.ConvertToUndirected() as IncidenceMatrixWeighted;
+            if(undirectedGraph != null)
+            {
+                foreach (Tuple<int, int, int> edgeWeight in undirectedGraph.edgeWeights)
+                {
+                    Tuple<int, int, int> otherWeight = undirectedGraph.FindWeight(edgeWeight.Item2, edgeWeight.Item1);
+                    if (otherWeight == null)
+                    {
+                        undirectedGraph.edgeWeights.Add(new Tuple<int, int, int>(edgeWeight.Item2, edgeWeight.Item1, edgeWeight.Item3));
+                    }
+                    else
+                    {
+                        if (otherWeight.Item3 < edgeWeight.Item3)
+                        {
+                            undirectedGraph.edgeWeights.Remove(edgeWeight);
+                            undirectedGraph.edgeWeights.Add(new Tuple<int, int, int>(otherWeight.Item2, otherWeight.Item1, otherWeight.Item3));
+                        }
+                        else if (otherWeight.Item3 > edgeWeight.Item3)
+                        {
+                            undirectedGraph.edgeWeights.Remove(otherWeight);
+                            undirectedGraph.edgeWeights.Add(new Tuple<int, int, int>(edgeWeight.Item2, edgeWeight.Item1, edgeWeight.Item3));
+                        }
+                    }
+                }
+            }
+            return undirectedGraph;
         }
     }
 }
