@@ -2,6 +2,7 @@
 using MPGraphs.GraphStructures;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -158,6 +159,41 @@ namespace MPGraphs.GraphStructures.Tests
             expectedRow = new List<Incidence>();
             CollectionAssert.AreEqual(expectedRow, m.GetRow(0));
             Assert.IsTrue(m.GetWeight(0, 2) == null);
+        }
+
+        [TestMethod()]
+        public void FindMSTTest()
+        {
+
+            IncidenceMatrixWeighted m = new IncidenceMatrixWeighted();
+            for(int i = 0; i < 6; i++)
+            {
+                m.AddVertex();
+            }
+            m.AddEdge(0, 1, 5);
+            m.AddEdge(0, 3, 2);
+            m.AddEdge(1, 2, 6);
+            m.AddEdge(1, 3, 7);
+            m.AddEdge(1, 4, 9);
+            m.AddEdge(1, 5, 8);
+            m.AddEdge(2, 5, 3);
+            m.AddEdge(3, 4, 1);
+            m.AddEdge(4, 5, 4);
+            IncidenceMatrixWeighted mst = m.FindMST();
+            IncidenceMatrixWeighted testM = new IncidenceMatrixWeighted();
+            for(int i = 0; i < 6; i++)
+            {
+                testM.AddVertex();
+            }
+            testM.AddEdge(3, 4, 1);
+            testM.AddEdge(0, 3, 2);
+            testM.AddEdge(2, 5, 3);
+            testM.AddEdge(4, 5, 4);
+            testM.AddEdge(0, 1, 5);
+            for (int i = 0; i < mst.RowCount; i++)
+            {
+                CollectionAssert.AreEqual(mst.GetRow(i), testM.GetRow(i));
+            }
         }
     }
 }

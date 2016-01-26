@@ -141,5 +141,51 @@ namespace MPGraphs.GraphStructures
             }
             return undirectedGraph;
         }
+        public AdjacencyMatrixWeighted FindMST()
+        {
+            List<List<int>> sets = new List<List<int>>(VertexCount);
+            AdjacencyMatrixWeighted Drzewo = new AdjacencyMatrixWeighted();
+            for (int i = 0; i < VertexCount; i++)
+            {
+                sets.Add(new List<int>() { i });
+                Drzewo.AddVertex();
+            }
+            List<Tuple<int, int, int>> E = new List<Tuple<int, int, int>>(edgeWeights);
+            E.Sort((a, b) =>
+            {
+                if(a.Item3 > b.Item3)
+                {
+                    return 1;
+                } else if(a.Item3 == b.Item3)
+                {
+                    return 0;
+                } else
+                {
+                    return -1;
+                }
+            });
+            int k = 0;
+            do
+            {
+                Tuple<int,int,int> ek = E[k]; // kolejna krawędź z posortowanego zbioru E
+                if (sets[ek.Item1] != sets[ek.Item2])
+                {
+                    Drzewo.AddEdge(ek.Item1, ek.Item2, ek.Item3);
+                    List<int> subsetU = new List<int>(sets[ek.Item1].Union(sets[ek.Item2]));
+                    sets[ek.Item2] = new List<int>(sets[ek.Item2].Union(sets[ek.Item1]));
+                    sets[ek.Item1] = subsetU;
+                }
+                k++;
+                if(IsDirected == false)
+                {
+                    k++;
+                }
+            } while ((Drzewo.EdgeCount < VertexCount - 1) && (k < E.Count));
+            if (Drzewo.EdgeCount != VertexCount - 1) //Wynikowy graf nie jest spójny
+            {
+                return null;
+            }
+            return Drzewo;
+        }
     }
 }
