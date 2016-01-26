@@ -198,5 +198,27 @@ namespace MPGraphs.GraphStructures.Tests
             m.AddEdge(1, 2);
             Assert.IsTrue(m.MergeComponent(0));
         }
+
+        [TestMethod()]
+        public void ConvertToUndirectedTest()
+        {
+            AdjacencyMatrix m = new AdjacencyMatrix(true);
+            m.AddVertex();
+            m.AddVertex();
+            m.AddVertex();
+            m.AddVertex();
+            Assert.IsTrue(m.VertexCount == 4);
+            Assert.IsTrue(m.EdgeCount == 0);
+            m.AddEdge(0, 1);
+            m.AddEdge(1, 2);
+            m.AddEdge(2, 3);
+            m.AddEdge(0, 3);
+            Assert.IsTrue(m.EdgeCount == 4);
+            Assert.IsFalse(m.MergeComponent(1));
+            AdjacencyMatrix undirectedM = m.ConvertToUndirected() as AdjacencyMatrix;
+            Assert.IsTrue(undirectedM.VertexCount == 4);
+            Assert.IsTrue(undirectedM.EdgeCount == 4);
+            Assert.IsTrue(undirectedM.MergeComponent(1));
+        }
     }
 }
