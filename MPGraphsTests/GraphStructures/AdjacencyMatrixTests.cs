@@ -203,10 +203,10 @@ namespace MPGraphs.GraphStructures.Tests
         public void ConvertToUndirectedTest()
         {
             AdjacencyMatrix m = new AdjacencyMatrix(true);
-            m.AddVertex();
-            m.AddVertex();
-            m.AddVertex();
-            m.AddVertex();
+            for(int i = 0; i < 4; i++)
+            {
+                m.AddVertex();
+            }
             Assert.IsTrue(m.VertexCount == 4);
             Assert.IsTrue(m.EdgeCount == 0);
             m.AddEdge(0, 1);
@@ -219,6 +219,31 @@ namespace MPGraphs.GraphStructures.Tests
             Assert.IsTrue(undirectedM.VertexCount == 4);
             Assert.IsTrue(undirectedM.EdgeCount == 4);
             Assert.IsTrue(undirectedM.MergeComponent(1));
+        }
+        [TestMethod()]
+        public void IsConnectedTest()
+        {
+            AdjacencyMatrix m = new AdjacencyMatrix(true);
+            for (int i = 0; i < 4; i++)
+            {
+                m.AddVertex();
+            }
+            Assert.IsTrue(m.VertexCount == 4);
+            Assert.IsTrue(m.EdgeCount == 0);
+            m.AddEdge(0, 1);
+            m.AddEdge(1, 2);
+            m.AddEdge(2, 3);
+            m.AddEdge(0, 3);
+            Assert.IsTrue(m.EdgeCount == 4);
+            Assert.IsFalse(m.MergeComponent(1));
+            Assert.IsFalse(m.IsConnected);
+            AdjacencyMatrix undirectedM = m.ConvertToUndirected() as AdjacencyMatrix;
+            Assert.IsTrue(undirectedM.VertexCount == 4);
+            Assert.IsTrue(undirectedM.EdgeCount == 4);
+            Assert.IsTrue(undirectedM.MergeComponent(1));
+            Assert.IsTrue(undirectedM.IsConnected);
+            m.AddEdge(3, 0);
+            Assert.IsTrue(m.IsConnected);
         }
     }
 }

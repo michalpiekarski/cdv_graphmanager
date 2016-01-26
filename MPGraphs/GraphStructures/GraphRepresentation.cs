@@ -38,6 +38,20 @@ namespace MPGraphs.GraphStructures
         {
             get;
         }
+        public bool IsConnected
+        {
+            get
+            {
+                for(int i = 0; i < VertexCount; i++)
+                {
+                    if(MergeComponent(i) == false)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
         #endregion Properties
         #region Vertex Manipulation
         /// <summary>
