@@ -4,6 +4,4 @@
 
 - Separate the directed and undirected graph representation
 - Conversion between graph representations
-- Path length algorithm
-- Calculating radius, diameter and graphs center
 - Eulerian cycle algorithm
