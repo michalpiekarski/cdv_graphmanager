@@ -312,5 +312,45 @@ namespace MPGraphs.GraphStructures
             }
             return null;
         }
+        public List<int> Fleury()
+        {
+            List<int> oddAdjacent = new List<int>();
+            for (int i = 0; i < VertexCount; i++)
+            {
+                if(FindAdjacentVertices(i).Count % 2 == 1)
+                {
+                    oddAdjacent.Add(i);
+                }
+                if(oddAdjacent.Count > 2)
+                {
+                    return null; // graf nie jest eulerowski
+                }
+            }
+            if(oddAdjacent.Count == 1)
+            {
+                return null; // graf nie jest eulerowski
+            }
+
+            int v;
+            if(oddAdjacent.Count == 0)
+            {
+                v = 0;
+            } else
+            {
+                v = oddAdjacent[0];
+            }
+
+            List<int> W = new List<int>() { v };
+            AdjacencyMatrix m = new AdjacencyMatrix(this);
+            while (m.EdgeCount > 0)
+            {
+                List<int> N = m.FindAdjacentVertices(v);
+                int w = N.Last();
+                W.Add(w);
+                m.RemoveEdge(v, w);
+                v = w;
+            }
+            return W;
+        }
     }
 }

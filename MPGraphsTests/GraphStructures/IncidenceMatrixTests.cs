@@ -272,5 +272,33 @@ namespace MPGraphs.GraphStructures.Tests
             m.AddEdge(3, 0);
             Assert.IsTrue(m.IsConnected);
         }
+
+        [TestMethod()]
+        public void FleuryTest() // FAILS - removes to many edges
+        {
+            IncidenceMatrix m = new IncidenceMatrix();
+            for (int i = 0; i < 9; i++)
+            {
+                m.AddVertex();
+            }
+            m.AddEdge(0, 1);
+            m.AddEdge(1, 2);
+            m.AddEdge(3, 0);
+            m.AddEdge(3, 1);
+            m.AddEdge(3, 4);
+            m.AddEdge(4, 1);
+            m.AddEdge(4, 2);
+            m.AddEdge(4, 5);
+            m.AddEdge(5, 2);
+            m.AddEdge(6, 4);
+            m.AddEdge(6, 5);
+            m.AddEdge(7, 3);
+            m.AddEdge(7, 2);
+            m.AddEdge(8, 4);
+            m.AddEdge(8, 5);
+            List<int> fleuryResult = m.Fleury();
+            List<int> fleuryTest = new List<int>() { 0, 3, 7, 2, 5, 8, 4, 6, 5, 4, 3, 1, 4, 2, 1, 0 };
+            CollectionAssert.AreEqual(fleuryTest, fleuryResult);
+        }
     }
 }
