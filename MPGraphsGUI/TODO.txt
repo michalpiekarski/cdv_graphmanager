@@ -3,9 +3,3 @@
 ------------------------------------------
 
 - Wyświetlanie graficzne struktury grafu
-- Interfejs do edycji grafu i wyboru algorytmu
-- Wyszukiwanie w grafie – BFS, DFS
-- Sprawdzanie spójności (nieskierowany i skierowany)
-- Wyszukiwanie MST w grafie ważonym (dowolnym algorytmem)
-- Wyznaczanie odległości między wszystkimi wierzchołkami w grafie ważonym, obliczanie średnicy, promienia i centrum grafu (dowolnym algorytmem)
-- Wyznaczanie cyklu Eulera w grafach eulerowskich (dowolnym algorytmem)

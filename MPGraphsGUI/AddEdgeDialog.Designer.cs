@@ -35,14 +35,17 @@
             this.vertexIndexBInput = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.weightsLabel = new System.Windows.Forms.Label();
+            this.weightInput = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.vertexIndexAInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vertexIndexBInput)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weightInput)).BeginInit();
             this.SuspendLayout();
             // 
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(116, 94);
+            this.cancelButton.Location = new System.Drawing.Point(116, 118);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 13;
@@ -52,7 +55,7 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(197, 94);
+            this.okButton.Location = new System.Drawing.Point(197, 118);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 12;
@@ -62,7 +65,7 @@
             // 
             // vertexIndexAInput
             // 
-            this.vertexIndexAInput.Location = new System.Drawing.Point(195, 42);
+            this.vertexIndexAInput.Location = new System.Drawing.Point(195, 40);
             this.vertexIndexAInput.Name = "vertexIndexAInput";
             this.vertexIndexAInput.Size = new System.Drawing.Size(77, 20);
             this.vertexIndexAInput.TabIndex = 11;
@@ -70,7 +73,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(108, 70);
+            this.label3.Location = new System.Drawing.Point(108, 68);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(81, 13);
             this.label3.TabIndex = 10;
@@ -78,7 +81,7 @@
             // 
             // vertexIndexBInput
             // 
-            this.vertexIndexBInput.Location = new System.Drawing.Point(195, 68);
+            this.vertexIndexBInput.Location = new System.Drawing.Point(195, 66);
             this.vertexIndexBInput.Name = "vertexIndexBInput";
             this.vertexIndexBInput.Size = new System.Drawing.Size(77, 20);
             this.vertexIndexBInput.TabIndex = 9;
@@ -86,7 +89,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(108, 44);
+            this.label2.Location = new System.Drawing.Point(108, 42);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(81, 13);
             this.label2.TabIndex = 8;
@@ -101,14 +104,32 @@
             this.label1.TabIndex = 7;
             this.label1.Text = "Podaj indeksy wierzchołków do połączenia krawędzią:";
             // 
+            // weightsLabel
+            // 
+            this.weightsLabel.AutoSize = true;
+            this.weightsLabel.Location = new System.Drawing.Point(149, 94);
+            this.weightsLabel.Name = "weightsLabel";
+            this.weightsLabel.Size = new System.Drawing.Size(39, 13);
+            this.weightsLabel.TabIndex = 14;
+            this.weightsLabel.Text = "Waga:";
+            // 
+            // weightInput
+            // 
+            this.weightInput.Location = new System.Drawing.Point(195, 92);
+            this.weightInput.Name = "weightInput";
+            this.weightInput.Size = new System.Drawing.Size(77, 20);
+            this.weightInput.TabIndex = 15;
+            // 
             // AddEdgeDialog
             // 
             this.AcceptButton = this.okButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(284, 129);
+            this.ClientSize = new System.Drawing.Size(284, 153);
             this.ControlBox = false;
+            this.Controls.Add(this.weightInput);
+            this.Controls.Add(this.weightsLabel);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.vertexIndexAInput);
@@ -125,6 +146,7 @@
             this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.vertexIndexAInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.vertexIndexBInput)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weightInput)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -139,5 +161,7 @@
         private System.Windows.Forms.NumericUpDown vertexIndexBInput;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label weightsLabel;
+        private System.Windows.Forms.NumericUpDown weightInput;
     }
 }

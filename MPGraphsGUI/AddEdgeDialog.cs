@@ -14,17 +14,26 @@ namespace MPGraphsGUI
     {
         public int? VertexIndexA { get; private set; }
         public int? VertexIndexB { get; private set; }
-        public AddEdgeDialog()
+        public int? Weight { get; private set; }
+
+        public AddEdgeDialog(bool isWeighted = false)
         {
             InitializeComponent();
             this.VertexIndexA = null;
             this.VertexIndexB = null;
+            this.Weight = null;
+            if (isWeighted == false)
+            {
+                weightsLabel.Enabled = false;
+                weightInput.Enabled = false;
+            }
         }
 
         private void okButton_Click(object sender, EventArgs e)
         {
             this.VertexIndexA = (int)vertexIndexAInput.Value;
             this.VertexIndexB = (int)vertexIndexBInput.Value;
+            this.Weight = (int)weightInput.Value;
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

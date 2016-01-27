@@ -319,16 +319,8 @@ namespace MPGraphs.GraphStructures
             {
                 if(FindAdjacentVertices(i).Count % 2 == 1)
                 {
-                    oddAdjacent.Add(i);
-                }
-                if(oddAdjacent.Count > 2)
-                {
                     return null; // graf nie jest eulerowski
                 }
-            }
-            if(oddAdjacent.Count == 1)
-            {
-                return null; // graf nie jest eulerowski
             }
 
             int v;

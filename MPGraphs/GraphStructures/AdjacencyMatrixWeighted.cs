@@ -28,7 +28,7 @@ namespace MPGraphs.GraphStructures
             get
             {
                 List<List<double>> pathWeights = Floyd().Item1;
-                double diameter = double.MinValue;
+                double diameter = double.NegativeInfinity;
                 foreach(List<double> row in pathWeights)
                 {
                     diameter = Math.Max(diameter, row.Max());
@@ -41,7 +41,7 @@ namespace MPGraphs.GraphStructures
             get
             {
                 List<List<double>> pathWeights = Floyd().Item1;
-                double radius = double.MaxValue;
+                double radius = double.PositiveInfinity;
                 foreach (List<double> row in pathWeights)
                 {
                     radius = Math.Min(radius, row.Max());

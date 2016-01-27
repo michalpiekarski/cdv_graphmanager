@@ -52,11 +52,29 @@
     <Compile Include="AddEdgeDialog.Designer.cs">
       <DependentUpon>AddEdgeDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="CheckConnectedDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CheckConnectedDialog.Designer.cs">
+      <DependentUpon>CheckConnectedDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CheckPathsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CheckPathsDialog.Designer.cs">
+      <DependentUpon>CheckPathsDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeleteGraphConfirmDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DeleteGraphConfirmDialog.Designer.cs">
       <DependentUpon>DeleteGraphConfirmDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GraphSearchDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraphSearchDialog.Designer.cs">
+      <DependentUpon>GraphSearchDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
@@ -84,6 +102,18 @@
     <Compile Include="RemoveVertexDialog.Designer.cs">
       <DependentUpon>RemoveVertexDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="SearchEulerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchEulerDialog.Designer.cs">
+      <DependentUpon>SearchEulerDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SearchMSTDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchMSTDialog.Designer.cs">
+      <DependentUpon>SearchMSTDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ShowListOfNeighbours.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,8 +123,17 @@
     <EmbeddedResource Include="AddEdgeDialog.resx">
       <DependentUpon>AddEdgeDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CheckConnectedDialog.resx">
+      <DependentUpon>CheckConnectedDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CheckPathsDialog.resx">
+      <DependentUpon>CheckPathsDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DeleteGraphConfirmDialog.resx">
       <DependentUpon>DeleteGraphConfirmDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphSearchDialog.resx">
+      <DependentUpon>GraphSearchDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
@@ -116,6 +155,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RemoveVertexDialog.resx">
       <DependentUpon>RemoveVertexDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchEulerDialog.resx">
+      <DependentUpon>SearchEulerDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchMSTDialog.resx">
+      <DependentUpon>SearchMSTDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ShowListOfNeighbours.resx">
       <DependentUpon>ShowListOfNeighbours.cs</DependentUpon>

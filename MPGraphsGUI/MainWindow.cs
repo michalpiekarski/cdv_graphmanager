@@ -156,6 +156,16 @@ namespace MPGraphsGUI
                             }
                         }
                     }
+                    if(CurrentMatrixI.VertexCount > 0)
+                    {
+                        generateCompleteRandomButton.Enabled = false;
+                        generateRandomButton.Enabled = false;
+                    }
+                    else
+                    {
+                        generateCompleteRandomButton.Enabled = true;
+                        generateRandomButton.Enabled = true;
+                    }
                     matrixOutput.Text = GenerateIncidenceString(CurrentMatrixI);
                     break;
                 case "adjacency":
@@ -172,6 +182,16 @@ namespace MPGraphsGUI
                                 edgeList.Items.Add(String.Format("{0}--{1}", i, j));
                             }
                         }
+                    }
+                    if (CurrentMatrixA.VertexCount > 0)
+                    {
+                        generateCompleteRandomButton.Enabled = false;
+                        generateRandomButton.Enabled = false;
+                    }
+                    else
+                    {
+                        generateCompleteRandomButton.Enabled = true;
+                        generateRandomButton.Enabled = true;
                     }
                     matrixOutput.Text = GenerateAdjacencyString(CurrentMatrixA);
                     break;
@@ -190,6 +210,16 @@ namespace MPGraphsGUI
                             }
                         }
                     }
+                    if (CurrentMatrixIW.VertexCount > 0)
+                    {
+                        generateCompleteRandomButton.Enabled = false;
+                        generateRandomButton.Enabled = false;
+                    }
+                    else
+                    {
+                        generateCompleteRandomButton.Enabled = true;
+                        generateRandomButton.Enabled = true;
+                    }
                     matrixOutput.Text = GenerateIncidenceString(CurrentMatrixIW);
                     break;
                 case "adjacencyWeighted":
@@ -206,6 +236,15 @@ namespace MPGraphsGUI
                                 edgeList.Items.Add(String.Format("{0}--{1}", i, j));
                             }
                         }
+                    }
+                    if (CurrentMatrixAW.VertexCount > 0)
+                    {
+                        generateCompleteRandomButton.Enabled = false;
+                        generateRandomButton.Enabled = false;
+                    } else
+                    {
+                        generateCompleteRandomButton.Enabled = true;
+                        generateRandomButton.Enabled = true;
                     }
                     matrixOutput.Text = GenerateAdjacencyString(CurrentMatrixAW);
                     break;
@@ -352,43 +391,203 @@ namespace MPGraphsGUI
 
         private void addEdgeButton_Click(object sender, EventArgs e)
         {
-
-            using (AddEdgeDialog dialog = new AddEdgeDialog())
+            int vertexIndexA;
+            int vertexIndexB;
+            int weight;
+            switch (Graphs[CurrentGraphKey])
             {
-                DialogResult result = dialog.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    int vertexIndexA = (int)dialog.VertexIndexA;
-                    int vertexIndexB = (int)dialog.VertexIndexB;
-                    switch (Graphs[CurrentGraphKey])
+                case "incidence":
+                    using (AddEdgeDialog dialog = new AddEdgeDialog())
                     {
-                        case "incidence":
+                        DialogResult result = dialog.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            vertexIndexA = (int)dialog.VertexIndexA;
+                            vertexIndexB = (int)dialog.VertexIndexB;
                             IncidenceMatrix CurrentMatrixI = GraphsIncidence[CurrentGraphKey];
                             CurrentMatrixI.AddEdge(vertexIndexA, vertexIndexB);
-                            break;
-                        case "adjacency":
+                        }
+                    }
+                    break;
+                case "adjacency":
+                    using (AddEdgeDialog dialog = new AddEdgeDialog())
+                    {
+                        DialogResult result = dialog.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            vertexIndexA = (int)dialog.VertexIndexA;
+                            vertexIndexB = (int)dialog.VertexIndexB;
                             AdjacencyMatrix CurrentMatrixA = GraphsAdjacenecy[CurrentGraphKey];
                             CurrentMatrixA.AddEdge(vertexIndexA, vertexIndexB);
-                            break;
-                        case "incidenceWeighted":
-                            IncidenceMatrixWeighted CurrentMatrixIW = GraphsIncidenceWeighted[CurrentGraphKey];
-                            CurrentMatrixIW.AddEdge(vertexIndexA, vertexIndexB);
-                            break;
-                        case "adjacencyWeighted":
-                            AdjacencyMatrixWeighted CurrentMatrixAW = GraphsAdjacencyWeighted[CurrentGraphKey];
-                            CurrentMatrixAW.AddEdge(vertexIndexA, vertexIndexB);
-                            break;
-                        default:
-                            break;
+                        }
                     }
-                    LoadGraph();
-                }
+                    break;
+                case "incidenceWeighted":
+                    using (AddEdgeDialog dialog = new AddEdgeDialog(true))
+                    {
+                        DialogResult result = dialog.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            vertexIndexA = (int)dialog.VertexIndexA;
+                            vertexIndexB = (int)dialog.VertexIndexB;
+                            weight = (int)dialog.Weight;
+                            IncidenceMatrixWeighted CurrentMatrixIW = GraphsIncidenceWeighted[CurrentGraphKey];
+                            CurrentMatrixIW.AddEdge(vertexIndexA, vertexIndexB, weight);
+                        }
+                    }
+                    break;
+                case "adjacencyWeighted":
+                    using (AddEdgeDialog dialog = new AddEdgeDialog(true))
+                    {
+                        DialogResult result = dialog.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            vertexIndexA = (int)dialog.VertexIndexA;
+                            vertexIndexB = (int)dialog.VertexIndexB;
+                            weight = (int)dialog.Weight;
+                            AdjacencyMatrixWeighted CurrentMatrixAW = GraphsAdjacencyWeighted[CurrentGraphKey];
+                            CurrentMatrixAW.AddEdge(vertexIndexA, vertexIndexB, weight);
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
+            LoadGraph();
         }
 
         private void showNeighboursButton_Click(object sender, EventArgs e)
         {
             using(ShowListOfNeighbours dialog = new ShowListOfNeighbours(this))
+            {
+                dialog.ShowDialog();
+            }
+        }
+
+        private void checkConnectedButton_Click(object sender, EventArgs e)
+        {
+            using(CheckConnectedDialog dialog = new CheckConnectedDialog(this))
+            {
+                dialog.ShowDialog();
+            }
+        }
+
+        private void searchMSTButton_Click(object sender, EventArgs e)
+        {
+            using (SearchMSTDialog dialog = new SearchMSTDialog(this))
+            {
+                dialog.ShowDialog();
+            }
+        }
+
+        private void generateCompleteRandomButton_Click(object sender, EventArgs e)
+        {
+            Random r = new Random(DateTime.Now.Millisecond);
+            int vertexCount = r.Next(5, 20);
+            switch (Graphs[CurrentGraphKey])
+            {
+                case "incidence":
+                    GraphsIncidence[CurrentGraphKey] = IncidenceMatrix.CompleteGraph<IncidenceMatrix, Incidence>(vertexCount);
+                    break;
+                case "adjacency":
+                    GraphsAdjacenecy[CurrentGraphKey] = AdjacencyMatrix.CompleteGraph<AdjacencyMatrix, Adjacency>(vertexCount);
+                    break;
+                case "incidenceWeighted":
+                    GraphsIncidenceWeighted[CurrentGraphKey] = IncidenceMatrixWeighted.CompleteGraph<IncidenceMatrixWeighted, Incidence>(vertexCount);
+                    break;
+                case "adjacencyWeighted":
+                    GraphsAdjacencyWeighted[CurrentGraphKey] = AdjacencyMatrixWeighted.CompleteGraph<AdjacencyMatrixWeighted, Adjacency>(vertexCount);
+                    break;
+                default:
+                    break;
+            }
+            LoadGraph();
+        }
+
+        private void generateRandomButton_Click(object sender, EventArgs e)
+        {
+            Random r = new Random(DateTime.Now.Millisecond);
+            int vertexCount = r.Next(5, 20);
+            int edgeCount = r.Next(3, 30);
+            switch (Graphs[CurrentGraphKey])
+            {
+                case "incidence":
+                    IncidenceMatrix CurrentMatrixI = GraphsIncidence[CurrentGraphKey];
+                    for (int i = 0; i < vertexCount; i++)
+                    {
+                        CurrentMatrixI.AddVertex();
+                    }
+                    for (int i = 0; i < edgeCount; i++)
+                    {
+                        CurrentMatrixI.AddEdge(r.Next(0, vertexCount - 1), r.Next(0, vertexCount - 1));
+                    }
+                    break;
+                case "adjacency":
+                    AdjacencyMatrix CurrentMatrixA = GraphsAdjacenecy[CurrentGraphKey];
+                    for (int i = 0; i < vertexCount; i++)
+                    {
+                        CurrentMatrixA.AddVertex();
+                    }
+                    for (int i = 0; i < edgeCount; i++)
+                    {
+                        CurrentMatrixA.AddEdge(r.Next(0, vertexCount - 1), r.Next(0, vertexCount - 1));
+                    }
+                    break;
+                case "incidenceWeighted":
+                    IncidenceMatrixWeighted CurrentMatrixIW = GraphsIncidenceWeighted[CurrentGraphKey];
+                    for (int i = 0; i < vertexCount; i++)
+                    {
+                        CurrentMatrixIW.AddVertex();
+                    }
+                    for (int i = 0; i < edgeCount; i++)
+                    {
+                        CurrentMatrixIW.AddEdge(r.Next(0, vertexCount - 1), r.Next(0, vertexCount - 1), r.Next(0, 100));
+                    }
+                    break;
+                case "adjacencyWeighted":
+                    AdjacencyMatrixWeighted CurrentMatrixAW = GraphsAdjacencyWeighted[CurrentGraphKey];
+                    for (int i = 0; i < vertexCount; i++)
+                    {
+                        CurrentMatrixAW.AddVertex();
+                    }
+                    for (int i = 0; i < edgeCount; i++)
+                    {
+                        CurrentMatrixAW.AddEdge(r.Next(0, vertexCount - 1), r.Next(0, vertexCount - 1), r.Next(0, 100));
+                    }
+                    break;
+                default:
+                    break;
+            }
+            LoadGraph();
+        }
+
+        private void EulerButton_Click(object sender, EventArgs e)
+        {
+            using(SearchEulerDialog dialog = new SearchEulerDialog(this))
+            {
+                dialog.ShowDialog();
+            }
+        }
+
+        private void checkPathsButton_Click(object sender, EventArgs e)
+        {
+            using(CheckPathsDialog dialog = new CheckPathsDialog(this))
+            {
+                dialog.ShowDialog();
+            }
+        }
+
+        private void DFSButton_Click(object sender, EventArgs e)
+        {
+            using(GraphSearchDialog dialog = new GraphSearchDialog(this, "dfs"))
+            {
+                dialog.ShowDialog();
+            }
+        }
+
+        private void BFSButton_Click(object sender, EventArgs e)
+        {
+            using (GraphSearchDialog dialog = new GraphSearchDialog(this, "bfs"))
             {
                 dialog.ShowDialog();
             }
