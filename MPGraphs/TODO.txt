@@ -4,3 +4,4 @@
 
 - Separate the directed and undirected graph representation
 - Conversion between graph representations
+- Fix failing test case for Fleury in IncidenceMatrix
