@@ -166,7 +166,7 @@ namespace MPGraphs.GraphStructures.Tests
         {
 
             IncidenceMatrixWeighted m = new IncidenceMatrixWeighted();
-            for(int i = 0; i < 6; i++)
+            for (int i = 0; i < 6; i++)
             {
                 m.AddVertex();
             }
@@ -181,7 +181,7 @@ namespace MPGraphs.GraphStructures.Tests
             m.AddEdge(4, 5, 4);
             IncidenceMatrixWeighted mst = m.FindMST();
             IncidenceMatrixWeighted testM = new IncidenceMatrixWeighted();
-            for(int i = 0; i < 6; i++)
+            for (int i = 0; i < 6; i++)
             {
                 testM.AddVertex();
             }
@@ -193,6 +193,50 @@ namespace MPGraphs.GraphStructures.Tests
             for (int i = 0; i < mst.RowCount; i++)
             {
                 CollectionAssert.AreEqual(mst.GetRow(i), testM.GetRow(i));
+            }
+        }
+
+        [TestMethod()]
+        public void FloydTest()
+        {
+            IncidenceMatrixWeighted m = new IncidenceMatrixWeighted();
+            for (int i = 0; i < 5; i++)
+            {
+                m.AddVertex();
+            }
+            m.AddEdge(0, 1, 2);
+            m.AddEdge(0, 4, 1);
+            m.AddEdge(1, 2, 1);
+            m.AddEdge(1, 3, 4);
+            m.AddEdge(1, 4, 8);
+            m.AddEdge(2, 3, 2);
+            m.AddEdge(3, 4, 10);
+            Tuple<List<List<double>>, List<List<double>>> floydResult = m.Floyd();
+            List<List<double>> floydResultWTest = new List<List<double>>()
+            {
+                new List<double>() {0,2,3,5,1},
+                new List<double>() {2,0,1,3,3},
+                new List<double>() {3,1,0,2,4},
+                new List<double>() {5,3,2,0,6},
+                new List<double>() {1,3,4,6,0}
+            };
+            List<List<double>> floydResultPTest = new List<List<double>>()
+            {
+                new List<double>() {-1,0,1,2,0},
+                new List<double>() {1,-1,1,2,0},
+                new List<double>() {1,2,-1,2,0},
+                new List<double>() {1,2,3,-1,0},
+                new List<double>() {4,0,1,2,-1}
+            };
+
+            for (int i = 0; i < floydResult.Item1.Count; i++)
+            {
+                CollectionAssert.AreEqual(floydResult.Item1[i], floydResultWTest[i]);
+            }
+
+            for (int i = 0; i < floydResult.Item2.Count; i++)
+            {
+                CollectionAssert.AreEqual(floydResult.Item2[i], floydResultPTest[i]);
             }
         }
     }

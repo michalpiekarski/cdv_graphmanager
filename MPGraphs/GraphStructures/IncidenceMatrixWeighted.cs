@@ -23,6 +23,51 @@ namespace MPGraphs.GraphStructures
                 }
             }
         }
+        public double Diameter
+        {
+            get
+            {
+                List<List<double>> pathWeights = Floyd().Item1;
+                double diameter = double.MinValue;
+                foreach (List<double> row in pathWeights)
+                {
+                    diameter = Math.Max(diameter, row.Max());
+                }
+                return diameter;
+            }
+        }
+        public double Radius
+        {
+            get
+            {
+                List<List<double>> pathWeights = Floyd().Item1;
+                double radius = double.MaxValue;
+                foreach (List<double> row in pathWeights)
+                {
+                    radius = Math.Min(radius, row.Max());
+                }
+                return radius;
+            }
+        }
+        public List<int> GraphCenter
+        {
+            get
+            {
+                List<int> graphCenter = new List<int>();
+                double radius = Radius;
+                List<List<double>> pathWeights = Floyd().Item1;
+                int i = 0;
+                foreach (List<double> row in pathWeights)
+                {
+                    if (row.Max() == radius)
+                    {
+                        graphCenter.Add(i);
+                    }
+                    i++;
+                }
+                return graphCenter;
+            }
+        }
         public IncidenceMatrixWeighted() : base()
         {
             this.edgeWeights = new List<Tuple<int,int,int>>();
@@ -201,6 +246,80 @@ namespace MPGraphs.GraphStructures
                 return null;
             }
             return Drzewo;
+        }
+
+        public Tuple<List<List<double>>, List<List<double>>> Floyd()
+        {
+            List<List<double>> StaraWartość = new List<List<double>>(VertexCount);
+            for (int i = 0; i < VertexCount; i++)
+            {
+                StaraWartość.Add(new List<double>(VertexCount));
+                for (int j = 0; j < VertexCount; j++)
+                {
+                    if (i == j)
+                    {
+                        StaraWartość[i].Add(0);
+                    }
+                    else
+                    {
+                        int? edgeWeight = GetWeight(i, j);
+                        if (edgeWeight != null)
+                        {
+                            StaraWartość[i].Add((double)edgeWeight);
+                        }
+                        else
+                        {
+                            StaraWartość[i].Add(double.PositiveInfinity);
+                        }
+                    }
+                }
+            }
+
+            List<List<double>> StareP = new List<List<double>>(VertexCount);
+            for (int v = 0; v < VertexCount; v++)
+            {
+                StareP.Add(new List<double>(VertexCount));
+                for (int w = 0; w < VertexCount; w++)
+                {
+                    if ((v == w) || GetWeight(v, w) == null)
+                    {
+                        StareP[v].Add(-1);
+                    }
+                    else
+                    {
+                        StareP[v].Add(v);
+                    }
+                }
+            }
+
+            List<List<double>> Wartość = null;
+            List<List<double>> P = null;
+            for (int k = 0; k < VertexCount; k++)
+            {
+                Wartość = new List<List<double>>(StaraWartość);
+                P = new List<List<double>>(StareP);
+                for (int v = 0; v < VertexCount; v++)
+                {
+                    for (int w = 0; w < VertexCount; w++)
+                    {
+                        if (StaraWartość[v][w] > StaraWartość[v][k] + StaraWartość[k][w])
+                        {
+                            Wartość[v][w] = StaraWartość[v][k] + StaraWartość[k][w];
+                            P[v][w] = StareP[k][w];
+                        }
+                    }
+                }
+                for (int v = 0; v < VertexCount; v++)
+                {
+                    if (Wartość[v][v] < -1)
+                    {
+                        //Graf zawiera cykl o ujemnej sumie wag;
+                        //STOP;
+                        return null;
+                    }
+                }
+            }
+            return new Tuple<List<List<double>>, List<List<double>>>(Wartość, P); // dwie tablice
         }
     }
 }
