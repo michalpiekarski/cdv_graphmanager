@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPGraphs", "MPGraphs\MPGraphs.csproj", "{8093986B-2E7F-470D-8DC2-55DEFDDA4F3A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPGraphsTests", "MPGraphsTests\MPGraphsTests.csproj", "{4E381AD7-861B-4F70-8361-9D7CD2E115D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPGraphsGUI", "MPGraphsGUI\MPGraphsGUI.csproj", "{11028423-3A00-4137-97E0-B22279CFE203}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{4E381AD7-861B-4F70-8361-9D7CD2E115D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E381AD7-861B-4F70-8361-9D7CD2E115D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E381AD7-861B-4F70-8361-9D7CD2E115D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11028423-3A00-4137-97E0-B22279CFE203}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11028423-3A00-4137-97E0-B22279CFE203}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11028423-3A00-4137-97E0-B22279CFE203}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11028423-3A00-4137-97E0-B22279CFE203}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
