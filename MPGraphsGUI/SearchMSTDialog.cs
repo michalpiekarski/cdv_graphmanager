@@ -24,21 +24,39 @@ namespace MPGraphsGUI
         {
             IncidenceMatrixWeighted msti = null;
             AdjacencyMatrixWeighted msta = null;
+            CheckBox labels = new CheckBox();
+            labels.Checked = true;
             switch (mainRef.Graphs[mainRef.CurrentGraphKey])
             {
                 case "incidence":
                     IncidenceMatrixWeighted mi = new IncidenceMatrixWeighted(mainRef.GraphsIncidence[mainRef.CurrentGraphKey]);
                     msti = mi.FindMST();
+                    if (msti != null)
+                    {
+                        mainRef.DrawGraph<IncidenceMatrix, Incidence>(msti, true, splitContainer1.Panel2, labels, 20, 25);
+                    }
                     break;
                 case "adjacency":
                     AdjacencyMatrixWeighted ma = new AdjacencyMatrixWeighted(mainRef.GraphsAdjacenecy[mainRef.CurrentGraphKey]);
                     msta = ma.FindMST();
+                    if (msta != null)
+                    {
+                        mainRef.DrawGraph<AdjacencyMatrix, Adjacency>(msta, true, splitContainer1.Panel2, labels, 20, 25);
+                    }
                     break;
                 case "incidenceWeighted":
                     msti = mainRef.GraphsIncidenceWeighted[mainRef.CurrentGraphKey].FindMST();
+                    if (msti != null)
+                    {
+                        mainRef.DrawGraph<IncidenceMatrix, Incidence>(msti, true, splitContainer1.Panel2, labels, 20, 25);
+                    }
                     break;
                 case "adjacencyWeighted":
                     msta = mainRef.GraphsAdjacencyWeighted[mainRef.CurrentGraphKey].FindMST();
+                    if (msta != null)
+                    {
+                        mainRef.DrawGraph<AdjacencyMatrix, Adjacency>(msta, true, splitContainer1.Panel2, labels, 20, 25);
+                    }
                     break;
                 default:
                     break;

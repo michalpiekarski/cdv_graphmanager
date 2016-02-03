@@ -32,6 +32,8 @@
             this.vertexIndexInput = new System.Windows.Forms.NumericUpDown();
             this.incidentList = new System.Windows.Forms.ListView();
             this.searchButton = new System.Windows.Forms.Button();
+            this.neighbourDraw = new System.Windows.Forms.Panel();
+            this.neighbourLabels = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.vertexIndexInput)).BeginInit();
             this.SuspendLayout();
             // 
@@ -69,11 +71,31 @@
             this.searchButton.UseVisualStyleBackColor = true;
             this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
+            // neighbourDraw
+            // 
+            this.neighbourDraw.Location = new System.Drawing.Point(12, 73);
+            this.neighbourDraw.Name = "neighbourDraw";
+            this.neighbourDraw.Size = new System.Drawing.Size(189, 193);
+            this.neighbourDraw.TabIndex = 4;
+            // 
+            // neighbourLabels
+            // 
+            this.neighbourLabels.AutoSize = true;
+            this.neighbourLabels.Location = new System.Drawing.Point(138, 272);
+            this.neighbourLabels.Name = "neighbourLabels";
+            this.neighbourLabels.Size = new System.Drawing.Size(63, 17);
+            this.neighbourLabels.TabIndex = 5;
+            this.neighbourLabels.Text = "Etykiety";
+            this.neighbourLabels.UseVisualStyleBackColor = true;
+            this.neighbourLabels.CheckedChanged += new System.EventHandler(this.neighbourLabels_CheckedChanged);
+            // 
             // ShowListOfNeighbours
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(315, 301);
+            this.Controls.Add(this.neighbourLabels);
+            this.Controls.Add(this.neighbourDraw);
             this.Controls.Add(this.searchButton);
             this.Controls.Add(this.incidentList);
             this.Controls.Add(this.vertexIndexInput);
@@ -87,6 +109,7 @@
             this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.vertexIndexInput)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -96,5 +119,7 @@
         private System.Windows.Forms.NumericUpDown vertexIndexInput;
         private System.Windows.Forms.ListView incidentList;
         private System.Windows.Forms.Button searchButton;
+        private System.Windows.Forms.Panel neighbourDraw;
+        private System.Windows.Forms.CheckBox neighbourLabels;
     }
 }

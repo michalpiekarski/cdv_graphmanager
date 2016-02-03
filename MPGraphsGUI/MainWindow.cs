@@ -30,7 +30,7 @@ namespace MPGraphsGUI
 
         private void addGraphButton_Click(object sender, EventArgs e)
         {
-            using(NewGraphDialog dialog = new NewGraphDialog())
+            using(NewGraphDialog dialog = new NewGraphDialog(this))
             {
                 DialogResult result = dialog.ShowDialog();
                 if(result == DialogResult.OK)
@@ -591,6 +591,169 @@ namespace MPGraphsGUI
             {
                 dialog.ShowDialog();
             }
+        }
+        Graphics graphDrawing;
+        private void drawTab_Paint(object sender, PaintEventArgs e)
+        {
+            DrawGraph();
+        }
+
+        private void DrawGraph()
+        {
+            if (CurrentGraphKey != null)
+            {
+                switch (Graphs[CurrentGraphKey])
+                {
+                    case "incidence":
+                        IncidenceMatrix im = GraphsIncidence[CurrentGraphKey];
+                        DrawGraph<IncidenceMatrix, Incidence>(im);
+                        break;
+                    case "adjacency":
+                        AdjacencyMatrix am = GraphsAdjacenecy[CurrentGraphKey];
+                        DrawGraph<AdjacencyMatrix, Adjacency>(am);
+                        break;
+                    case "incidenceWeighted":
+                        IncidenceMatrixWeighted iwm = GraphsIncidenceWeighted[CurrentGraphKey];
+                        DrawGraph<IncidenceMatrixWeighted, Incidence>(iwm);
+                        break;
+                    case "adjacencyWeighted":
+                        AdjacencyMatrixWeighted awm = GraphsAdjacencyWeighted[CurrentGraphKey];
+                        DrawGraph<AdjacencyMatrixWeighted, Adjacency>(awm);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        public void DrawGraph<T, V>(T graph, bool customDraw = false, Control control = null, CheckBox labels = null, int size = 40, int padding = 50) where T : GraphRepresentation<V> where V : struct
+        {
+            Graphics tmp = null;
+            if(customDraw == true)
+            {
+                tmp = graphDrawing;
+                graphDrawing = control.CreateGraphics();
+            } else
+            {
+                control = drawTab;
+                labels = showLabels;
+            }
+
+            if (graphDrawing == null)
+            {
+                graphDrawing = drawTab.CreateGraphics();
+            }
+            else
+            {
+                graphDrawing.Clear(SystemColors.Control);
+            }
+
+            int radius = 0;
+            if (control.Width < control.Height)
+            {
+                radius = control.Width / 2 - padding;
+            }
+            else
+            {
+                radius = control.Height / 2 - padding;
+            }
+            Tuple<int, int> center = new Tuple<int, int>(control.Width / 2 - padding, control.Height / 2 - padding);
+            DrawVertices(graph.VertexCount, radius, graphDrawing, center, labels.Checked, size);
+            DrawEdges<V>(graph, graphDrawing, radius, center, labels.Checked, size);
+
+            if(customDraw == true)
+            {
+                graphDrawing.Dispose();
+                graphDrawing = tmp;
+            }
+        }
+
+        private void DrawVertices(int vertexNum, int radius, Graphics g, Tuple<int,int> center, bool drawLabels = true, int size = 40, double rotateDeg = -90.0)
+        {
+            double angleStep = 0;
+            if (vertexNum > 0) {
+                angleStep = 360 / vertexNum;
+            }
+            for (int i = 0; i < vertexNum; i++)
+            {
+                double x = Math.Cos(DegToRad(angleStep * i + rotateDeg)) * radius + center.Item1;
+                double y = Math.Sin(DegToRad(angleStep * i + rotateDeg)) * radius + center.Item2;
+                Rectangle r = new Rectangle((int)x, (int)y, size, size);
+                g.DrawEllipse(Pens.Black, r);
+                if (drawLabels == true)
+                {
+                    Point p = new Point((int)x + size / 2, (int)y + size / 2);
+                    Font f = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
+                    g.DrawString(String.Format("v{0}", i), f, Brushes.Black, p);
+                }
+            }
+        }
+        public double DegToRad(double deg)
+        {
+            return (Math.PI / 180.0) * deg;
+        }
+        private void DrawEdges<T>(GraphRepresentation<T> graph, Graphics g, int radius, Tuple<int,int> center, bool drawLabels = true, int size = 40, double rotateDeg = -90.0) where T : struct
+        {
+            int vertexNum = graph.VertexCount;
+            double angleStep = 0;
+            if (vertexNum > 0)
+            {
+                angleStep = 360 / vertexNum;
+            }
+            for (int i = 0; i < vertexNum; i++)
+            {
+                int j = 0;
+                if(graph.IsDirected == false)
+                {
+                    j = i;
+                }
+                for(; j < vertexNum; j++)
+                {
+                    if(graph.FindEdge(i,j) == true)
+                    {
+                        double x1 = Math.Cos(DegToRad(angleStep * i + rotateDeg)) * radius + center.Item1 + size/2;
+                        double y1 = Math.Sin(DegToRad(angleStep * i + rotateDeg)) * radius + center.Item2 + size/2;
+                        double x2 = Math.Cos(DegToRad(angleStep * j + rotateDeg)) * radius + center.Item1 + size/2;
+                        double y2 = Math.Sin(DegToRad(angleStep * j + rotateDeg)) * radius + center.Item2 + size/2;
+                        g.DrawLine(Pens.Black, new Point((int)x1, (int)y1), new Point((int)x2, (int)y2));
+                        if(graph.IsDirected == true)
+                        {
+                            g.FillEllipse(Brushes.Black, (int)x2-size/8, (int)y2-size/8, size / 4, size / 4);
+                        }
+                        if (drawLabels == true)
+                        {
+                            double x, y;
+                            if(x1 > x2)
+                            {
+                                x = x2 + (x1 - x2) / 2;
+                            } else
+                            {
+                                x = x1 + (x2 - x1) / 2;
+                            }
+                            if(y1 > y2)
+                            {
+                                y = y2 + (y1 - y2) / 2;
+                            } else
+                            {
+                                y = y1 + (y2 - y1) / 2;
+                            }
+                            Point p = new Point((int)x, (int)y);
+                            Font f = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
+                            g.DrawString(String.Format("e(v{0},v{1})", i, j), f, Brushes.Black, p);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void drawTab_Resize(object sender, EventArgs e)
+        {
+            graphDrawing.Dispose();
+            graphDrawing = null;
+        }
+
+        private void showLabels_CheckedChanged(object sender, EventArgs e)
+        {
+            DrawGraph();
         }
     }
 }

@@ -35,6 +35,8 @@
             this.graphList = new System.Windows.Forms.ListView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.editTab = new System.Windows.Forms.TabPage();
+            this.generateCompleteRandomButton = new System.Windows.Forms.Button();
+            this.generateRandomButton = new System.Windows.Forms.Button();
             this.showNeighboursButton = new System.Windows.Forms.Button();
             this.matrixOutput = new System.Windows.Forms.TextBox();
             this.graphTypeLabel = new System.Windows.Forms.Label();
@@ -51,14 +53,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.drawTab = new System.Windows.Forms.TabPage();
             this.analyzeTab = new System.Windows.Forms.TabPage();
-            this.checkConnectedButton = new System.Windows.Forms.Button();
-            this.searchMSTButton = new System.Windows.Forms.Button();
-            this.EulerButton = new System.Windows.Forms.Button();
-            this.DFSButton = new System.Windows.Forms.Button();
-            this.BFSButton = new System.Windows.Forms.Button();
-            this.generateRandomButton = new System.Windows.Forms.Button();
-            this.generateCompleteRandomButton = new System.Windows.Forms.Button();
             this.checkPathsButton = new System.Windows.Forms.Button();
+            this.BFSButton = new System.Windows.Forms.Button();
+            this.DFSButton = new System.Windows.Forms.Button();
+            this.EulerButton = new System.Windows.Forms.Button();
+            this.searchMSTButton = new System.Windows.Forms.Button();
+            this.checkConnectedButton = new System.Windows.Forms.Button();
+            this.showLabels = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -66,6 +67,7 @@
             this.graphListControls.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.editTab.SuspendLayout();
+            this.drawTab.SuspendLayout();
             this.analyzeTab.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -180,6 +182,26 @@
             this.editTab.TabIndex = 0;
             this.editTab.Text = "Edytuj";
             this.editTab.UseVisualStyleBackColor = true;
+            // 
+            // generateCompleteRandomButton
+            // 
+            this.generateCompleteRandomButton.Location = new System.Drawing.Point(10, 418);
+            this.generateCompleteRandomButton.Name = "generateCompleteRandomButton";
+            this.generateCompleteRandomButton.Size = new System.Drawing.Size(121, 65);
+            this.generateCompleteRandomButton.TabIndex = 15;
+            this.generateCompleteRandomButton.Text = "Generuj pełny o losowym rozmiarze";
+            this.generateCompleteRandomButton.UseVisualStyleBackColor = true;
+            this.generateCompleteRandomButton.Click += new System.EventHandler(this.generateCompleteRandomButton_Click);
+            // 
+            // generateRandomButton
+            // 
+            this.generateRandomButton.Location = new System.Drawing.Point(10, 489);
+            this.generateRandomButton.Name = "generateRandomButton";
+            this.generateRandomButton.Size = new System.Drawing.Size(121, 38);
+            this.generateRandomButton.TabIndex = 14;
+            this.generateRandomButton.Text = "Generuj losowo";
+            this.generateRandomButton.UseVisualStyleBackColor = true;
+            this.generateRandomButton.Click += new System.EventHandler(this.generateRandomButton_Click);
             // 
             // showNeighboursButton
             // 
@@ -320,13 +342,16 @@
             // 
             // drawTab
             // 
+            this.drawTab.BackColor = System.Drawing.Color.Transparent;
+            this.drawTab.Controls.Add(this.showLabels);
             this.drawTab.Location = new System.Drawing.Point(4, 22);
             this.drawTab.Name = "drawTab";
             this.drawTab.Padding = new System.Windows.Forms.Padding(3);
             this.drawTab.Size = new System.Drawing.Size(525, 535);
             this.drawTab.TabIndex = 1;
             this.drawTab.Text = "Rysuj";
-            this.drawTab.UseVisualStyleBackColor = true;
+            this.drawTab.Paint += new System.Windows.Forms.PaintEventHandler(this.drawTab_Paint);
+            this.drawTab.Resize += new System.EventHandler(this.drawTab_Resize);
             // 
             // analyzeTab
             // 
@@ -343,45 +368,15 @@
             this.analyzeTab.Text = "Analizuj";
             this.analyzeTab.UseVisualStyleBackColor = true;
             // 
-            // checkConnectedButton
+            // checkPathsButton
             // 
-            this.checkConnectedButton.Location = new System.Drawing.Point(3, 3);
-            this.checkConnectedButton.Name = "checkConnectedButton";
-            this.checkConnectedButton.Size = new System.Drawing.Size(170, 74);
-            this.checkConnectedButton.TabIndex = 2;
-            this.checkConnectedButton.Text = "Sprawdź spójność";
-            this.checkConnectedButton.UseVisualStyleBackColor = true;
-            this.checkConnectedButton.Click += new System.EventHandler(this.checkConnectedButton_Click);
-            // 
-            // searchMSTButton
-            // 
-            this.searchMSTButton.Location = new System.Drawing.Point(3, 83);
-            this.searchMSTButton.Name = "searchMSTButton";
-            this.searchMSTButton.Size = new System.Drawing.Size(170, 74);
-            this.searchMSTButton.TabIndex = 3;
-            this.searchMSTButton.Text = "Szukaj MST";
-            this.searchMSTButton.UseVisualStyleBackColor = true;
-            this.searchMSTButton.Click += new System.EventHandler(this.searchMSTButton_Click);
-            // 
-            // EulerButton
-            // 
-            this.EulerButton.Location = new System.Drawing.Point(355, 3);
-            this.EulerButton.Name = "EulerButton";
-            this.EulerButton.Size = new System.Drawing.Size(162, 74);
-            this.EulerButton.TabIndex = 4;
-            this.EulerButton.Text = "Szukaj cylku Eulera";
-            this.EulerButton.UseVisualStyleBackColor = true;
-            this.EulerButton.Click += new System.EventHandler(this.EulerButton_Click);
-            // 
-            // DFSButton
-            // 
-            this.DFSButton.Location = new System.Drawing.Point(179, 3);
-            this.DFSButton.Name = "DFSButton";
-            this.DFSButton.Size = new System.Drawing.Size(170, 74);
-            this.DFSButton.TabIndex = 5;
-            this.DFSButton.Text = "DFS";
-            this.DFSButton.UseVisualStyleBackColor = true;
-            this.DFSButton.Click += new System.EventHandler(this.DFSButton_Click);
+            this.checkPathsButton.Location = new System.Drawing.Point(355, 83);
+            this.checkPathsButton.Name = "checkPathsButton";
+            this.checkPathsButton.Size = new System.Drawing.Size(162, 74);
+            this.checkPathsButton.TabIndex = 7;
+            this.checkPathsButton.Text = "Sprawdź średnicę, promień i centrum grafu";
+            this.checkPathsButton.UseVisualStyleBackColor = true;
+            this.checkPathsButton.Click += new System.EventHandler(this.checkPathsButton_Click);
             // 
             // BFSButton
             // 
@@ -393,35 +388,58 @@
             this.BFSButton.UseVisualStyleBackColor = true;
             this.BFSButton.Click += new System.EventHandler(this.BFSButton_Click);
             // 
-            // generateRandomButton
+            // DFSButton
             // 
-            this.generateRandomButton.Location = new System.Drawing.Point(10, 489);
-            this.generateRandomButton.Name = "generateRandomButton";
-            this.generateRandomButton.Size = new System.Drawing.Size(121, 38);
-            this.generateRandomButton.TabIndex = 14;
-            this.generateRandomButton.Text = "Generuj losowo";
-            this.generateRandomButton.UseVisualStyleBackColor = true;
-            this.generateRandomButton.Click += new System.EventHandler(this.generateRandomButton_Click);
+            this.DFSButton.Location = new System.Drawing.Point(179, 3);
+            this.DFSButton.Name = "DFSButton";
+            this.DFSButton.Size = new System.Drawing.Size(170, 74);
+            this.DFSButton.TabIndex = 5;
+            this.DFSButton.Text = "DFS";
+            this.DFSButton.UseVisualStyleBackColor = true;
+            this.DFSButton.Click += new System.EventHandler(this.DFSButton_Click);
             // 
-            // generateCompleteRandomButton
+            // EulerButton
             // 
-            this.generateCompleteRandomButton.Location = new System.Drawing.Point(10, 418);
-            this.generateCompleteRandomButton.Name = "generateCompleteRandomButton";
-            this.generateCompleteRandomButton.Size = new System.Drawing.Size(121, 65);
-            this.generateCompleteRandomButton.TabIndex = 15;
-            this.generateCompleteRandomButton.Text = "Generuj pełny o losowym rozmiarze";
-            this.generateCompleteRandomButton.UseVisualStyleBackColor = true;
-            this.generateCompleteRandomButton.Click += new System.EventHandler(this.generateCompleteRandomButton_Click);
+            this.EulerButton.Location = new System.Drawing.Point(355, 3);
+            this.EulerButton.Name = "EulerButton";
+            this.EulerButton.Size = new System.Drawing.Size(162, 74);
+            this.EulerButton.TabIndex = 4;
+            this.EulerButton.Text = "Szukaj cylku Eulera";
+            this.EulerButton.UseVisualStyleBackColor = true;
+            this.EulerButton.Click += new System.EventHandler(this.EulerButton_Click);
             // 
-            // checkPathsButton
+            // searchMSTButton
             // 
-            this.checkPathsButton.Location = new System.Drawing.Point(355, 83);
-            this.checkPathsButton.Name = "checkPathsButton";
-            this.checkPathsButton.Size = new System.Drawing.Size(162, 74);
-            this.checkPathsButton.TabIndex = 7;
-            this.checkPathsButton.Text = "Sprawdź średnicę, promień i centrum grafu";
-            this.checkPathsButton.UseVisualStyleBackColor = true;
-            this.checkPathsButton.Click += new System.EventHandler(this.checkPathsButton_Click);
+            this.searchMSTButton.Location = new System.Drawing.Point(3, 83);
+            this.searchMSTButton.Name = "searchMSTButton";
+            this.searchMSTButton.Size = new System.Drawing.Size(170, 74);
+            this.searchMSTButton.TabIndex = 3;
+            this.searchMSTButton.Text = "Szukaj MST";
+            this.searchMSTButton.UseVisualStyleBackColor = true;
+            this.searchMSTButton.Click += new System.EventHandler(this.searchMSTButton_Click);
+            // 
+            // checkConnectedButton
+            // 
+            this.checkConnectedButton.Location = new System.Drawing.Point(3, 3);
+            this.checkConnectedButton.Name = "checkConnectedButton";
+            this.checkConnectedButton.Size = new System.Drawing.Size(170, 74);
+            this.checkConnectedButton.TabIndex = 2;
+            this.checkConnectedButton.Text = "Sprawdź spójność";
+            this.checkConnectedButton.UseVisualStyleBackColor = true;
+            this.checkConnectedButton.Click += new System.EventHandler(this.checkConnectedButton_Click);
+            // 
+            // showLabels
+            // 
+            this.showLabels.AutoSize = true;
+            this.showLabels.Checked = true;
+            this.showLabels.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showLabels.Location = new System.Drawing.Point(7, 7);
+            this.showLabels.Name = "showLabels";
+            this.showLabels.Size = new System.Drawing.Size(63, 17);
+            this.showLabels.TabIndex = 0;
+            this.showLabels.Text = "Etykiety";
+            this.showLabels.UseVisualStyleBackColor = true;
+            this.showLabels.CheckedChanged += new System.EventHandler(this.showLabels_CheckedChanged);
             // 
             // MainWindow
             // 
@@ -429,6 +447,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(this.splitContainer1);
+            this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MPGraphs GUI";
@@ -442,6 +461,8 @@
             this.tabControl1.ResumeLayout(false);
             this.editTab.ResumeLayout(false);
             this.editTab.PerformLayout();
+            this.drawTab.ResumeLayout(false);
+            this.drawTab.PerformLayout();
             this.analyzeTab.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -480,5 +501,6 @@
         private System.Windows.Forms.Button generateCompleteRandomButton;
         private System.Windows.Forms.Button generateRandomButton;
         private System.Windows.Forms.Button checkPathsButton;
+        private System.Windows.Forms.CheckBox showLabels;
     }
 }

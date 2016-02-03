@@ -15,16 +15,28 @@ namespace MPGraphsGUI
         public string GraphName { get; private set; }
         public string GraphType { get; private set; }
         public bool? GraphDirected { get; private set; }
-        public NewGraphDialog()
+        MainWindow mainRef;
+        public NewGraphDialog(MainWindow mainRef)
         {
             InitializeComponent();
             this.GraphName = null;
             this.GraphType = null;
             this.GraphDirected = null;
+            graphTypeInput.SelectedIndex = 0;
+            this.mainRef = mainRef;
         }
 
         private void okButton_Click(object sender, EventArgs e)
         {
+            graphNameLabel.ForeColor = SystemColors.ControlText;
+            graphNameLabel.Font = SystemFonts.DefaultFont;
+            if (graphNameInput.Text == "" || mainRef.Graphs.ContainsKey(graphNameInput.Text))
+            {
+                graphNameLabel.ForeColor = Color.Red;
+                Font f = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
+                graphNameLabel.Font = f;
+                return;
+            }
             this.GraphName = graphNameInput.Text;
             this.GraphType = graphTypeInput.SelectedItem.ToString();
             this.GraphDirected = directedInput.Checked;
