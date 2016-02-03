@@ -129,6 +129,7 @@ namespace MPGraphsGUI
                         addEdgeButton.Enabled = false;
                         removeVertexButton.Enabled = false;
                         removeEdgeButton.Enabled = false;
+                        showNeighboursButton.Enabled = false;
                         generateCompleteRandomButton.Enabled = false;
                         generateRandomButton.Enabled = false;
                         checkConnectedButton.Enabled = false;
@@ -274,6 +275,7 @@ namespace MPGraphsGUI
             addEdgeButton.Enabled = true;
             removeVertexButton.Enabled = true;
             removeEdgeButton.Enabled = true;
+            showNeighboursButton.Enabled = true;
             generateCompleteRandomButton.Enabled = true;
             generateRandomButton.Enabled = true;
             checkConnectedButton.Enabled = true;
