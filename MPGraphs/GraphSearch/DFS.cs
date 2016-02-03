@@ -49,6 +49,10 @@ namespace MPGraphs.GraphSearch
                     Graph.AddVertex();
                     Remaining.AddVertex();
                 }
+                if(Numbering.Count == 0)
+                {
+                    return null;
+                }
                 CurrentlyNumbered = 1;
                 Numbering[v] = 1;
                 FirstRun = false;

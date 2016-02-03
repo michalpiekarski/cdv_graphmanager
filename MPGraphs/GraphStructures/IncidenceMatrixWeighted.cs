@@ -29,6 +29,10 @@ namespace MPGraphs.GraphStructures
             {
                 List<List<double>> pathWeights = Floyd().Item1;
                 double diameter = double.NegativeInfinity;
+                if (pathWeights == null)
+                {
+                    return diameter;
+                }
                 foreach (List<double> row in pathWeights)
                 {
                     diameter = Math.Max(diameter, row.Max());
@@ -42,6 +46,10 @@ namespace MPGraphs.GraphStructures
             {
                 List<List<double>> pathWeights = Floyd().Item1;
                 double radius = double.PositiveInfinity;
+                if (pathWeights == null)
+                {
+                    return radius;
+                }
                 foreach (List<double> row in pathWeights)
                 {
                     radius = Math.Min(radius, row.Max());
@@ -56,6 +64,10 @@ namespace MPGraphs.GraphStructures
                 List<int> graphCenter = new List<int>();
                 double radius = Radius;
                 List<List<double>> pathWeights = Floyd().Item1;
+                if (pathWeights == null)
+                {
+                    return graphCenter;
+                }
                 int i = 0;
                 foreach (List<double> row in pathWeights)
                 {
@@ -80,7 +92,7 @@ namespace MPGraphs.GraphStructures
 
         public IncidenceMatrixWeighted(IncidenceMatrix matrix) : base(matrix)
         {
-            this.edgeWeights = new List<Tuple<int, int, int>>(EdgeCount);
+            this.edgeWeights = new List<Tuple<int, int, int>>(Math.Max(0,EdgeCount));
             for (int i = 0; i < VertexCount; i++)
             {
                 for (int j = 0; j < VertexCount; j++)
@@ -225,6 +237,10 @@ namespace MPGraphs.GraphStructures
                 }
             });
             int k = 0;
+            if(E.Count == 0)
+            {
+                return null;
+            }
             do
             {
                 Tuple<int, int, int> ek = E[k]; // kolejna krawędź z posortowanego zbioru E

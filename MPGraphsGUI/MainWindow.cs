@@ -119,6 +119,25 @@ namespace MPGraphsGUI
                                 break;
                         }
                         graphList.Items.RemoveAt(graphList.SelectedIndices[0]);
+                        graphNameLabel.Text = "Graph Name";
+                        graphTypeLabel.Text = "Graph Type";
+                        vertexCountLabel.Text = "---";
+                        edgeCountLabel.Text = "--";
+                        edgeList.Clear();
+                        matrixOutput.Clear();
+                        addVertexButton.Enabled = false;
+                        addEdgeButton.Enabled = false;
+                        removeVertexButton.Enabled = false;
+                        removeEdgeButton.Enabled = false;
+                        generateCompleteRandomButton.Enabled = false;
+                        generateRandomButton.Enabled = false;
+                        checkConnectedButton.Enabled = false;
+                        searchMSTButton.Enabled = false;
+                        BFSButton.Enabled = false;
+                        DFSButton.Enabled = false;
+                        EulerButton.Enabled = false;
+                        checkPathsButton.Enabled = false;
+                        CurrentGraphKey = null;
                     }
                 }
             }
@@ -251,6 +270,18 @@ namespace MPGraphsGUI
                 default:
                     break;
             }
+            addVertexButton.Enabled = true;
+            addEdgeButton.Enabled = true;
+            removeVertexButton.Enabled = true;
+            removeEdgeButton.Enabled = true;
+            generateCompleteRandomButton.Enabled = true;
+            generateRandomButton.Enabled = true;
+            checkConnectedButton.Enabled = true;
+            searchMSTButton.Enabled = true;
+            BFSButton.Enabled = true;
+            DFSButton.Enabled = true;
+            EulerButton.Enabled = true;
+            checkPathsButton.Enabled = true;
         }
 
         private string GenerateIncidenceString(IncidenceMatrix matrix)

@@ -52,6 +52,7 @@
             this.vertexCountLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.drawTab = new System.Windows.Forms.TabPage();
+            this.showLabels = new System.Windows.Forms.CheckBox();
             this.analyzeTab = new System.Windows.Forms.TabPage();
             this.checkPathsButton = new System.Windows.Forms.Button();
             this.BFSButton = new System.Windows.Forms.Button();
@@ -59,7 +60,6 @@
             this.EulerButton = new System.Windows.Forms.Button();
             this.searchMSTButton = new System.Windows.Forms.Button();
             this.checkConnectedButton = new System.Windows.Forms.Button();
-            this.showLabels = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -185,6 +185,7 @@
             // 
             // generateCompleteRandomButton
             // 
+            this.generateCompleteRandomButton.Enabled = false;
             this.generateCompleteRandomButton.Location = new System.Drawing.Point(10, 418);
             this.generateCompleteRandomButton.Name = "generateCompleteRandomButton";
             this.generateCompleteRandomButton.Size = new System.Drawing.Size(121, 65);
@@ -195,6 +196,7 @@
             // 
             // generateRandomButton
             // 
+            this.generateRandomButton.Enabled = false;
             this.generateRandomButton.Location = new System.Drawing.Point(10, 489);
             this.generateRandomButton.Name = "generateRandomButton";
             this.generateRandomButton.Size = new System.Drawing.Size(121, 38);
@@ -205,6 +207,7 @@
             // 
             // showNeighboursButton
             // 
+            this.showNeighboursButton.Enabled = false;
             this.showNeighboursButton.Location = new System.Drawing.Point(283, 73);
             this.showNeighboursButton.Name = "showNeighboursButton";
             this.showNeighboursButton.Size = new System.Drawing.Size(234, 23);
@@ -248,6 +251,7 @@
             // 
             // removeEdgeButton
             // 
+            this.removeEdgeButton.Enabled = false;
             this.removeEdgeButton.Location = new System.Drawing.Point(403, 44);
             this.removeEdgeButton.Name = "removeEdgeButton";
             this.removeEdgeButton.Size = new System.Drawing.Size(114, 23);
@@ -258,6 +262,7 @@
             // 
             // removeVertexButton
             // 
+            this.removeVertexButton.Enabled = false;
             this.removeVertexButton.Location = new System.Drawing.Point(283, 44);
             this.removeVertexButton.Name = "removeVertexButton";
             this.removeVertexButton.Size = new System.Drawing.Size(114, 23);
@@ -268,6 +273,7 @@
             // 
             // addEdgeButton
             // 
+            this.addEdgeButton.Enabled = false;
             this.addEdgeButton.Location = new System.Drawing.Point(403, 6);
             this.addEdgeButton.Name = "addEdgeButton";
             this.addEdgeButton.Size = new System.Drawing.Size(114, 32);
@@ -278,6 +284,7 @@
             // 
             // addVertexButton
             // 
+            this.addVertexButton.Enabled = false;
             this.addVertexButton.Location = new System.Drawing.Point(283, 6);
             this.addVertexButton.Name = "addVertexButton";
             this.addVertexButton.Size = new System.Drawing.Size(114, 32);
@@ -353,6 +360,19 @@
             this.drawTab.Paint += new System.Windows.Forms.PaintEventHandler(this.drawTab_Paint);
             this.drawTab.Resize += new System.EventHandler(this.drawTab_Resize);
             // 
+            // showLabels
+            // 
+            this.showLabels.AutoSize = true;
+            this.showLabels.Checked = true;
+            this.showLabels.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showLabels.Location = new System.Drawing.Point(7, 7);
+            this.showLabels.Name = "showLabels";
+            this.showLabels.Size = new System.Drawing.Size(63, 17);
+            this.showLabels.TabIndex = 0;
+            this.showLabels.Text = "Etykiety";
+            this.showLabels.UseVisualStyleBackColor = true;
+            this.showLabels.CheckedChanged += new System.EventHandler(this.showLabels_CheckedChanged);
+            // 
             // analyzeTab
             // 
             this.analyzeTab.Controls.Add(this.checkPathsButton);
@@ -370,6 +390,7 @@
             // 
             // checkPathsButton
             // 
+            this.checkPathsButton.Enabled = false;
             this.checkPathsButton.Location = new System.Drawing.Point(355, 83);
             this.checkPathsButton.Name = "checkPathsButton";
             this.checkPathsButton.Size = new System.Drawing.Size(162, 74);
@@ -380,6 +401,7 @@
             // 
             // BFSButton
             // 
+            this.BFSButton.Enabled = false;
             this.BFSButton.Location = new System.Drawing.Point(179, 83);
             this.BFSButton.Name = "BFSButton";
             this.BFSButton.Size = new System.Drawing.Size(170, 74);
@@ -390,6 +412,7 @@
             // 
             // DFSButton
             // 
+            this.DFSButton.Enabled = false;
             this.DFSButton.Location = new System.Drawing.Point(179, 3);
             this.DFSButton.Name = "DFSButton";
             this.DFSButton.Size = new System.Drawing.Size(170, 74);
@@ -400,6 +423,7 @@
             // 
             // EulerButton
             // 
+            this.EulerButton.Enabled = false;
             this.EulerButton.Location = new System.Drawing.Point(355, 3);
             this.EulerButton.Name = "EulerButton";
             this.EulerButton.Size = new System.Drawing.Size(162, 74);
@@ -410,6 +434,7 @@
             // 
             // searchMSTButton
             // 
+            this.searchMSTButton.Enabled = false;
             this.searchMSTButton.Location = new System.Drawing.Point(3, 83);
             this.searchMSTButton.Name = "searchMSTButton";
             this.searchMSTButton.Size = new System.Drawing.Size(170, 74);
@@ -420,6 +445,7 @@
             // 
             // checkConnectedButton
             // 
+            this.checkConnectedButton.Enabled = false;
             this.checkConnectedButton.Location = new System.Drawing.Point(3, 3);
             this.checkConnectedButton.Name = "checkConnectedButton";
             this.checkConnectedButton.Size = new System.Drawing.Size(170, 74);
@@ -427,19 +453,6 @@
             this.checkConnectedButton.Text = "Sprawdź spójność";
             this.checkConnectedButton.UseVisualStyleBackColor = true;
             this.checkConnectedButton.Click += new System.EventHandler(this.checkConnectedButton_Click);
-            // 
-            // showLabels
-            // 
-            this.showLabels.AutoSize = true;
-            this.showLabels.Checked = true;
-            this.showLabels.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showLabels.Location = new System.Drawing.Point(7, 7);
-            this.showLabels.Name = "showLabels";
-            this.showLabels.Size = new System.Drawing.Size(63, 17);
-            this.showLabels.TabIndex = 0;
-            this.showLabels.Text = "Etykiety";
-            this.showLabels.UseVisualStyleBackColor = true;
-            this.showLabels.CheckedChanged += new System.EventHandler(this.showLabels_CheckedChanged);
             // 
             // MainWindow
             // 

@@ -45,6 +45,10 @@ namespace MPGraphs.GraphSearch
                 Graph.AddVertex();
                 Remaining.AddVertex();
             }
+            if(Numbering.Count == 0)
+            {
+                return null;
+            }
             Numbering[root] = 1;
             CurrentlyNumbered = 1;
             SearchQueue.Enqueue(root);
